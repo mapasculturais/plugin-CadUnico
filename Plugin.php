@@ -32,8 +32,8 @@ class Plugin extends \MapasCulturais\Plugin
             return;
         }
 
+        //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
         $app->hook('template(site.index.home-search-form):begin', function () use ($plugin, $config, $app) {            
-            //Insere um texto na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
             if($config['text_home']['use_part']){
                 $this->part($config['text_home']['text_or_part']);
             }else{

@@ -12,7 +12,7 @@ class Plugin extends \MapasCulturais\Plugin
         $app = App::i();
 
         $config += [
-            'enabled' => env("ENABLED_STREAM_LINED_OPPORTUNITY", false),
+            'enabled_plugin' => env("ENABLED_STREAM_LINED_OPPORTUNITY", false), // True habilita o plugin false desabilita
             'text_home' => [
                 'enabled' => env("ENABLED_TEXT_HOME", false), // true para usar um texto acima do formulário de pesquisa da home
                 'use_part' => env("USE_PART", false), //true para usar um template part ou false para usar diretamente texto da configuração
@@ -35,7 +35,7 @@ class Plugin extends \MapasCulturais\Plugin
         $plugin = $this;
         $config = $plugin->_config;
 
-        if(!$config['enabled']){
+        if(!$config['enabled_plugin']){
             return;
         }
 

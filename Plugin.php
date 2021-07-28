@@ -14,8 +14,9 @@ class Plugin extends \MapasCulturais\Plugin
         $config += [
             'enabled' => env("ENABLED_STREAM_LINED_OPPORTUNITY", false),
             'text_home' => [
-                'use_part' => env("USE_PART", false),
-                'text_or_part' => env("TEXT_OR_PART", "")
+                'enabled' => env("ENABLED_TEXT_HOME", false), // true para usar um texto acima do formulário de pesquisa da home
+                'use_part' => env("USE_PART", false), //true para usar um template part ou false para usar diretamente texto da configuração
+                'text_or_part' => env("TEXT_OR_PART", "") // Nome do template part ou texto que sera usado
             ],
             'img_home' => [
                 'enabled' => env("ENABLED_IMG_HOME", true), // true para usar uma imagem acima do texto que será inserido na home
@@ -52,11 +53,16 @@ class Plugin extends \MapasCulturais\Plugin
                 }
             }            
            
-            if($config['text_home']['use_part']){
-                $this->part($config['text_home']['text_or_part']);
-            }else{
-                echo $config['text_home']['text_or_part'];
+            //Insere um texto caso esteja configurado
+            $text_home = $config['text_home'];
+            if($text_home['enabled']){
+                if($text_home['use_part']){
+                    $this->part($text_home['text_or_part']);
+                }else{
+                    echo $text_home['text_or_part'];
+                }
             }
+            
         });
     }
 

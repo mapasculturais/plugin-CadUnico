@@ -19,8 +19,8 @@ class Plugin extends \MapasCulturais\Plugin
                 'text_or_part' => env("TEXT_OR_PART", "") // Nome do template part ou texto que sera usado
             ],
             'img_home' => [
-                'enabled' => env("ENABLED_IMG_HOME", true), // true para usar uma imagem acima do texto que será inserido na home
-                'use_part' => env("USE_PART_IMG", true),  //true para usar um template part ou false para usar diretamente o caminho de uma imagem
+                'enabled' => env("ENABLED_IMG_HOME", false), // true para usar uma imagem acima do texto que será inserido na home
+                'use_part' => env("USE_PART_IMG", false),  //true para usar um template part ou false para usar diretamente o caminho de uma imagem
                 'patch_or_part' => env("PATCH_OR_PART", "img-home") // Nome do template part ou caminho da imagem que sera usada
             ]
         ];

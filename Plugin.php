@@ -12,7 +12,7 @@ class Plugin extends \MapasCulturais\Plugin
         $app = App::i();
 
         $config += [
-            'enabled_plugin' => env("ENABLED_STREAM_LINED_OPPORTUNITY", false), // True habilita o plugin false desabilita
+            'enabled_plugin' => env("ENABLED_STREAM_LINED_OPPORTUNITY", false), // true habilita o plugin false desabilita
             'text_home' => [
                 'enabled' => env("ENABLED_TEXT_HOME", false), // true para usar um texto acima do formulário de pesquisa da home
                 'use_part' => env("USE_PART", false), //true para usar um template part ou false para usar diretamente texto da configuração
@@ -21,7 +21,8 @@ class Plugin extends \MapasCulturais\Plugin
             'img_home' => [
                 'enabled' => env("ENABLED_IMG_HOME", false), // true para usar uma imagem acima do texto que será inserido na home
                 'use_part' => env("USE_PART_IMG", false),  //true para usar um template part ou false para usar diretamente o caminho de uma imagem
-                'patch_or_part' => env("PATCH_OR_PART", "img-home") // Nome do template part ou caminho da imagem que sera usada
+                'patch_or_part' => env("PATCH_OR_PART", "img-home"), // Nome do template part ou caminho da imagem que sera usada
+                'styles_class' => env("STYLES_CLASS", ""), 
             ]
         ];
 
@@ -42,14 +43,20 @@ class Plugin extends \MapasCulturais\Plugin
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
         $app->hook('template(site.index.home-search-form):begin', function () use ($plugin, $config, $app) {  
             
-            
+            $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');       
+
             //Insere uma imagem acima do texto caso esteja configurada
             $img_home = $config['img_home'];
-            if($img_home['enabled']){
+            if($img_home['enabled']){                
+                $params = [
+                    'styles_class' => $img_home['styles_class'] ?: "",
+                    'patch' => $img_home['patch_or_part'] ?: "",
+                ];
+                
                 if($img_home['use_part']){
-                    $this->part($img_home['patch_or_part']);
+                    $this->part($img_home['patch_or_part'] , $params);
                 }else{
-                    $this->part("insert-img", ['patch' => $img_home['patch_or_part']]);
+                    $this->part("insert-img", $params);
                 }
             }            
            
@@ -62,12 +69,12 @@ class Plugin extends \MapasCulturais\Plugin
                     echo $text_home['text_or_part'];
                 }
             }
-            
+
         });
+
     }
 
     public function register ()
     {
-        
     }
 }

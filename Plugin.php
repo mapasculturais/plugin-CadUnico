@@ -17,7 +17,7 @@ class Plugin extends \MapasCulturais\Plugin
     {
         $app = App::i();
 
-        $slug = $config['SLUG'] ?? null;
+        $slug = $config['slug'] ?? null;
 
         if (!$slug) {
             throw new Exception(i::__('A chave de configuração "slug" é obrigatória no plugin StreamlinedOpportunity'));

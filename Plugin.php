@@ -2,8 +2,14 @@
 
 namespace StreamlinedOpportunity;
 
+use Exception;
 use MapasCulturais\App;
+use MapasCulturais\i;
 
+/**
+ * @property-read String $slug slug configurado para o plugin
+ * @package StreamlinedOpportunity
+ */
 class Plugin extends \MapasCulturais\Plugin
 {
 
@@ -11,18 +17,29 @@ class Plugin extends \MapasCulturais\Plugin
     {
         $app = App::i();
 
+        $slug = $config['SLUG'] ?? null;
+
+        if (!$slug) {
+            throw new Exception(i::__('A chave de configuração "slug" é obrigatória no plugin StreamlinedOpportunity'));
+        }
+        $env_prefix = strtoupper($slug);
+
+        /*
+        ENABLED_STREAM_LINED_OPPORTUNITY => {$slug}_ENABLED
+        demais somente adiciona o prefixo
+        */
         $config += [
-            'enabled_plugin' => env("ENABLED_STREAM_LINED_OPPORTUNITY", false), // true habilita o plugin false desabilita
+            'enabled_plugin' => env("{$env_prefix}_ENABLED", false), // true habilita o plugin false desabilita
             'text_home' => [
-                'enabled' => env("ENABLED_TEXT_HOME", false), // true para usar um texto acima do formulário de pesquisa da home
-                'use_part' => env("USE_PART", false), //true para usar um template part ou false para usar diretamente texto da configuração
-                'text_or_part' => env("TEXT_OR_PART", "") // Nome do template part ou texto que sera usado
+                'enabled' => env("{$env_prefix}_ENABLED_TEXT_HOME", false), // true para usar um texto acima do formulário de pesquisa da home
+                'use_part' => env("{$env_prefix}_USE_PART", false), //true para usar um template part ou false para usar diretamente texto da configuração
+                'text_or_part' => env("{$env_prefix}_TEXT_OR_PART", "") // Nome do template part ou texto que sera usado
             ],
             'img_home' => [
-                'enabled' => env("ENABLED_IMG_HOME", false), // true para usar uma imagem acima do texto que será inserido na home
-                'use_part' => env("USE_PART_IMG", false),  //true para usar um template part ou false para usar diretamente o caminho de uma imagem
-                'patch_or_part' => env("PATCH_OR_PART", "img-home"), // Nome do template part ou caminho da imagem que sera usada
-                'styles_class' => env("STYLES_CLASS", ""), 
+                'enabled' => env("{$env_prefix}_ENABLED_IMG_HOME", false), // true para usar uma imagem acima do texto que será inserido na home
+                'use_part' => env("{$env_prefix}_USE_PART_IMG", false),  //true para usar um template part ou false para usar diretamente o caminho de uma imagem
+                'patch_or_part' => env("{$env_prefix}_PATCH_OR_PART", "img-home"), // Nome do template part ou caminho da imagem que sera usada
+                'styles_class' => env("{$env_prefix}_STYLES_CLASS", ""), 
             ]
         ];
 
@@ -77,4 +94,13 @@ class Plugin extends \MapasCulturais\Plugin
     public function register ()
     {
     }
+
+    /**
+     * Retorna o slug configurado para o plugin
+     * @return string 
+     */
+    public function getSlug() {
+        return $this->condig['slug'];
+    }
 }
+

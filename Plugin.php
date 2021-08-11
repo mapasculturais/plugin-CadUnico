@@ -29,22 +29,32 @@ class Plugin extends \MapasCulturais\Plugin
         demais somente adiciona o prefixo
         */
         $config += [
-            'enabled_plugin' => env("{$env_prefix}_ENABLED", false), // true habilita o plugin false desabilita
+            'enabled_plugin' => env("{$env_prefix}_ENABLED", false), 
+            'layout' => "steamlined-opportunity",
+            'zammad_src_form' => env("{$env_prefix}_ZAMMAD_SRC_FORM", 'https://suporte.ms.mapasculturais.com.br/assets/form/form.js'),
+            'zammad_src_chat' => env("{$env_prefix}_ZAMMAD_SRC_CHAT", 'https://suporte.ms.mapasculturais.com.br/assets/chat/chat.min.js'),
+            'zammad_enable' => env("{$env_prefix}_ZAMMAD_ENABLE", true),
+            'zammad_background_color' => env("{$env_prefix}_ZAMMAD_SRC_CHAT", '#202047'),
+            'logotipo_instituicao' => env("$env_prefix}_LOGOTIPO_INSTITUICAO",''),
+            'logotipo_central' => env("$env_prefix}_LOGOTIPO_CENTRAL",''),
+            'privacidade_termos_condicoes' => env("$env_prefix}_PRIVACIDADE_TERMOS",null),
+            'link_suporte' => env("$env_prefix}_LINK_SUPORTE",null),
             'text_home' => [
-                'enabled' => env("{$env_prefix}_ENABLED_TEXT_HOME", false), // true para usar um texto acima do formulário de pesquisa da home
-                'use_part' => env("{$env_prefix}_USE_PART", false), //true para usar um template part ou false para usar diretamente texto da configuração
-                'text_or_part' => env("{$env_prefix}_TEXT_OR_PART", "") // Nome do template part ou texto que sera usado
+                'enabled' => env("{$env_prefix}_ENABLED_TEXT_HOME", false), 
+                'use_part' => env("{$env_prefix}_USE_PART", false),
+                'text_or_part' => env("{$env_prefix}_TEXT_OR_PART", "") 
             ],
             'img_home' => [
-                'enabled' => env("{$env_prefix}_ENABLED_IMG_HOME", false), // true para usar uma imagem acima do texto que será inserido na home
-                'use_part' => env("{$env_prefix}_USE_PART_IMG", false),  //true para usar um template part ou false para usar diretamente o caminho de uma imagem
-                'patch_or_part' => env("{$env_prefix}_PATCH_OR_PART", "img-home"), // Nome do template part ou caminho da imagem que sera usada
+                'enabled' => env("{$env_prefix}_ENABLED_IMG_HOME", false), 
+                'use_part' => env("{$env_prefix}_USE_PART_IMG", false),  
+                'patch_or_part' => env("{$env_prefix}_PATCH_OR_PART", "img-home"),
                 'styles_class' => env("{$env_prefix}_STYLES_CLASS", ""), 
             ]
         ];
 
         parent::__construct($config);
     }
+
 
     public function _init()
     {
@@ -87,6 +97,17 @@ class Plugin extends \MapasCulturais\Plugin
                 }
             }
 
+        });
+
+        // Modifica o template do autenticador quando o redirect url for para um slug configurado
+        $app->hook('controller(auth).render(<<*>>)', function () use ($app, $plugin) {
+            $redirect_url = $_SESSION['mapasculturais.auth.redirect_path'] ?? '';
+
+            if (strpos($redirect_url, "/{$this->getSlug()}") === 0) {
+                $req = $app->request;
+
+                $this->layout = $plugin->_config['layout'];
+            }
         });
 
     }

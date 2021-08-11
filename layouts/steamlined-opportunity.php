@@ -1,0 +1,8 @@
+<?php 
+$app = MapasCulturais\App::i();
+
+$plugin = $app->plugins['StreamlinedOpportunity'];
+?>
+<?php $this->part("header"); ?>
+<?php echo $TEMPLATE_CONTENT; ?>
+<?php $this->part("footer"); ?>

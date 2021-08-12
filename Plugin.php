@@ -29,7 +29,11 @@ class Plugin extends \MapasCulturais\Plugin
         demais somente adiciona o prefixo
         */
         $config += [
-            'enabled_plugin' => env("{$env_prefix}_ENABLED", false), 
+            'enabled_plugin' => env("{$env_prefix}_ENABLED", false),
+            'texto_home'=> env("AB_TEXTO_HOME",''),
+            'botao_home'=> env("AB_BOTAO_HOME",''),
+            'titulo_home'=> env("AB_TITULO_HOME",''),
+            'opportunity_id' => env("{$env_prefix}_OPPORTUNITY_ID", 199), 
             'layout' => "steamlined-opportunity",
             'logotipo_instituicao' => env("$env_prefix}_LOGOTIPO_INSTITUICAO",''),
             'logotipo_central' => env("$env_prefix}_LOGOTIPO_CENTRAL",''),
@@ -59,13 +63,15 @@ class Plugin extends \MapasCulturais\Plugin
         $plugin = $this;
         $config = $plugin->_config;
 
+      
         if(!$config['enabled_plugin']){
             return;
         }
 
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
-        $app->hook('template(site.index.home-search-form):begin', function () use ($plugin, $config, $app) {  
+        $app->hook('template(site.index.home-search-form):begin', function () use ($config) {  
             
+            /** @var \MapasCulturais\Theme $this */
             $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');       
 
             //Insere uma imagem acima do texto caso esteja configurada
@@ -77,9 +83,9 @@ class Plugin extends \MapasCulturais\Plugin
                 ];
                 
                 if($img_home['use_part']){
-                    $this->part($img_home['patch_or_part'] , $params);
+                    $this->part("streamlinedopportunity/".$img_home['patch_or_part'] , $params);
                 }else{
-                    $this->part("insert-img", $params);
+                    $this->part("streamlinedopportunity/"."insert-img", $params);
                 }
             }            
            
@@ -95,14 +101,104 @@ class Plugin extends \MapasCulturais\Plugin
 
         });
 
+        // adiciona informações do status das validações ao formulário de avaliação
+        $app->hook('template(registration.view.evaluationForm.simple):before', function(\MapasCulturais\Entities\Registration $registration, $opportunity) use($plugin) {
+            $opportunities_id = $plugin->config['opportunity_id'];
+            if ($opportunity->id == $opportunities_id && $registration->consolidatedResult) {
+                $em = $registration->getEvaluationMethod();
+                $result = $em->valueToString($registration->consolidatedResult);
+                echo "<div class='alert warning'> Status das avaliações: <strong>{$result}</strong></div>";
+            }
+        });
+
+        // reordena avaliações antes da reconsolidação, colocando as que tem id = registration_id no começo, 
+        // pois indica que foram importadas
+        $app->hook('controller(opportunity).reconsolidateResult', function($opportunity, &$evaluations) {
+
+            usort($evaluations, function($a,$b) {
+                if(preg_replace('#[^\d]+#', '', $a['number']) == $a['id']) {
+                    return -1;
+                } else if(preg_replace('#[^\d]+#', '', $b['number']) == $b['id']) {
+                    return 1;
+                } else {
+                    $_a = (int) $a['id'];
+                    $_b = (int) $b['id'];
+                    return $_a <=> $_b;
+                }
+            });
+
+        });
+
+
+        //Seta uma sessão com redirect_path do painel 
+        $app->hook('auth.successful', function() use($plugin, $app) {
+            $opportunities_id = $plugin->config['opportunity_id'];
+
+            $opportunity = $app->repo('Opportunity')->find($opportunities_id);
+            
+            if($opportunity->canUser('@control')) {
+                $_SESSION['mapasculturais.auth.redirect_path'] = $app->createUrl('panel', 'index');
+            }
+        });
+
         // Modifica o template do autenticador quando o redirect url for para um slug configurado
         $app->hook('controller(auth).render(<<*>>)', function () use ($app, $plugin) {
             $redirect_url = $_SESSION['mapasculturais.auth.redirect_path'] ?? '';
-
-            if (strpos($redirect_url, "/{$this->getSlug()}") === 0) {
+           
+            if (strpos($redirect_url, "/{$plugin->getSlug()}") === 0) {
                 $req = $app->request;
 
-                $this->layout = $plugin->_config['layout'];
+                $this->layout = $plugin->config['layout'];
+            }
+        });
+
+        $app->hook('template(site.index.home-search):end', function () use ($plugin) {
+            $texto = $plugin->config['texto_home'];
+            $botao = $plugin->config['botao_home'];
+            $titulo = $plugin->config['titulo_home'];
+
+            $this->part('streamlinedopportunity/home-search', [
+                'texto' => $texto, 
+                'botao' => $botao, 
+                'titulo' => $titulo,
+            ]);
+        });
+
+        // Redireciona usuário que acessar a oportunidade dos incisos I pelo mapas para o plugin
+        $app->hook('GET(opportunity.single):before', function() use($plugin, $app) {
+            $opportunities_id = $plugin->config['opportunity_id'];
+            $requestedOpportunity = $this->requestedEntity;
+            
+            if (!$requestedOpportunity) {
+                return;
+            }
+
+            $can_view = $requestedOpportunity->canUser('@control') || 
+                        $requestedOpportunity->canUser('viewEvaluations') || 
+                        $requestedOpportunity->canUser('evaluateRegistrations');
+
+                        
+            if(!$can_view && $requestedOpportunity->id == $opportunities_id ) {
+                $url = $app->createUrl($plugin->getSlug(), 'cadastro');
+                $app->redirect($url);
+            }
+        });
+
+        // Redireciona o usuário que acessa a inscrição pelo mapas culturais para o plugin
+        $app->hook('GET(registration.view):before', function() use($plugin, $app) {
+            $opportunities_id = $plugin->config['opportunity_id'];
+            $registration = $this->requestedEntity;
+            $requestedOpportunity = $registration->opportunity;
+            if (!$requestedOpportunity) {
+                return;
+            }
+            $can_view = $requestedOpportunity->canUser('@control') || 
+                        $requestedOpportunity->canUser('viewEvaluations') || 
+                        $requestedOpportunity->canUser('evaluateRegistrations');
+
+            if(!$can_view && $requestedOpportunity->id == $opportunities_id ) {
+                $url = $app->createUrl($plugin->getSlug(), 'formulario',[$registration->id]);
+                $app->redirect($url);
             }
         });
 

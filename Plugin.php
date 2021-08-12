@@ -31,10 +31,6 @@ class Plugin extends \MapasCulturais\Plugin
         $config += [
             'enabled_plugin' => env("{$env_prefix}_ENABLED", false), 
             'layout' => "steamlined-opportunity",
-            'zammad_src_form' => env("{$env_prefix}_ZAMMAD_SRC_FORM", 'https://suporte.ms.mapasculturais.com.br/assets/form/form.js'),
-            'zammad_src_chat' => env("{$env_prefix}_ZAMMAD_SRC_CHAT", 'https://suporte.ms.mapasculturais.com.br/assets/chat/chat.min.js'),
-            'zammad_enable' => env("{$env_prefix}_ZAMMAD_ENABLE", true),
-            'zammad_background_color' => env("{$env_prefix}_ZAMMAD_SRC_CHAT", '#202047'),
             'logotipo_instituicao' => env("$env_prefix}_LOGOTIPO_INSTITUICAO",''),
             'logotipo_central' => env("$env_prefix}_LOGOTIPO_CENTRAL",''),
             'privacidade_termos_condicoes' => env("$env_prefix}_PRIVACIDADE_TERMOS",null),

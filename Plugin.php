@@ -30,9 +30,9 @@ class Plugin extends \MapasCulturais\Plugin
         */
         $config += [
             'enabled_plugin' => env("{$env_prefix}_ENABLED", false),
-            'texto_home'=> env("AB_TEXTO_HOME",''),
-            'botao_home'=> env("AB_BOTAO_HOME",''),
-            'titulo_home'=> env("AB_TITULO_HOME",''),
+            'texto_home'=> env("{$env_prefix}_TEXTO_HOME",''),
+            'botao_home'=> env("{$env_prefix}_BOTAO_HOME",''),
+            'titulo_home'=> env("{$env_prefix}_TITULO_HOME",''),
             'opportunity_id' => env("{$env_prefix}_OPPORTUNITY_ID", 199), 
             'layout' => "steamlined-opportunity",
             'logotipo_instituicao' => env("$env_prefix}_LOGOTIPO_INSTITUICAO",''),

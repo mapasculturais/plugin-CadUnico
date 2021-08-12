@@ -1,7 +1,7 @@
 <?php
 $app = \MapasCulturais\App::i();
-$controller = $app->controller('streamlinedopportunity');
 $config = $app->plugins['StreamlinedOpportunity']->config;
+$controller = $app->controller($config['slug']);
 $linkSuporte      = isset($config['link_suporte']) ? $config['link_suporte'] : '';
 $termosECondicoes = isset($config['privacidade_termos_condicoes']) ? $config['privacidade_termos_condicoes'] : $app->createUrl('auth', '', array('termos-e-condicoes'));
 $logotipo = isset($config['logotipo_instituicao']) ? $config['logotipo_instituicao'] : '';?>
@@ -46,25 +46,6 @@ $logotipo = isset($config['logotipo_instituicao']) ? $config['logotipo_instituic
 
         <span> e comunidade </span>
     </div>
-    <?php  if($app->plugins['StreamlinedOpportunity']->config['zammad_enable']) {
-                ?>
-            <script src="<?= $app->plugins['StreamlinedOpportunity']->config['zammad_src_chat']; ?>"></script>
-            <script>
-                $(function() {
-                new ZammadChat({
-                    background: '<?= $app->plugins['StreamlinedOpportunity']->config['zammad_background_color']; ?>',
-                    fontSize: '14px',
-                    chatId: 1,
-                    title: '<strong>Dúvidas?</strong> Fale conosco'
-
-                });
-                });
-        </script>
-         <style>.zammad-chat{
-            z-index: 9999!important;
-        }</style>
-    
-    <?php }?>
 </footer>
 
 <?php $this->bodyEnd(); ?>

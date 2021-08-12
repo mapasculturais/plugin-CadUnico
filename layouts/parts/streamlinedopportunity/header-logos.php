@@ -5,7 +5,7 @@
  */
 $app = \MapasCulturais\App::i();
 $config = $app->plugins['StreamlinedOpportunity']->config;
-$controller = $app->controller('streamlinedopportunity');
+$controller = $app->controller($config['slug']);
 
 $logotipo_instituicao = isset($config['logotipo_instituicao']) ? $config['logotipo_instituicao'] : $this->asset('streamlinedopportunity/img/picture.png', false);
 $logotipo_central = isset($config['logotipo_central']) ? $config['logotipo_central'] : $this->asset('streamlinedopportunity/img/picture.png', false);

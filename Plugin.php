@@ -117,7 +117,7 @@ class Plugin extends \MapasCulturais\Plugin
      * @return string 
      */
     public function getSlug() {
-        return $this->condig['slug'];
+        return $this->config['slug'];
     }
 }
 

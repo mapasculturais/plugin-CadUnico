@@ -234,6 +234,42 @@ class Plugin extends \MapasCulturais\Plugin
 
     public function register ()
     {
+        $app = App::i();
+
+        $app->registerController($this->getSlug(), 'StreamlinedOpportunity\Controllers\StreamlinedOpportunity');  
+
+        //Registro de metadados
+        $this->registerMetadata('MapasCulturais\Entities\Registration', 'termos_aceitos', [
+            'label' => i::__('Aceite dos termos e condições'),
+            'type' => 'boolean',
+            'private' => true,
+        ]);
+
+        $this->registerMetadata('MapasCulturais\Entities\Opportunity', "{$this->getSlug()}_Fields", [
+            'label' => i::__("Lista de ID dos campos ".$this->getSlug()),
+            'type' => 'array',
+            'serialize' => function ($val) {
+                return json_encode($val);
+            },
+            'unserialize' => function ($val) {
+                return json_decode($val);
+            },
+            'private' => true,
+        ]);
+
+        $slug = "{$this->getSlug()}_registration";
+        $this->registerAgentMetadata($slug, [
+            'label' => i::__('Id da inscrição no Insiso I'),
+            'type' => 'string',
+            'private' => true,
+        ]);
+    }
+
+    function json($data, $status = 200)
+    {
+        $app = App::i();
+        $app->contentType('application/json');
+        $app->halt($status, json_encode($data));
     }
 
     /**

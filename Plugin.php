@@ -34,6 +34,7 @@ class Plugin extends \MapasCulturais\Plugin
             'botao_home'=> env("{$env_prefix}_BOTAO_HOME",''),
             'titulo_home'=> env("{$env_prefix}_TITULO_HOME",''),
             'opportunity_id' => env("{$env_prefix}_OPPORTUNITY_ID", 199), 
+            'limite' => env("{$env_prefix}_LIMITE", 1),
             'layout' => "steamlined-opportunity",
             'logotipo_instituicao' => env("$env_prefix}_LOGOTIPO_INSTITUICAO",''),
             'logotipo_central' => env("$env_prefix}_LOGOTIPO_CENTRAL",''),
@@ -150,6 +151,33 @@ class Plugin extends \MapasCulturais\Plugin
 
                 $this->layout = $plugin->config['layout'];
             }
+        });
+
+        //Altera o redirectUrl caso encontre um slug  configurado na sessão mapasculturais.auth.redirect_path
+        $app->hook('auth.createUser:redirectUrl', function(&$redirectUrl) use($plugin){
+            if(isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) === 0) {
+                $redirectUrl =  $plugin->getSlug();
+            } 
+        });
+
+        /**
+         * Na criação da inscrição, define os metadados inciso2_opportunity_id ou 
+         * inciso1_opportunity_id do agente responsável pela inscrição
+         */
+        $app->hook('entity(Registration).save:after', function () use ($plugin) {
+
+            if ($this->opportunity->id == $plugin->config['opportunity_id']) {
+                $slug = "{$plugin->getSlug()}_registration";
+                $agent = $this->owner;
+                $agent->$slug = $this->id;
+                $agent->save(true);
+            }
+        });
+
+        $app->hook("GET({$plugin->getSlug()}.<<*>>):before", function () use ($plugin, $app) {
+            $limit = 1;
+
+            $plugin->_config['limite'] = $limit;
         });
 
         $app->hook('template(site.index.home-search):end', function () use ($plugin) {

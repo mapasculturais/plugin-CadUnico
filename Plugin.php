@@ -221,12 +221,6 @@ class Plugin extends \MapasCulturais\Plugin
             }
         });
 
-        $app->hook("GET({$plugin->getSlug()}.<<*>>):before", function () use ($plugin, $app) {
-            $limit = 1;
-
-            $plugin->_config['limite'] = $limit;
-        });
-
         $app->hook('template(site.index.home-search):end', function () use ($plugin) {
             $texto = $plugin->config['texto_home'];
             $botao = $plugin->config['botao_home'];

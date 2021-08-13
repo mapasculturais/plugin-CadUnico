@@ -4,6 +4,7 @@ namespace StreamlinedOpportunity\Controllers;
 
 use MapasCulturais\i;
 use MapasCulturais\App;
+use MapasCulturais\Controller;
 use MapasCulturais\Entities\MetaList;
 use MapasCulturais\Entities\Registration;
 use StreamlinedOpportunity\Plugin;
@@ -38,7 +39,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
      * @param string $controller_id 
      * @return StreamlinedOpportunity 
      */
-    static public function i(string $controller_id): StreamlinedOpportunity {
+    static public function i(string $controller_id): Controller {
         $instance = parent::i($controller_id);
         $instance->init($controller_id);
 

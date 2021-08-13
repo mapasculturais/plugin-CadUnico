@@ -85,6 +85,7 @@ class Plugin extends \MapasCulturais\Plugin
             'privacidade_termos_condicoes' => env("$PREFIX}_PRIVACIDADE_TERMOS", null),
             'link_suporte' => env("$PREFIX}_LINK_SUPORTE", null),
             'link_suporte_no_footer' => env("{$PREFIX}_LINK_SUPORTE",null),
+            'msg_disabled' => env("{$PREFIX}_INCISO1_DISABLE_MESSAGE",'Em breve!'),
         ];
 
         parent::__construct($config);

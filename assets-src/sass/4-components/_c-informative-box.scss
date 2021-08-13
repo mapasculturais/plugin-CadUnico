@@ -1,0 +1,424 @@
+// Component schema (HTML schema for block usage)
+// <button class="informative-box">
+//     <element class="informative-box--status"></element>
+//     <element class="informative-box--icon"></element>
+//     <element class="informative-box--title">
+//         <h2> Title here </h2>
+//         <i class="status-icon"></i>
+//     </element>
+//     <element class="informative-box--content">
+//          <span class="more"> </span>
+//          <span class="content">
+//              <div class="item">
+//                  <span class="label"></span>
+//              </div>
+//          </span>
+//     </element>
+// </button>
+
+
+.informative-box {
+    width: calc(100% - 23px);
+    height: auto;
+    background-color: var(--box-default-background);
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,0.3);
+    border-radius: 10px;
+    position: relative;
+    margin-left: 23px;
+    padding: 0px;
+    padding-bottom: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:not(.has-status) {
+        padding-top: 20px;
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    &.active, &.selected, &:not(.disabled):hover {
+        background-color: var(--box-default-icon-color);
+        transition: all 0.2s ease-in-out;
+
+        .informative-box--icon {
+            i {
+                color: var(--box-default-background);
+            }
+
+            &:before, &:after, & {
+                background-color: var(--box-default-icon-color);
+                transition: all 0.2s ease-in-out;
+            }
+        }
+
+        .informative-box--title, .informative-box--content {
+            h2, i, .content, .more {
+                color: var(--box-default-background);
+            }
+        }
+
+        &:not(.has-status) {
+            .informative-box--title {
+                i.fa-minus {
+                    border: none;
+                    width: auto;
+                    height: auto;
+                    display: block;
+                    min-width: auto;
+                    font-size: 44px;
+                    
+                    &:before {
+                        content: "\f058";
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+    }
+
+    &--status {
+        background-color: var(--box-default-status-background); 
+        padding: 9px 32px;
+        text-align: left;
+        color: var(--box-default-status-text);
+        padding: 9px 32px;
+        border-radius: 8px 8px 0 0;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    &--icon {
+        position: absolute;
+        left: -21.5px;
+        width: 50px;
+        height: 50px;
+        background: var(--box-default-background);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img.thumbnail {
+            z-index: 1;
+            border-radius: 50%;
+            border: 0px;
+        }
+
+        i {
+            z-index: 99;
+            font-size: 20px;
+            color: var(--box-default-icon-color);
+        }
+
+        &:before {
+            transition: all 0.2s ease-in-out;
+            content: "";
+            display: block;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            padding: 1px;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
+        }
+
+
+        &:after {
+            transition: all 0.2s ease-in-out;
+            content: "";
+            display: block;
+            width: 39px;
+            height: 67px;
+            position: absolute;
+            background: var(--box-default-background);
+            z-index: 0;
+            right: -11px;
+        }
+    }
+
+    &--title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 13px;
+        margin-left: 40px;
+        margin-right: 18px;
+
+        h2 {
+            color: #111111;
+            font-family: $f_title;
+            font-size: $font-size-base;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 1.1875rem;
+            margin-bottom: 0;
+            text-align: left;
+        }
+
+        i {
+            margin-left: 31px;
+            font-size: 44px;
+            color: $brand-primary;
+        }
+
+        i.fa-minus {
+            border: 4px solid;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            min-width: 36px;
+            font-size: 22px;
+            
+            &:before {
+                content: "\f068";
+                font-weight: 600;
+            }
+        }
+    }
+
+
+    &--content {
+        text-align: left;
+        color: $brand-secondary;
+        font-family: $f_body;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        margin-left: 40px;
+        line-height: 17px;
+
+        .more {
+            cursor: pointer;
+            // remove
+            display: none;
+        }
+
+        .content {
+            // transform: scale(0);
+            display: block;
+            margin-right: 18px;
+            transition: all .2s ease-in-out;
+
+            .item {
+                font-weight: normal;
+                margin-bottom: 8px;
+                
+                .label {
+                    display: block;
+                    font-weight: bold;;
+                }
+            }
+        }
+
+        &.active {
+            .content {
+                transform: scale(1);
+                height: auto;
+                transition: all .2s ease-in-out;
+            }
+
+            .more {
+                display: none;
+            }
+        }
+    }
+
+
+    //STATUS_SENT = self::STATUS_ENABLED;
+    //STATUS_APPROVED = 10;
+    //STATUS_WAITLIST = 8;
+    //STATUS_NOTAPPROVED = 3;
+    //STATUS_INVALID = 2;
+
+    
+
+    &.status-10, &.status-8, &.status-3, &.status-2, &.status-1 {
+        .informative-box--status {
+            background: white;
+        }
+
+        .informative-box--title {
+            h2 {
+                color: white;
+                font-weight: bold;
+            }
+        }
+
+        .informative-box--content {
+            color: white;
+        }
+
+        i {
+            color: white;
+        }
+    }
+
+
+    &.status-0 {
+        // Cadastro inciado
+        .informative-box--title {
+            i.fa-check-circle {
+                border: 4px solid;
+                border-radius: 50%;
+                width: 36px;
+                height: 36px;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                min-width: 36px;
+                font-size: 22px;
+                
+                &:before {
+                    content: "\f141";
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    &.status-1 {
+        // Analise
+        background-color: var(--box-status-1-background);
+
+        .informative-box--title {
+            i.fa-check-circle {
+                border: 4px solid;
+                border-radius: 50%;
+                width: 36px;
+                height: 36px;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                min-width: 36px;
+                font-size: 22px;
+                
+                &:before {
+                    content: "\f085";
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .informative-box--status {
+            color: var(--box-status-1-background);
+        }
+
+        .informative-box--icon {
+            &:before {
+                background-color: var(--box-status-1-background);
+            }
+
+            &:after {
+                background-color: var(--box-status-1-background);   
+            }
+        }
+
+    }
+
+    &.status-10 {
+        background-color: var(--box-status-10-background);
+
+        .informative-box--status {
+            color: var(--box-status-10-background);
+        }
+
+        .informative-box--icon {
+            &:before {
+                background-color: var(--box-status-10-background);
+            }
+
+            &:after {
+                background-color: var(--box-status-10-background);   
+            }
+        }
+    }
+
+    &.status-8 {
+        background-color: var(--box-status-8-background);
+
+        .informative-box--status {
+            color: var(--box-status-8-background);
+        }
+
+        .informative-box--icon {
+            &:before {
+                background-color: var(--box-status-8-background);
+            }
+
+            &:after {
+                background-color: var(--box-status-8-background);   
+            }
+        }
+
+        .informative-box--title {
+            i {
+                border: 4px solid;
+                border-radius: 50%;
+                width: 38px;
+                height: 38px;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                min-width: 38px;
+                font-size: 22px;
+                
+                &:before {
+                    content: "\f068";
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    &.status-3 {
+        background-color: var(--box-status-3-background);
+
+        .informative-box--status {
+            color: var(--box-status-3-background);
+        }
+
+        .informative-box--title {
+            i {
+                &:before {
+                    content: "\f057";
+                }
+            }
+        }
+
+        .informative-box--icon {
+
+            &:before {
+                background-color: var(--box-status-3-background);
+            }
+
+            &:after {
+                background-color:  var(--box-status-3-background);   
+            }
+        }
+    }
+
+    &.status-2 {
+        background-color: var(--box-status-2-background);
+
+        .informative-box--status {
+            color: var(--box-status-2-background);
+        }
+
+        .informative-box--icon {
+            &:before {
+                background-color: var(--box-status-2-background);
+            }
+
+            &:after {
+                background-color: var(--box-status-2-background);   
+            }
+        }
+    }
+}
+

@@ -1,0 +1,45 @@
+// Component schema
+// <element class="btn"></element>
+// <element class="btn secondary"></element>
+// <element class="btn tertiary"></element>
+
+.btn {
+
+    @include border-radius(10px);
+
+    background-color: var(--primary-button-bg-color);
+    border: 0;
+    box-sizing: border-box;
+    color: var(--primary-button-txt-color);
+    cursor: pointer;
+    display: inline-block;
+    font-family: $f_title;
+    font-size: $font-size-base;
+    font-weight: bold;
+    height: auto;
+    line-height: 1.4;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 14px 50px;
+    text-align: center;
+    transition: all .3s;
+    white-space: inherit;
+    width: auto;
+
+    &.secondary, &--secondary {
+        background-color: var(--secondary-button-bg-color);
+        color: var(--secondary-button-txt-color)
+    };
+
+    &.tertiary,  &--tertiary {
+        background-color: $brand-tertiary;
+    };
+
+    &:hover {
+        border: 0;
+        color: $light;
+        text-decoration: none;
+        @include opacity(0.85);
+    }    
+
+}

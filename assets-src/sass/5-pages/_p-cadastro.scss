@@ -1,0 +1,300 @@
+section.cadastro {
+    overflow: hidden;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    header {
+        padding-top: 31px;
+        padding-bottom: 30px;
+
+        div.intro-message {
+            .name {
+                color: $brand-secondary;
+                font-family: $f_title;
+                font-size: $font-size-base;
+                letter-spacing: 0;
+                line-height: 1.1875rem;
+                text-align: center;
+            }
+        }
+
+    }   
+
+    .cadastro-options {
+        h2.featured-title {
+            color: #111111;
+            font-family: $f_title;
+            font-size: $font-size-h3;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 1.9375rem;
+            text-align: center;
+            margin: 0 25px 40px;
+        }
+
+        .opcoes-inciso {
+            display: grid;
+            grid-template-columns: repeat(1, 100%);
+            grid-gap: 30px;
+            max-width: calc(100% - 23px);
+            margin: 0 auto;
+            align-items: flex-start;
+            
+            @include desktop {
+                grid-template-columns: repeat(2, 50%);
+                max-width: 58%;
+                margin: 0 auto;
+            }
+
+            .draf-option {
+                a {
+                    text-decoration: none;
+                }
+                div.btn  {
+                    width: 80%;
+                    margin: 0 auto;
+                    display: block;
+                    padding: 14px 20px;
+
+                    @include desktop {
+                        width: calc(100% - 24px);
+                        margin: 0 auto;
+                        margin-right: 0;
+                        display: block;
+                        padding: 14px 20px;
+                    }
+
+                    @include tablet {
+                        width: 100%;
+                    }
+                }
+                
+            }
+        }
+    }
+
+    .selected {
+        background-color: $brand-primary;
+        transition: all 0.2s ease-in-out;
+        transform: scale(1.1);
+
+        .informative-box--icon {
+            i {
+                color: white;
+            }
+
+            &:before, &:after, & {
+                background-color: $brand-primary;
+                transition: all 0.2s ease-in-out;
+            }
+        }
+
+        .informative-box--title, .informative-box--content {
+            h2, i, .content, .more {
+                color: white;
+            }
+        }
+    }
+
+    .questions{
+        text-align: center;
+
+        p {
+            font-family: $f_title;
+        }
+
+        &--icon{
+            padding: 10px;
+            font-size: 30px;
+        }
+
+        &--title{
+            font-size: 26px;
+            line-height: 31px;
+            font-family: $f_title;
+        }
+
+        &--summary{
+            font-size: 16px;
+            line-height: 19px;
+            text-align: center;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        &--note{
+            font-size: 14px;
+            line-height: 17px;
+            color: $brand-secondary;
+            margin: auto;
+            font-family: $f_title;
+
+            @include desktop {
+                width: 40%;
+            }
+
+            @include tablet {
+                width: 60%;
+            }
+
+            @include mobile {
+                width: 90%;
+            }
+        }
+
+        &--options{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            .select2-choices {
+                min-height: 150px;
+                max-height: 150px;
+                overflow-y: auto;
+            }
+
+            h2{
+                margin-bottom: -35px;
+            }
+
+            label{
+                margin: 20px;
+                text-align: left;
+                line-height: 19px;
+                font-size: 16px;
+                vertical-align: center;
+
+                @include desktop {
+                    width: 30%;
+                }
+
+                @include tablet {
+                    width: 30%;
+                }
+
+                @include mobile {
+                    width: 90%;
+                }
+            }
+            label > input{
+                visibility: hidden;
+            }
+        }
+
+        &--nav{
+            display: flex;
+            justify-content: center;
+            margin: 15px;
+            flex-wrap: wrap;
+
+            @include mobile {
+                flex-wrap: wrap-reverse;
+            }
+
+            .btn{
+                margin:auto;
+                @include mobile {
+                    margin:10px;
+                    width: calc(100% - 20px);
+                }
+            }
+        }
+
+        .select2-container {
+            max-width: 60%;
+
+            @include mobile {
+                max-width: 90%;
+            }
+        }
+
+        &.opportunity-listing {
+            .opportunities {
+                max-width: 60%;
+                margin: 0 auto;
+
+                @include mobile {
+                    max-width: 90%;
+                }
+
+                &--cards {
+                    .card {
+                        margin-bottom: 30px;
+
+                        &--title {
+                            text-align: left;
+                            display: block;
+                        }
+
+                        &--content, &--adicional-info {
+                            text-align: left;
+                            color: #666666;
+                            font-family: $f_body;
+                            font-size: 14px;
+                            letter-spacing: 0;
+                            line-height: 19px;
+                        }
+
+                        &--adicional-info {
+                            .taxonomies {
+                                display: grid;
+                                grid-template-columns: repeat(2, auto);
+                                margin-top: 20px;
+                            }
+                        }
+                    }
+                }
+
+                .pagination {
+                    display: flex;
+                    justify-content: center;
+                    margin: 60px 0;
+    
+                    a:first-child {
+                        font-size: 16px;
+                        letter-spacing: 0;
+                        line-height: 16px;
+                        text-align: center;
+                    }
+    
+                    a {
+                        color: #666666;
+                        font-family: $f_title;
+                        font-size: 16px;
+                        font-weight: bold;
+                        letter-spacing: 0;
+                        line-height: 19px;
+                        text-align: center;
+                        margin: 15px;
+    
+                        &.current-page {
+                            &:after {
+                                content: "";
+                                display: block;
+                                width: calc(100% + 15px);
+                                height: 4px;
+                                margin-left: -7.5px;
+                                margin-top: 5px;    
+                                background-color: #31AAC9;
+                            }
+                        }
+                    }
+    
+                    a:last-child {
+                        font-size: 16px;
+                        letter-spacing: 0;
+                        line-height: 16px;
+                        text-align: center;
+                    }
+                }
+            }
+
+            
+        }
+
+    }
+}
+
+.mediador .opcoes-inciso {
+    grid-template-columns:none !important;
+}

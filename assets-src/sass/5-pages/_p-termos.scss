@@ -1,0 +1,44 @@
+.termos {
+    margin-top: 100px;
+
+    h2 {
+        font-family: $f_title;
+        text-align: center;
+        font-weight: bold;
+        padding-top: 20px;
+        margin: auto;
+
+        @include desktop {
+            width: 40%;
+        }
+    }
+
+    &--summay {
+        font-family: $f_title;
+        text-align: center;
+        margin: auto;
+        padding-left: 8%;
+        padding-right: 8%;
+
+        @include desktop {
+            width: 40%;
+        }
+    }
+
+    &--list {
+        margin: auto;
+
+        @include desktop {
+            width: 40%;
+        }
+    }
+
+    &--text {
+        line-height: 17px;
+    }
+
+    &--nav-terms {
+        display: flex;
+        justify-content: center;
+    }
+}

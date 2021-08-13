@@ -1,0 +1,42 @@
+
+
+/* ----- 1: SETTINGS ------- */
+@import '1-settings/s-variables';
+@import '1-settings/s-typography';
+@import '1-settings/s-globals';
+
+
+/* ----- 2: ATOMS ------- */
+@import '2-atoms/a-mixins';
+@import '2-atoms/a-spacing';
+@import '2-atoms/a-typography';
+
+
+/* ----- 3: LAYOUT ------- */
+@import '3-layout/l-header';
+@import '3-layout/l-footer';
+@import '3-layout/l-form';
+
+/* ----- 4: COMPONENTS ------- */
+@import '4-components/c-example-block';
+@import '4-components/c-button';
+@import '4-components/c-card';
+@import '4-components/c-status-card';
+@import '4-components/c-informative-box';
+@import '4-components/c-modal';
+@import '4-components/c-term';
+@import '4-components/c-built-select';
+
+
+/* ----- 5: PAGES ------- */
+@import '5-pages/p-cadastro';
+@import '5-pages/p-formulario';
+@import '5-pages/p-termos';
+@import '5-pages/p-agentes-espacos';
+@import '5-pages/p-confirmacao';
+@import '5-pages/p-status';
+@import '5-pages/p-mediados-login';
+
+/* ----- 6: VENDORS ------- */
+// @import './../example-vendor/sss.css';
+

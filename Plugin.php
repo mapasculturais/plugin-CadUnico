@@ -99,6 +99,16 @@ class Plugin extends \MapasCulturais\Plugin
         return self::$instances[$slug];
     }
 
+    public function registerAssets()
+    {
+        $app = App::i();
+
+        // enqueue scripts and styles
+        $app->view->enqueueScript('app', 'streamlinedopportunity', 'streamlinedopportunity/app.js');
+        $app->view->enqueueStyle('app', 'app-customization', 'streamlinedopportunity/customization.css');
+        $app->view->enqueueStyle('app', 'app', 'streamlinedopportunity/app.css');
+    }
+
     public function _init()
     {
         $app = App::i();
@@ -110,6 +120,9 @@ class Plugin extends \MapasCulturais\Plugin
         if(!$config['enabled_plugin']){
             return;
         }
+
+        //Faz a inclusão do assets
+        $this->registerAssets();
 
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
         $app->hook('template(site.index.home-search-form):begin', function () use ($config) {  

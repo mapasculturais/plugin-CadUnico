@@ -84,6 +84,7 @@ class Plugin extends \MapasCulturais\Plugin
             'logotipo_central' => env("$PREFIX}_LOGOTIPO_CENTRAL", ''),
             'privacidade_termos_condicoes' => env("$PREFIX}_PRIVACIDADE_TERMOS", null),
             'link_suporte' => env("$PREFIX}_LINK_SUPORTE", null),
+            'link_suporte_no_footer' => env("{$PREFIX}_LINK_SUPORTE",null),
         ];
 
         parent::__construct($config);
@@ -142,6 +143,11 @@ class Plugin extends \MapasCulturais\Plugin
 
         });
 
+        $app->hook('template(<<*>>.main-footer):begin', function() use($plugin) {
+            if ($plugin->config['link_suporte_no_footer'] && $plugin->config['link_suporte']) {
+                $this->part('streamlinedopportunity/support', ['linkSuporte' => $plugin->config['link_suporte']]);
+            }
+        });
   
         // adiciona informações do status das validações ao formulário de avaliação
         $app->hook('template(registration.view.evaluationForm.simple):before', function(Registration $registration, Opportunity $opportunity) use($plugin) {
@@ -176,9 +182,9 @@ class Plugin extends \MapasCulturais\Plugin
         $app->hook('auth.successful', function() use($plugin, $app) {
             $opportunities_id = $plugin->config['opportunity_id'];
 
-            $opportunity = $app->repo('Opportunity')->find($opportunities_id);
+            $opportunity = $app->repo('Opportunity')->find($opportunities_id) ?? null;
             
-            if($opportunity->canUser('@control')) {
+            if($opportunity && $opportunity->canUser('@control')) {
                 $_SESSION['mapasculturais.auth.redirect_path'] = $app->createUrl('panel', 'index');
             }
         });

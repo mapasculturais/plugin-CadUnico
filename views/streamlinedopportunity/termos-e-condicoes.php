@@ -166,7 +166,7 @@
 
         if(checkboxes.length === checkboxesChecked.length){
             //redirect to next page
-            document.location = MapasCulturais.createUrl($slug, 'aceitar_termos', [MapasCulturais.registrationId])
+            document.location = MapasCulturais.createUrl('<?=$slug?>', 'aceitar_termos', [MapasCulturais.registrationId])
         }else{
             modal.style.display = "flex";
         }

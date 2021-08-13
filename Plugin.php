@@ -86,6 +86,8 @@ class Plugin extends \MapasCulturais\Plugin
             'link_suporte' => env("$PREFIX}_LINK_SUPORTE", null),
             'link_suporte_no_footer' => env("{$PREFIX}_LINK_SUPORTE",null),
             'msg_disabled' => env("{$PREFIX}_INCISO1_DISABLE_MESSAGE",'Em breve!'),
+            'exibir_resultado_padrao' => (array) json_decode(env("{$PREFIX}_EXIBIR_RESULTADO_PADRAO", '["1", "2", "3", "8", "10"]')),
+            'msg_recurso' => env("{$PREFIX}_MENSAGEM_RECURSO", ''),
         ];
 
         parent::__construct($config);
@@ -329,6 +331,16 @@ class Plugin extends \MapasCulturais\Plugin
             'label' => i::__('Status do último e-mail enviado'),
             'type' => 'integer',
             'private' => true
+        ]);
+
+        /**
+         * Registra campo adicional "Mensagem de Recurso" nas oportunidades
+         * @return void
+         */
+        $slug = "{$this->getSlug()}_status_recurso";
+        $this->registerMetadata('MapasCulturais\Entities\Opportunity', $slug, [
+            'label' => i::__('Mensagem para Recurso na tela de Status'),
+            'type' => 'text'
         ]);
     }
 

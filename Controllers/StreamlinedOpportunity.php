@@ -360,27 +360,27 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $summaryStatusMessages = [
             //STATUS_SENT = 1 - Em análise
             '1' => [
-                'title'   => $this->config[''],
+                'title'   => $this->config['title_status_sent'],
                 'message'  => $this->config['msg_status_sent']
             ],
             //STATUS_INVALID = 2 - Inválida
             '2' => [
-                'title'    => $this->config[''],
+                'title'    => $this->config['title_status_invalid'],
                 'message'  => $this->config['msg_status_invalid']
             ],
             //STATUS_NOTAPPROVED = 3 - Reprovado
             '3' => [
-                'title'    => $this->config[''],
+                'title'    => $this->config['title_status_notapproved'],
                 'message'  => $this->config['msg_status_notapproved']
             ],
             //STATUS_APPROVED = 10 - Aprovado
             '10' => [
-                'title'   => $this->config[''],
+                'title'   => $this->config['title_status_approved'],
                 'message' => $this->config['msg_status_approved']
             ],
             //STATUS_WAITLIST = 8 - Recursos Exauridos
             '8' => [
-                'title'   => $this->config[''],
+                'title'   => $this->config['title_status_waitlist'],
                 'message' => $this->config['msg_status_waitlist']
             ]
         ];

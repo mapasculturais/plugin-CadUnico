@@ -1,7 +1,7 @@
 <?php
 $app = \MapasCulturais\App::i();
 $config = $app->plugins['StreamlinedOpportunity']->config;
-$slug = $this->controller->plugin->$config['slug'];
+$slug = $this->controller->plugin->slug;
 
 use MapasCulturais\i;
 use MapasCulturais\Entities\Registration;

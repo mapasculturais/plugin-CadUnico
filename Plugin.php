@@ -121,8 +121,6 @@ class Plugin extends \MapasCulturais\Plugin
             return;
         }
 
-        //Faz a inclusão do assets
-        $this->registerAssets();
 
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
         $app->hook('template(site.index.home-search-form):begin', function () use ($config) {  
@@ -208,6 +206,7 @@ class Plugin extends \MapasCulturais\Plugin
             $redirect_url = $_SESSION['mapasculturais.auth.redirect_path'] ?? '';
            
             if (strpos($redirect_url, "/{$plugin->getSlug()}") === 0) {
+                $this->registerAssets();
                 $req = $app->request;
 
                 $this->layout = $plugin->config['layout'];

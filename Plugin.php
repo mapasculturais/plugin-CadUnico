@@ -42,7 +42,7 @@ class Plugin extends \MapasCulturais\Plugin
 
             /* TEXTOS E DEMAIS COMPONENTES DE INTERFACE */ 
 
-            'layout' => "steamlined-opportunity",
+            'layout' => "streamlined-opportunity",
 
             'texto_home'=> env("{$PREFIX}_TEXTO_HOME",''),
             'botao_home'=> env("{$PREFIX}_BOTAO_HOME",''),
@@ -208,7 +208,7 @@ class Plugin extends \MapasCulturais\Plugin
             $redirect_url = $_SESSION['mapasculturais.auth.redirect_path'] ?? '';
            
             if (strpos($redirect_url, "/{$plugin->getSlug()}") === 0) {
-                $this->registerAssets();
+                $plugin->registerAssets();
                 $req = $app->request;
 
                 $this->layout = $plugin->config['layout'];

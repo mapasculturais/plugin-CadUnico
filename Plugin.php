@@ -310,6 +310,19 @@ class Plugin extends \MapasCulturais\Plugin
             'type' => 'string',
             'private' => true,
         ]);
+
+        $this->registerMetadata('MapasCulturais\Entities\Registration', 'lab_sent_emails', [
+            'label' => i::__('E-mails enviados'),
+            'type' => 'json',
+            'private' => true,
+            'default' => '[]'
+        ]);
+
+        $this->registerMetadata('MapasCulturais\Entities\Registration', 'lab_last_email_status', [
+            'label' => i::__('Status do último e-mail enviado'),
+            'type' => 'integer',
+            'private' => true
+        ]);
     }
 
     function json($data, $status = 200)

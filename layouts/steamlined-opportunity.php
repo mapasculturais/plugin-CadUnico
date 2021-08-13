@@ -1,5 +1,4 @@
 <?php 
-exit;
 $app = MapasCulturais\App::i();
 
 $plugin = $app->plugins['StreamlinedOpportunity'];

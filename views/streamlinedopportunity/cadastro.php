@@ -1,12 +1,11 @@
 <?php
+
 use MapasCulturais\i;
 use MapasCulturais\Entities\Registration;
 
 $app = \MapasCulturais\App::i();
 $config = $app->plugins['StreamlinedOpportunity']->config;
 $slug = $this->controller->plugin->slug;
-
-
 
 
 $this->jsObject['opportunityId'] = $config['opportunity_id'];
@@ -30,9 +29,10 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
         <div class="lab-form-filter opcoes-inciso">
             <?php
             $title = i::__('Trabalhadoras e trabalhadores da Cultura', 'streamlined-opportunity');
+            $agent_id = $app->getUser()->profile->id;
             if (count($registrations) < $limite) {
             ?>
-                <button onclick="location.href='<?= $this->controller->createUrl('individual') ?>'" clickable id="option3" class="informative-box lab-option">
+                <button onclick="location.href='<?= $this->controller->createUrl('novaInscricao', ['agent' => $agent_id]) ?>'" clickable id="option3" class="informative-box lab-option">
                     <div class="informative-box--icon">
                         <i class="fas fa-user"></i>
                     </div>

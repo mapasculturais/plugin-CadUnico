@@ -127,7 +127,7 @@ $this->jsObject['registrationId'] = $registration_id;
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2 class="modal-content--title title-modal">Atenção!</h2>
+            <h2 class="modal-content--title title-modal"><?= i::__('Atenção!', 'streamlined-opportunity') ?></h2>
             <p>
                 <?= i::__('Você precisa aceitar todos os termos para continuar com a inscrição no auxílio emergencial da cultura.', 'streamlined-opportunity') ?>
             </p>

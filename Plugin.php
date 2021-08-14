@@ -88,6 +88,8 @@ class Plugin extends \MapasCulturais\Plugin
             'msg_disabled' => env("{$PREFIX}_INCISO1_DISABLE_MESSAGE",'Em breve!'),
             'exibir_resultado_padrao' => (array) json_decode(env("{$PREFIX}_EXIBIR_RESULTADO_PADRAO", '["1", "2", "3", "8", "10"]')),
             'msg_recurso' => env("{$PREFIX}_MENSAGEM_RECURSO", ''),
+            'oportunidades_desabilitar_envio' => (array) json_decode(env("{$PREFIX}_OPORTUNIDADES_DESABILITAR_ENVIO", '[]')),
+            'mensagens_envio_desabilitado' => (array) json_decode(env("{$PREFIX}_MENSAGENS_ENVIO_DESABILITADO", '[]')),
         ];
 
         parent::__construct($config);

@@ -28,8 +28,11 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
 
         <div class="lab-form-filter opcoes-inciso">
             <?php
+            
             $title = i::__('Trabalhadoras e trabalhadores da Cultura', 'streamlined-opportunity');
-            $agent_id = $app->getUser()->profile->id;
+            
+            $agent_id = $app->user->profile->id;
+            
             if (count($registrations) < $limite) {
             ?>
                 <button onclick="location.href='<?= $this->controller->createUrl('novaInscricao', ['agent' => $agent_id]) ?>'" clickable id="option3" class="informative-box lab-option">

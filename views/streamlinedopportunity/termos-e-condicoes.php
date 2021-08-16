@@ -9,11 +9,10 @@ $this->jsObject['registrationId'] = $registration_id;
 
 ?>
 <section class="termos">
-    <p class="termos--summay"><?= i::__('De acordo com os critérios da LEI Nº 14.017 com sanção presidencial em 29 DE JUNHO DE 2020. Para ter acesso ao Auxílio Emergencial Cultural, você deve cumprir os seguintes requisitos:', 'streamlined-opportunity') ?> </p>
+    <p class="termos--summay"><?= i::__('Para ser beneficiário do Programa “MS Cultura Cidadã”, o trabalhador da cultura deverá preencher, cumulativamente, os requisitos de elegibilidade a serem documentalmente comprovados no ato da inscrição, conforme previsto no Art. 2º da Lei Estadual nº 5.688, de 7 de julho de 2021 e Art. 9º do Decreto Estadual nº 15.728, de 14 de julho de 2021, e, conjuntamente, não poderá apresentar quaisquer das condições impeditivas previstas no Art. 3º da Lei Estadual.', 'streamlined-opportunity') ?> </p>
 
     <h2>
         <?= i::__('Termos e Condições', 'streamlined-opportunity') ?><br />
-        <?= i::__('Trabalhadoras e trabalhadores', 'streamlined-opportunity') ?><br />
 
     </h2>
 
@@ -23,7 +22,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO ATUAÇÃO NO SETOR CULTURAL E FONTE DE RENDA, CONFORME LEI FEDERAL Nº 14.017, DE 29 DE JUNHO DE 2020, QUE DISPÕE SOBRE AÇÕES EMERGENCIAIS DESTINADAS AO SETOR CULTURAL A SEREM ADOTADAS DURANTE O ESTADO DE CALAMIDADE PÚBLICA.', 'streamlined-opportunity') ?>
+                    <?= i::__('DECLARO SER RESIDENTE NO ESTADO DE MATO GROSSO DO SUL, CONFORME INCISO I DO ART. 2º DA LEI ESTADUAL Nº 5.688/2021, E ARTIGO 9º, INCISO II DO DECRETO ESTADUAL Nº 15.728/2021. ', 'streamlined-opportunity') ?>
                 </span>
             </label>
         </div>
@@ -32,7 +31,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO QUE ATUEI SOCIAL OU PROFISSIONALMENTE NAS ÁREAS ARTÍSTICA E CULTURAL NOS 24 (VINTE E QUATRO) MESES IMEDIATAMENTE ANTERIORES À 29 DE JUNHO DE 2020, CONFORME INCISO I DO ART. 6º DA LEI FEDERAL Nº 14.017/2020, E ARTIGO 4º, INCISO I DO DECRETO FEDERAL Nº 10.464/2020.', 'streamlined-opportunity') ?>
+                    <?= i::__('DECLARO TER PARTICIPADO DA CADEIA PRODUTIVA DOS SEGMENTOS ARTÍSTICOS E CULTURAIS DO ESTADO DE MATO GROSSO DO SUL NOS 24 (VINTE E QUATRO) MESES IMEDIATAMENTE ANTERIORES À 19 DE MARÇO DE 2020, DATA DA EDIÇÃO DO DECRETO ESTDUAL Nº 15.396, CONFORME INCISO II DO ART. 2º DA LEI ESTADUAL Nº 5.688/2021, E ARTIGO 9º, INCISO III DO DECRETO ESTADUAL Nº 15.728/2021.', 'streamlined-opportunity') ?>
                 </span>
             </label>
         </div>
@@ -41,7 +40,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO QUE NÃO POSSUO EMPREGO FORMAL ATIVO COM CONTRATO DE TRABALHO FORMALIZADO NOS TERMOS DA CONSOLIDAÇÃO DAS LEIS DO TRABALHO, CONFORME O INCISO II DO ART. 6º DA LEI FEDERAL Nº 14.017/2020, E O ART. 4º, INCISO II DO DECRETO FEDERAL Nº 10.464/2020.', 'streamlined-opportunity') ?> </span>
+                    <?= i::__('DECLARO QUE ESTOU CIENTE DE QUE, SERÁ CONCEDIDO APENAS 1 (UM) APOIO FINANCEIRO EMERGENCIAL POR FAMÍLIA, CONFORME ART. 1º, § 3º DA LEI Nº 5.688/2021 E ART. 9º, INCISO IV DO DECRETO Nº 15.728/2021:', 'streamlined-opportunity') ?> </span>
             </label>
         </div>
         <div class="term">
@@ -49,7 +48,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO QUE NÃO SOU TITULAR DE BENEFÍCIO PREVIDENCIÁRIO OU ASSISTENCIAL DO GOVERNO FEDERAL, EXCETO DO PROGRAMA BOLSA FAMÍLIA, CONFORME INCISO III DO ART. 6º DA LEI FEDERAL Nº 14.017/2020, E ART. 4º, INCISO III DO DECRETO FEDERAL Nº 10.464/2020.', 'streamlined-opportunity') ?>
+                    <?= i::__('DDECLARO QUE ESTOU CIENTE DE QUE, A PARTICIPAÇÃO NO PROGRAMA “MS CULTURA CIDADÃ” É CONDICIONADA À RENÚNCIA AO DIREITO DE FUTURA AÇÃO RELATIVA A EVENTUAIS INDENIZAÇÕES DECORRENTES DE MEDIDAS RESTRITIVAS IMPOSTAS EM RAZÃO DA EMERGÊNCIA EM SAÚDE PÚBLICA CAUSADA PELA PANDEMIA DO NOVO CORONAVÍRUS (COVID-19), BEM COMO À DESISTÊNCIA DE AÇÕES COM O MESMO TEOR JÁ PROPOSTAS EM FACE DO ESTADO, COM A CORRESPONDENTE RENÚNCIA AO DIREITO VEICULADO NA DEMANDA, CONFORME PARAGRAFO ÚNICO DO ART. 2º DA LEI ESTADUAL Nº 5.688/2021, E ARTIGO 9º, INCISO V DO DECRETO ESTADUAL Nº 15.728/2021.', 'streamlined-opportunity') ?>
                 </span>
             </label>
         </div>
@@ -58,7 +57,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO QUE NÃO ESTOU RECEBENDO BENEFÍCIO DO SEGURO DESEMPREGO OU PROGRAMA DE TRANSFERÊNCIA DE RENDA FEDERAL, EXCETO DO PROGRAMA BOLSA FAMÍLIA, CONFORME INCISO III DO ART. 6º DA LEI Nº 14.017/2020, E ART. 4º, INCISO III DO DECRETO FEDERAL Nº 10.464/2020.', 'streamlined-opportunity') ?> </span>
+                    <?= i::__('PROGRAMAS FEDERAIS OU RESTRIÇÃO DE ACESSO, CASO JÁ BENEFICIADO, CONFORME ART. 9º, §2º DO DECRETO ESTADUAL Nº 15.728/2021.', 'streamlined-opportunity') ?> </span>
             </label>
         </div>
         <div class="term">
@@ -66,7 +65,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO RENDA FAMILIAR PER CAPITA DE ATÉ MEIO SALÁRIO MÍNIMO OU RENDA FAMILIAR TOTAL DE ATÉ TRÊS SALÁRIOS MÍNIMOS, CONFORME INCISO IV DO ART. 6º DA LEI FEDERAL Nº 14.017/2020, E ART. 4º, INCISO IV DO DECRETO FEDERAL Nº 10.464/2020.', 'streamlined-opportunity') ?> </span>
+                    <?= i::__('DECLARO QUE NÃO POSSUO EMPREGO FORMAL ATIVO NA INICIATIVA PRIVADA, COM CONTRATO DE TRABALHO FORMALIZADO NOS TERMOS DA CONSOLIDAÇÃO DAS LEIS DO TRABALHO, CONFORME O INCISO I DO ART. 3º DA LEI ESTADUAL Nº 5.688/2021, E O § 3º DO ART. 10 DO DECRETO ESTADUAL Nº 15.728/2021.', 'streamlined-opportunity') ?> </span>
             </label>
         </div>
         <div class="term">
@@ -74,7 +73,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO QUE NÃO RECEBI, NO ANO DE 2018, RENDIMENTOS TRIBUTÁVEIS ACIMA DE R$ 28.559,70 (VINTE E OITO MIL, QUINHENTOS E CINQUENTA E NOVE REAIS E SETENTA CENTAVOS), CONFORME INCISO V DO ART. 6º DA LEI FEDERAL Nº 14.017/2020, E ART. 4º, INCISO V DO DECRETO FEDERAL Nº 10.464/2020.', 'streamlined-opportunity') ?> </span>
+                    <?= i::__('DECLARO QUE NÃO SOU DETENTOR DE CARGO, EMPREGO OU FUNÇÃO PÚBLICOS, CONFORME INCISO II DO ART. 3º DA LEI ESTADUAL Nº 5.688/2021.', 'streamlined-opportunity') ?> </span>
             </label>
         </div>
         <div class="term">
@@ -82,7 +81,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO NÃO SER BENEFICIÁRIO (A) DO AUXÍLIO EMERGENCIAL PREVISTO NA LEI Nº 13.982, DE 2 DE ABRIL DE 2020, EM CONFORMIDADE COM O INCISO VII DO ART. 6º DA LEI Nº 14.017/2020, E ARTIGO 4º, INCISO VII DO DECRETO FEDERAL Nº 10.464/2020.', 'streamlined-opportunity') ?> </span>
+                    <?= i::__('DECLARO QUE NÃO SOU TITULAR DE BENEFÍCIO PREVIDENCIÁRIO, CONFORME INCISO III DO ART. 3º  DA LEI ESTADUAL Nº 5.688/2021.', 'streamlined-opportunity') ?> </span>
             </label>
         </div>
         <div class="term">
@@ -90,7 +89,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO QUE NÃO SOU AGENTE PÚBLICO, INDEPENDENTEMENTE DA RELAÇÃO JURÍDICA, INCLUSIVE OCUPANTE DE CARGO OU FUNÇÃO TEMPORÁRIO OU DE CARGO EM COMISSÃO DE LIVRE NOMEAÇÃO E EXONERAÇÃO OU, AINDA, TITULAR DE MANDATO ELETIVO, CONFORME ART. 4º, §2º DO DECRETO Nº FEDERAL Nº 10.464/2020.', 'streamlined-opportunity') ?> </span>
+                    <?= i::__('DECLARO QUE NÃO ESTOU RECEBENDO BENEFÍCIO DO SEGURO DESEMPREGO, CONFORME INCISO IV DO ART. 3º  DA LEI ESTADUAL Nº 5.688/2021.', 'streamlined-opportunity') ?> </span>
             </label>
         </div>
         <div class="term">
@@ -98,7 +97,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO QUE ESTOU CIENTE DE QUE, EM CASO DE UTILIZAÇÃO DE QUALQUER MEIO ILÍCITO, IMORAL OU DECLARAÇÃO FALSA PARA A PARTICIPAÇÃO DESTE CREDENCIAMENTO, INCORRO NA PENALIDADE PREVISTA NO ARTIGO 299 DO DECRETO LEI Nº 2.848, DE 07 DE DEZEMBRO DE 1940 (CÓDIGO PENAL).', 'streamlined-opportunity') ?></span>
+                    <?= i::__('DECLARO QUE ESTOU CIENTE DE QUE, EM CASO DE UTILIZAÇÃO DE QUALQUER MEIO ILÍCITO, IMORAL OU DECLARAÇÃO FALSA PARA A PARTICIPAÇÃO DESTE CREDENCIAMENTO, INCORRO NA PENALIDADE PREVISTA NO ARTIGO 299 DO DECRETO LEI Nº 2.848, DE 07 DE DEZEMBRO DE 1940 (CÓDIGO PENAL), ALÉM DE ENSEJAR A ADOÇÃO DAS MEDIDAS CABÍVEIS, NAS ESFERAS ADMINISTRATIVA E JUDICIAL.', 'streamlined-opportunity') ?></span>
             </label>
         </div>
         <div class="term">
@@ -106,15 +105,7 @@ $this->jsObject['registrationId'] = $registration_id;
             <label class="term--label">
                 <input type="checkbox" class="term--input" />
                 <span class="termos--text">
-                    <?= i::__('DECLARO QUE ESTOU CIENTE DA CONCESSÃO DAS INFORMAÇÕES POR MIM DECLARADAS NESTE FORMULÁRIO PARA VALIDAÇÃO EM OUTRAS BASES DE DADOS OFICIAIS.', 'streamlined-opportunity') ?></span>
-            </label>
-        </div>
-        <div class="term">
-            <span class="term--box"></span>
-            <label class="term--label">
-                <input type="checkbox" class="term--input" />
-                <span class="termos--text">
-                    <?= i::__('CONCORDO COM A INCLUSÃO DAS INFORMAÇÕES POR MIM DECLARADAS NESTE FORMULÁRIO NA BASE DE DADOS DA PLATAFORMA MAPA CULTURAL DE MATO GROSSO DO SUL.', 'streamlined-opportunity') ?></span>
+                    <?= i::__('DECLARO QUE ESTOU CIENTE DA CONCESSÃO DAS INFORMAÇÕES POR MIM DECLARADAS NESTE FORMULÁRIO PARA PESQUISA E VALIDAÇÃO EM OUTRAS BASES DE DADOS OFICIAIS.', 'streamlined-opportunity') ?></span>
             </label>
         </div>
     </div>

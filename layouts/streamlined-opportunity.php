@@ -1,7 +1,7 @@
 <?php 
 $app = MapasCulturais\App::i();
 
-$plugin = $app->plugins['StreamlinedOpportunity'];
+$plugin = $this->controller->plugin;
 $plugin->registerAssets();
 ?>
 <?php $this->part("streamlinedopportunity/header"); ?>

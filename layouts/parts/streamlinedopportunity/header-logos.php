@@ -4,7 +4,8 @@
  * Exibe o logo no cabeçalho
  */
 $app = \MapasCulturais\App::i();
-$config = $app->plugins['StreamlinedOpportunity']->config;
+$plugin = $this->controller->plugin;
+$config = $plugin->config;
 $controller = $app->controller($config['slug']);
 
 $logotipo_instituicao = isset($config['logotipo_instituicao']) ? $config['logotipo_instituicao'] : $this->asset('streamlinedopportunity/img/picture.png', false);

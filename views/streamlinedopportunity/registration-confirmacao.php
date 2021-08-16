@@ -3,7 +3,8 @@
 use MapasCulturais\i;
 
 $app = \MapasCulturais\App::i();
-$config = $app->plugins['StreamlinedOpportunity']->config;
+$plugin = $this->controller->plugin;
+$config = $plugin->config;
 $slug = $this->controller->plugin->slug;
 
 $PreventSend      = $config['oportunidades_desabilitar_envio'];

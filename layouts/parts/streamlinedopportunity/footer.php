@@ -3,7 +3,8 @@
 use MapasCulturais\i;
 
 $app = \MapasCulturais\App::i();
-$config = $app->plugins['StreamlinedOpportunity']->config;
+$plugin = $this->controller->plugin;
+$config = $plugin->config;
 $controller = $app->controller($config['slug']);
 $linkSuporte      = isset($config['link_suporte']) ? $config['link_suporte'] : '';
 $termosECondicoes = isset($config['privacidade_termos_condicoes']) ? $config['privacidade_termos_condicoes'] : $app->createUrl('auth', '', array('termos-e-condicoes'));

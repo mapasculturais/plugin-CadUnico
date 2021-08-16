@@ -71,6 +71,10 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
 
     }
 
+    function getTemplatePrefix() {
+        return 'streamlinedopportunity';
+    }
+
     function getConfig() {
         return $this->plugin->config;
     }

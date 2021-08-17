@@ -1,5 +1,6 @@
 <?php
-$site_name = $this->dict('site: name', false);
+$plugin = $plugin ?? $this->controller->plugin;
+$site_name = $this->dict("site: name", false);
 if ($title = $this->getTitle()) {
     $title = "{$site_name} - {$title}";
 } else {
@@ -29,16 +30,14 @@ if ($title = $this->getTitle()) {
     <!--[if lt IE 9]>
         <script src="<?php $this->asset('js/html5.js'); ?>" type="text/javascript"></script>
     <![endif]-->
-    
-
 </head>
 
 <body <?php $this->bodyProperties() ?>>
     <?php $this->bodyBegin(); ?>
     <header id="main-header" class="clearfix" ng-class="{'sombra':data.global.viewMode !== 'list'}">
-        <?php $this->part('streamlinedopportunity/header-logos') ?>
+        <?php $this->part("streamlinedopportunity/header-logos", ["plugin" => $plugin]) ?>
         <?php if($app->auth->isUserAuthenticated()): ?>
-            <?php $this->part('streamlinedopportunity/header-logout') ?>
+            <?php $this->part("streamlinedopportunity/header-logout") ?>
         <?php endif; ?>
     </header>
     <section id="main-section" class="clearfix">

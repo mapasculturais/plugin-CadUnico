@@ -1,9 +1,7 @@
-<?php 
-$app = MapasCulturais\App::i();
-
-$plugin = $this->controller->plugin;
+<?php
+$plugin = $plugin ?? $this->controller->plugin;
 $plugin->registerAssets();
+$this->part("streamlinedopportunity/header", ["plugin" => $plugin]);
+echo $TEMPLATE_CONTENT;
+$this->part("streamlinedopportunity/footer", ["plugin" => $plugin]);
 ?>
-<?php $this->part("streamlinedopportunity/header"); ?>
-<?php echo $TEMPLATE_CONTENT; ?>
-<?php $this->part("streamlinedopportunity/footer"); ?>

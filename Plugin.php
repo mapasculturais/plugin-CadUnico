@@ -121,15 +121,12 @@ class Plugin extends \MapasCulturais\Plugin
         $plugin = $this;
         $config = $plugin->_config;
 
-
         if (!$config['enabled_plugin']) {
             return;
         }
 
-
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
         $app->hook('template(site.index.home-search-form):begin', function () use ($config) {
-
             /** @var \MapasCulturais\Theme $this */
             $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');
 
@@ -160,6 +157,7 @@ class Plugin extends \MapasCulturais\Plugin
         });
 
         $app->hook('template(<<*>>.main-footer):begin', function () use ($plugin) {
+            /** @var \MapasCulturais\Theme $this */
             if ($plugin->config['link_suporte_no_footer'] && $plugin->config['link_suporte']) {
                 $this->part('streamlinedopportunity/support', ['linkSuporte' => $plugin->config['link_suporte']]);
             }
@@ -175,7 +173,7 @@ class Plugin extends \MapasCulturais\Plugin
             }
         });
 
-        // reordena avaliações antes da reconsolidação, colocando as que tem id = registration_id no começo, 
+        // reordena avaliações antes da reconsolidação, colocando as que tem id = registration_id no começo,
         // pois indica que foram importadas
         $app->hook('controller(opportunity).reconsolidateResult', function (Opportunity $opportunity, &$evaluations) {
 
@@ -192,8 +190,7 @@ class Plugin extends \MapasCulturais\Plugin
             });
         });
 
-
-        //Seta uma sessão com redirect_path do painel 
+        //Seta uma sessão com redirect_path do painel
         $app->hook('auth.successful', function () use ($plugin, $app) {
             $opportunities_id = $plugin->config['opportunity_id'];
 
@@ -205,14 +202,12 @@ class Plugin extends \MapasCulturais\Plugin
         });
 
         // Modifica o template do autenticador quando o redirect url for para um slug configurado
-        $app->hook('controller(auth).render(<<*>>)', function () use ($app, $plugin) {
-            $redirect_url = $_SESSION['mapasculturais.auth.redirect_path'] ?? '';
-
+        $app->hook("controller(auth).render(<<*>>)", function (&$template, &$data) use ($app, $plugin) {
+            /** @var \MapasCulturais\Controllers\Auth $this */
+            $redirect_url = $_SESSION["mapasculturais.auth.redirect_path"] ?? "";
             if (strpos($redirect_url, "/{$plugin->getSlug()}") === 0) {
-                $plugin->registerAssets();
-                $req = $app->request;
-
-                $this->layout = $plugin->config['layout'];
+                $data["plugin"] = $plugin;
+                $this->layout = $plugin->config["layout"];
             }
         });
 
@@ -224,11 +219,11 @@ class Plugin extends \MapasCulturais\Plugin
         });
 
         /**
-         * Na criação da inscrição, define os metadados inciso2_opportunity_id ou 
+         * Na criação da inscrição, define os metadados inciso2_opportunity_id ou
          * inciso1_opportunity_id do agente responsável pela inscrição
          */
         $app->hook('entity(Registration).save:after', function () use ($plugin) {
-
+            /** @var \MapasCulturais\Entities\Registration $this */
             if ($this->opportunity->id == $plugin->config['opportunity_id']) {
                 $slug = "{$plugin->getSlug()}_registration";
                 $agent = $this->owner;
@@ -238,6 +233,7 @@ class Plugin extends \MapasCulturais\Plugin
         });
 
         $app->hook('template(site.index.home-search):end', function () use ($plugin) {
+            /** @var \MapasCulturais\Theme $this */
             $texto = $plugin->config['texto_home'];
             $botao = $plugin->config['botao_home'];
             $titulo = $plugin->config['titulo_home'];
@@ -271,6 +267,7 @@ class Plugin extends \MapasCulturais\Plugin
 
         // Redireciona o usuário que acessa a inscrição pelo mapas culturais para o plugin
         $app->hook('GET(registration.view):before', function () use ($plugin, $app) {
+            /** @var \MapasCulturais\Controllers\Registration $this */
             $opportunities_id = $plugin->config['opportunity_id'];
             $registration = $this->requestedEntity;
             $requestedOpportunity = $registration->opportunity;
@@ -353,7 +350,7 @@ class Plugin extends \MapasCulturais\Plugin
 
     /**
      * Retorna o slug configurado para o plugin
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {

@@ -90,6 +90,13 @@ class Plugin extends \MapasCulturais\Plugin
             'msg_recurso' => env("{$PREFIX}_MENSAGEM_RECURSO", ''),
             'oportunidades_desabilitar_envio' => (array) json_decode(env("{$PREFIX}_OPORTUNIDADES_DESABILITAR_ENVIO", '[]')),
             'mensagens_envio_desabilitado' => (array) json_decode(env("{$PREFIX}_MENSAGENS_ENVIO_DESABILITADO", '[]')),
+            // placeholder configuration for "terms" texts
+            "terms" => [
+                "intro" => "terms-intro",
+                "title" => "terms-title",
+                "items" => ["terms-item0", "terms-item1"],
+                "help" => "terms-help"
+            ],
         ];
 
         parent::__construct($config);

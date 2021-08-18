@@ -208,13 +208,14 @@ class Plugin extends \MapasCulturais\Plugin
             }
         });
 
-        // Modifica o template do autenticador quando o redirect url for para um slug configurado
-        $app->hook("controller(auth).render(<<*>>)", function (&$template, &$data) use ($app, $plugin) {
-            /** @var \MapasCulturais\Controllers\Auth $this */
-            $redirect_url = $_SESSION["mapasculturais.auth.redirect_path"] ?? "";
+         // Modifica o template do autenticador quando o redirect url for para um slug configurado
+         $app->hook('controller(auth).render(<<*>>)', function (&$template, &$data) use ($app, $plugin) {
+            $redirect_url = $_SESSION['mapasculturais.auth.redirect_path'] ?? '';
+
             if (strpos($redirect_url, "/{$plugin->getSlug()}") === 0) {
-                $data["plugin"] = $plugin;
-                $this->layout = $plugin->config["layout"];
+                $req = $app->request;
+                $data['plugin'] = $plugin;
+                $this->layout = $plugin->config['layout'];
             }
         });
 
@@ -295,18 +296,20 @@ class Plugin extends \MapasCulturais\Plugin
     public function register()
     {
         $app = App::i();
-        $slug = $this->getSlug();
-        $app->registerController($this->getSlug(), Controllers\StreamlinedOpportunity::class);
-        // Registro de metadados
-        $this->registerRegistrationMetadata("{$slug}_has_accepted_terms", [
-            "label" => i::__("Aceite dos termos e condições", "streamlined-opportunity"),
-            "type" => "boolean",
-            "private" => true,
+
+        $app->registerController($this->getSlug(), 'StreamlinedOpportunity\Controllers\StreamlinedOpportunity');
+
+        //Registro de metadados
+        $this->registerMetadata(Registration::class, $this->prefix("termos_aceitos"), [
+            'label' => i::__('Aceite dos termos e condições'),
+            'type' => 'boolean',
+            'private' => true,
         ]);
-        $this->registerOpportunityMetadata("{$slug}_fields", [
-            "label" => i::__("Lista de IDs dos campos $slug", "streamlined-opportunity"),
-            "type" => "array",
-            "serialize" => function ($val) {
+
+        $this->registerMetadata(Opportunity::class, $this->prefix("Fields"), [
+            'label' => i::__("Lista de ID dos campos " . $this->getSlug()),
+            'type' => 'array',
+            'serialize' => function ($val) {
                 return json_encode($val);
             },
             "unserialize" => function ($val) {
@@ -314,37 +317,33 @@ class Plugin extends \MapasCulturais\Plugin
             },
             "private" => true,
         ]);
+
+        $this->registerAgentMetadata($this->prefix("registration"), [
+            'label' => i::__('Id da inscrição no Insiso I'),
+            'type' => 'string',
+            'private' => true,
+        ]);
+
+        $this->registerMetadata('MapasCulturais\Entities\Registration', $this->prefix("sent_emails"), [
+            'label' => i::__('E-mails enviados'),
+            'type' => 'json',
+            'private' => true,
+            'default' => '[]'
+        ]);
+
+        $this->registerMetadata('MapasCulturais\Entities\Registration', $this->prefix("last_email_status"), [
+            'label' => i::__('Status do último e-mail enviado'),
+            'type' => 'integer',
+            'private' => true
+        ]);
+
         /**
-         * Id da inscrição na oportunidade gerenciada
-         * @var string
+         * Registra campo adicional "Mensagem de Recurso" nas oportunidades
+         * @return void
          */
-        $this->registerAgentMetadata("{$slug}_registration", [
-            "label" => i::__("ID da inscrição na oportunidade gerenciada", "streamlined-opportunity"),
-            "type" => "string",
-            "private" => true,
-            // @todo: validação que impede a alteração do valor desse metadado
-        ]);
-        $this->registerRegistrationMetadata("{$slug}_sent_emails", [
-            "label" => i::__("E-mails enviados", "streamlined-opportunity"),
-            "type" => "json",
-            "private" => true,
-            "default" => "[]"
-        ]);
-        $this->registerRegistrationMetadata("{$slug}_last_email_status", [
-            "label" => i::__("Status do último e-mail enviado", "streamlined-opportunity"),
-            "type" => "integer",
-            "private" => true
-        ]);
-        $this->registerRegistrationMetadata("{$slug}_appeal_deadline", [
-            "label" => i::__("Data limite do recurso", "streamlined-opportunity"),
-            "type" => "date",
-            "private" => true,
-        ]);
-        $this->registerRegistrationMetadata("{$slug}_status_history", [
-            "label" => i::__("Histórico de status da inscrição", "streamlined-opportunity"),
-            "type" => "json",
-            "private" => true,
-            "default" => "[]"
+        $this->registerMetadata('MapasCulturais\Entities\Opportunity',  $this->prefix("status_recurso"), [
+            'label' => i::__('Mensagem para Recurso na tela de Status'),
+            'type' => 'text'
         ]);
         return;
     }
@@ -363,5 +362,16 @@ class Plugin extends \MapasCulturais\Plugin
     public function getSlug()
     {
         return $this->config['slug'];
+    }
+    
+    /**
+     * Retorna o valor com prefixo referenciando o slug
+     *
+     * @param  mixed $value
+     * @return string
+     */
+    public function prefix($value)
+    {
+        return $this->config['slug']."_".$value;
     }
 }

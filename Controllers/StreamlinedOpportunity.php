@@ -152,22 +152,19 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         }
 
         $registrations = $app->em->getConnection()->fetchAll("
-            SELECT 
+            SELECT
                 r.id,
                 r.status,
                 les.value AS last_email_status
-
             FROM registration r
                 LEFT JOIN
-                    registration_meta les ON 
-                        les.object_id = r.id AND 
-                        les.key = 'lab_last_email_status'
-                    
-            WHERE 
-                r.opportunity_id = {$opportunity->id} AND 
-                r.status IN ({$status}) AND 
+                    registration_meta les ON
+                        les.object_id = r.id AND
+                        les.key = '{$this->prefix("last_email_status")}'
+            WHERE
+                r.opportunity_id = {$opportunity->id} AND
+                r.status IN ({$status}) AND
                 (les.value IS NULL OR les.value <> r.status::VARCHAR)
-
             ORDER BY r.sent_timestamp ASC");
 
         foreach ($registrations as &$reg) {
@@ -289,7 +286,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             $app->log->debug("ENVIANDO EMAIL DE STATUS DA {$registration->number} ({$statusTitle})");
             $app->createAndSendMailMessage($email_params);
 
-            $sent_emails = $registration->lab_sent_emails;
+            $sent_emails = $registration->{$this->prefix("sent_emails")};
             $sent_emails[] = [
                 'timestamp' => date('Y-m-d H:i:s'),
                 'loggedin_user' => [
@@ -301,9 +298,9 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             ];
 
             $app->disableAccessControl();
-            $registration->lab_sent_emails = $sent_emails;
+            $registration->{$this->prefix("sent_emails")} = $sent_emails;
 
-            $registration->lab_last_email_status = $registration->status;
+            $registration->{$this->prefix("last_email_status")} = $registration->status;
 
             $registration->save(true);
             $app->enableAccessControl();
@@ -427,7 +424,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             $agent = $app->user->profile;
         }
 
-        $metadata_key = $this->plugin->slug . '_registration';
+        $metadata_key = $this->prefix("registration");
 
         // se ainda não tem inscrição
         if (!isset($agent->$metadata_key)) {
@@ -652,7 +649,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         if ($notInTime){
             $app->redirect($this->createUrl('cadastro'));
         }
-        if (!$registration->termos_aceitos) {
+        if (!$registration->{$this->prefix("has_accepted_terms")}) {
             $app->redirect($this->createUrl('termos_e_condicoes', [$registration->id]));
         }
         
@@ -758,7 +755,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $this->requireAuthentication();
         $registration = $this->requestedEntity;
         $registration->checkPermission('modify');
-        $registration->termos_aceitos = true;
+        $registration->{$this->prefix("has_accepted_terms")} = true;
         $registration->save(true);
         $app = App::i();
         $app->redirect($this->createUrl('formulario', [$registration->id]));
@@ -808,7 +805,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         if($registration->status != Registration::STATUS_DRAFT){
             $app->redirect($this->createUrl('status', [$registration->id]));
         }
-        if (!$registration->termos_aceitos) {
+        if (!$registration->{$this->prefix("has_accepted_terms")}) {
             $app->redirect($this->createUrl('termos_e_condicoes', [$registration->id]));
         }
         $registration->checkPermission('control');
@@ -848,24 +845,19 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
 
         $total = count($registrations);
         $count = 0;
-        foreach($registrations as $reg) {
+        foreach ($registrations as $reg) {
             $count++;
-            
             $r = $app->repo('Registration')->find($reg['id']);
-            
-            if($r->lab_data_limite_recurso){
+            if ($r->{$this->prefix("appeal_deadline")}) {
                 $app->log->debug("{$count}/{$total} -- EMAIL RECUSADAS, INSCRIÇÃO {$r->number} JÁ ENVIADA");
-
             } else {
                 $app->log->debug("{$count}/{$total} -- EMAIL RECUSADAS, INSCRIÇÃO {$r->number} AINDA NÃO ENVIADA");
-
                 $emailenviado = $this->enviaEmailRecusadas($r, $dataLimite);
             }
-
             $app->em->clear();
         }
     }
-   
+
     function enviaEmailRecusadas($registration, $dataLimite){
         $app = App::i();
         $mustache = new \Mustache_Engine(); //pega um template e add variaveis (sendo usado linha 22)
@@ -908,7 +900,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             $app->log->debug("E-MAIL ENVIADO COM SUCESSO!");
             $app->log->debug("==================================================================");
 
-            $sent_emails = $registration->lab_sent_emails;
+            $sent_emails = $registration->{$this->prefix("sent_emails")};
             $sent_emails[] = [
                 'timestamp' => date('Y-m-d H:i:s'),
                 'loggedin_user' => [
@@ -920,8 +912,8 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             ];
 
             $app->disableAccessControl();
-            $registration->lab_sent_emails = $sent_emails;
-            $registration->lab_data_limite_recurso = $dataLimite->format('Y-m-d 00:00');
+            $registration->{$this->prefix("sent_emails")} = $sent_emails;
+            $registration->{$this->prefix("appeal_deadline")} = $dataLimite->format('Y-m-d 00:00');
             $registration->save(true);
             $app->enableAccessControl();
 

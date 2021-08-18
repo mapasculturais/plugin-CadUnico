@@ -288,57 +288,58 @@ class Plugin extends \MapasCulturais\Plugin
     public function register()
     {
         $app = App::i();
-
-        $app->registerController($this->getSlug(), 'StreamlinedOpportunity\Controllers\StreamlinedOpportunity');
-
-        //Registro de metadados
-        $this->registerMetadata(Registration::class, 'termos_aceitos', [
-            'label' => i::__('Aceite dos termos e condições'),
-            'type' => 'boolean',
-            'private' => true,
+        $slug = $this->getSlug();
+        $app->registerController($this->getSlug(), Controllers\StreamlinedOpportunity::class);
+        // Registro de metadados
+        $this->registerRegistrationMetadata("{$slug}_has_accepted_terms", [
+            "label" => i::__("Aceite dos termos e condições", "streamlined-opportunity"),
+            "type" => "boolean",
+            "private" => true,
         ]);
-
-        $this->registerMetadata(Opportunity::class, "{$this->getSlug()}_Fields", [
-            'label' => i::__("Lista de ID dos campos " . $this->getSlug()),
-            'type' => 'array',
-            'serialize' => function ($val) {
+        $this->registerOpportunityMetadata("{$slug}_fields", [
+            "label" => i::__("Lista de IDs dos campos $slug", "streamlined-opportunity"),
+            "type" => "array",
+            "serialize" => function ($val) {
                 return json_encode($val);
             },
-            'unserialize' => function ($val) {
+            "unserialize" => function ($val) {
                 return json_decode($val);
             },
-            'private' => true,
+            "private" => true,
         ]);
-
-        $slug = "{$this->getSlug()}_registration";
-        $this->registerAgentMetadata($slug, [
-            'label' => i::__('Id da inscrição no Insiso I'),
-            'type' => 'string',
-            'private' => true,
-        ]);
-
-        $this->registerMetadata('MapasCulturais\Entities\Registration', 'lab_sent_emails', [
-            'label' => i::__('E-mails enviados'),
-            'type' => 'json',
-            'private' => true,
-            'default' => '[]'
-        ]);
-
-        $this->registerMetadata('MapasCulturais\Entities\Registration', 'lab_last_email_status', [
-            'label' => i::__('Status do último e-mail enviado'),
-            'type' => 'integer',
-            'private' => true
-        ]);
-
         /**
-         * Registra campo adicional "Mensagem de Recurso" nas oportunidades
-         * @return void
+         * Id da inscrição na oportunidade gerenciada
+         * @var string
          */
-        $slug = "{$this->getSlug()}_status_recurso";
-        $this->registerMetadata('MapasCulturais\Entities\Opportunity', $slug, [
-            'label' => i::__('Mensagem para Recurso na tela de Status'),
-            'type' => 'text'
+        $this->registerAgentMetadata("{$slug}_registration", [
+            "label" => i::__("ID da inscrição na oportunidade gerenciada", "streamlined-opportunity"),
+            "type" => "string",
+            "private" => true,
+            // @todo: validação que impede a alteração do valor desse metadado
         ]);
+        $this->registerRegistrationMetadata("{$slug}_sent_emails", [
+            "label" => i::__("E-mails enviados", "streamlined-opportunity"),
+            "type" => "json",
+            "private" => true,
+            "default" => "[]"
+        ]);
+        $this->registerRegistrationMetadata("{$slug}_last_email_status", [
+            "label" => i::__("Status do último e-mail enviado", "streamlined-opportunity"),
+            "type" => "integer",
+            "private" => true
+        ]);
+        $this->registerRegistrationMetadata("{$slug}_appeal_deadline", [
+            "label" => i::__("Data limite do recurso", "streamlined-opportunity"),
+            "type" => "date",
+            "private" => true,
+        ]);
+        $this->registerRegistrationMetadata("{$slug}_status_history", [
+            "label" => i::__("Histórico de status da inscrição", "streamlined-opportunity"),
+            "type" => "json",
+            "private" => true,
+            "default" => "[]"
+        ]);
+        return;
     }
 
     function json($data, $status = 200)

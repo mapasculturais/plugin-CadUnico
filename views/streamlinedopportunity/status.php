@@ -47,18 +47,18 @@ $_params = [
             <?php
 
             /**
-             * 
+             *
              * Exibe mensagem com informações sobre solicitação de recurso nas inscrições com status 2 (inválida) e 3 (não selecionada)
-             * 
+             *
              * Verifica se existe uma mensagem no campo `Mensagem de Recurso para o Status` da oportunidade.
              * Se não tiver, verifica na configuração `msg_recurso`.
-             * 
+             *
              */
             if (!$recursos && ($registration->status == 3 || $registration->status == 2)) {
                 $statusRecurso = '';
 
-                if ($registration->opportunity->getMetadata("{$slug}_status_recurso")) {
-                    $statusRecurso = $registration->opportunity->getMetadata("{$slug}_status_recurso");
+                if ($registration->opportunity->getMetadata("{$slug}_status_history")) {
+                    $statusRecurso = $registration->opportunity->getMetadata("{$slug}_status_history");
                 } elseif (!empty($config['msg_recurso'])) {
                     $statusRecurso = $config['msg_recurso'];
                 }

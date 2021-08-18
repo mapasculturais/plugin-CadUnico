@@ -78,6 +78,16 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
     function getConfig() {
         return $this->plugin->config;
     }
+    
+    /**
+     * Retorna o valor com prefixo refenreciando o slug
+     *
+     * @param  mixed $value
+     * @return string
+     */
+    function prefix($value){
+        return $this->plugin->prefix($value);
+    }
  
     /**
      * Retorna a oportunidade
@@ -151,6 +161,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             }
         }
 
+        $last_email_status = $this->prefix("last_email_status");
         $registrations = $app->em->getConnection()->fetchAll("
             SELECT
                 r.id,
@@ -753,6 +764,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
     function GET_aceitar_termos()
     {
         $this->requireAuthentication();
+        $termos_aceitos = $this->prefix("termos_aceitos");
         $registration = $this->requestedEntity;
         $registration->checkPermission('modify');
         $registration->{$this->prefix("has_accepted_terms")} = true;
@@ -911,6 +923,8 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
                 'email' => 'email - recusadas'
             ];
 
+            $sent_emails = $this->prefix("sent_emails");
+            $limite_recurso = $this->prefix("limite_recurso");
             $app->disableAccessControl();
             $registration->{$this->prefix("sent_emails")} = $sent_emails;
             $registration->{$this->prefix("appeal_deadline")} = $dataLimite->format('Y-m-d 00:00');

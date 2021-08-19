@@ -52,6 +52,13 @@ class Plugin extends \MapasCulturais\Plugin
                 "help" => env("{$PREFIX}TERMS_HELP", ""),
             ],
 
+            /*TEXTOS EXIBIDOS NA TELA DO INÍCIO DO CADASTRO */
+            'registration_screen' => [
+                'title' => env("{$PREFIX}_TITLE_REGISTRATION_SCREEN", 'Para se inscrver clique no botão abaixo'),
+                'description' => env("{$PREFIX}_DESCRIPTION_REGISTRATION_SCREEN", 'Programa MS Cultura Cidadã'),
+                'long_description' => env("{$PREFIX}_LONG_DESCRIPTION_REGISTRATION_SCREEN", 'Para ser beneficiário do Programa “MS Cultura Cidadã”, o trabalhador da cultura deverá preencher, cumulativamente, os requisitos de elegibilidade a serem documentalmente comprovados no ato da inscrição, conforme previsto no Art. 2º da Lei Estadual nº 5.688, de 7 de julho de 2021 e Art. 9º do Decreto Estadual nº 15.728, de 14 de julho de 2021, e, conjuntamente, não poderá apresentar quaisquer das condições impeditivas previstas no Art. 3º da Lei Estadual.", "streamlined-opportunity'),
+            ],
+
             'texto_home' => env("{$PREFIX}_TEXTO_HOME", ''),
             'botao_home' => env("{$PREFIX}_BOTAO_HOME", ''),
             'titulo_home' => env("{$PREFIX}_TITULO_HOME", ''),

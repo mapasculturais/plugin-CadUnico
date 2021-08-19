@@ -44,6 +44,14 @@ class Plugin extends \MapasCulturais\Plugin
 
             'layout' => "streamlined-opportunity",
 
+            /*TERMOS E CONDIÇÕES */
+            "terms" => [
+                "intro" => env("{$PREFIX}TERMS_INTRO", ""),
+                "title" =>  env("{$PREFIX}TERMS_TITLE", ""),
+                "items" =>  env("{$PREFIX}TERMS_ITEM", '[]'),
+                "help" => env("{$PREFIX}TERMS_HELP", ""),
+            ],
+
             'texto_home' => env("{$PREFIX}_TEXTO_HOME", ''),
             'botao_home' => env("{$PREFIX}_BOTAO_HOME", ''),
             'titulo_home' => env("{$PREFIX}_TITULO_HOME", ''),

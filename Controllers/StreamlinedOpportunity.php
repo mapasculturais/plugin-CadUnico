@@ -133,7 +133,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
      * Exemplo: /{$slug}/sendEmails/opportunity:1/status:10
      * 
      */
-    function ALL_sendEmails(){
+    function ALL_sendEmailsPayments(){
         ini_set('max_execution_time', 0);
 
         $this->requireAuthentication();
@@ -161,7 +161,6 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             }
         }
 
-        $last_email_status = $this->prefix("last_email_status");
         $registrations = $app->em->getConnection()->fetchAll("
             SELECT
                 r.id,

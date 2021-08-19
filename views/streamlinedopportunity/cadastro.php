@@ -24,13 +24,13 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
 
     <div class="js-lab-item lab-item cadastro-options">
         <h2 class="featured-title">
-            <?= i::__('Selecione abaixo o benefício desejado', 'streamlined-opportunity') ?>
+            <?= i::__($config['registration_screen']['title']) ?>
         </h2>
 
         <div class="lab-form-filter opcoes-inciso">
             <?php
             
-            $title = i::__('Trabalhadoras e trabalhadores da Cultura', 'streamlined-opportunity');
+            $title = i::__($config['registration_screen']['description']);
             
             $agent_id = $app->user->profile->id;
             
@@ -48,13 +48,13 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
 
                     <div class="informative-box--content active" data-content="">
                         <span class="more"> <?= i::__('Mais informações', 'streamlined-opportunity') ?> </span>
-                        <span class="content"><i><?= i::__('Texto cadastro.php', 'streamlined-opportunity') ?></i></span>
+                        <span class="content"><i><?= i::__($config['registration_screen']['long_description'], 'streamlined-opportunity') ?></i></span>
                     </div>
                 </button>
             <?php
             } else if ($this->controller->config['msg_disabled'] != '') {
                 $mensagemDisabled = $this->controller->config['msg_disabled'];
-                $this->part('streamlinedopportunity/cadastro/inciso-disabled',  ['mensagem' => $mensagemDisabled, 'title' => $title]);
+                $this->part('streamlinedopportunity/cadastro/disabled',  ['mensagem' => $mensagemDisabled, 'title' => $title]);
             }
             foreach ($registrations as $registration) {
                 $registrationUrl = $this->controller->createUrl('formulario', [$registration->id]);

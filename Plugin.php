@@ -300,7 +300,7 @@ class Plugin extends \MapasCulturais\Plugin
         $app->registerController($this->getSlug(), 'StreamlinedOpportunity\Controllers\StreamlinedOpportunity');
 
         //Registro de metadados
-        $this->registerMetadata(Registration::class, $this->prefix("termos_aceitos"), [
+        $this->registerMetadata(Registration::class, $this->prefix("has_accepted_terms"), [
             'label' => i::__('Aceite dos termos e condições'),
             'type' => 'boolean',
             'private' => true,

@@ -341,7 +341,7 @@ class Plugin extends \MapasCulturais\Plugin
          * Registra campo adicional "Mensagem de Recurso" nas oportunidades
          * @return void
          */
-        $this->registerMetadata('MapasCulturais\Entities\Opportunity',  $this->prefix("status_recurso"), [
+        $this->registerMetadata('MapasCulturais\Entities\Opportunity',  $this->prefix("status_appeal"), [
             'label' => i::__('Mensagem para Recurso na tela de Status'),
             'type' => 'text'
         ]);

@@ -764,7 +764,6 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
     function GET_aceitar_termos()
     {
         $this->requireAuthentication();
-        $termos_aceitos = $this->prefix("termos_aceitos");
         $registration = $this->requestedEntity;
         $registration->checkPermission('modify');
         $registration->{$this->prefix("has_accepted_terms")} = true;

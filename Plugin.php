@@ -136,6 +136,14 @@ class Plugin extends \MapasCulturais\Plugin
                 "items" =>  env("{$PREFIX}TERMS_ITEM", '["terms-item0", "terms-item1"]'),
                 "help" => env("{$PREFIX}TERMS_HELP", "terms-help"),
             ],
+
+            /*EMAIL DE CONFIRMAÇÃO DE INSCRIÇÃO */
+            "email_confirm_registration" => [
+                'project_name' => env("$PREFIX}_PROJECT_NAME_EMAIL_CONFIRM_REGISTRATION", ''),
+                'status_title' => env("$PREFIX}_STATUS_TITLE_EMAIL_CONFIRM_REGISTRATION", ''),
+                'url_image_body' => env("$PREFIX}_IMAGE_BODY_CONFIRM_REGISTRATION", ''),
+                'subject' => env("$PREFIX}_SUBJECT_EMAIL_CONFIRM_REGISTRATION", '')
+            ]
         ];
 
         parent::__construct($config);
@@ -170,6 +178,12 @@ class Plugin extends \MapasCulturais\Plugin
         if (!$config['enabled_plugin']) {
             return;
         }
+
+        // Envia um e-mail quando o proponenhte se inscreve 
+        $app->hook('POST(registration.send):before', function() use ($plugin){
+            $registration = $this->requestedEntity;
+            $plugin->sendEmailregistrationConfirm($registration, $plugin);
+        }); 
 
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
         $app->hook('template(site.index.home-search-form):begin', function () use ($config) {
@@ -416,5 +430,43 @@ class Plugin extends \MapasCulturais\Plugin
     public function prefix($value)
     {
         return $this->config['slug']."_".$value;
+    }
+       
+    /**
+     * Envia email de confirmação de cadastro
+     *
+     */
+    public function sendEmailregistrationConfirm(\MapasCulturais\Entities\Registration $registration, $plugin)
+    {
+        $app = App::i();
+
+        $mustache = new \Mustache_Engine();
+        $site_name = $app->view->dict('site: name', false);
+        $baseUrl = $app->getBaseUrl();
+        $filename = $app->view->resolveFilename("views/streamlinedopportunity", "email-regitration-confirmation.html");        
+        $template = file_get_contents($filename);
+
+        $params = [
+            "baseUrl" => $baseUrl,
+            "siteName" => $site_name,
+            "slug" => $plugin->config['slug'],
+            "projectName" => $plugin->config['email_confirm_registration']['project_name'],
+            "statusTitle" =>  $plugin->config['email_confirm_registration']['status_title'],
+            "urlImageBody" => $app->view->asset($plugin->config['email_confirm_registration']['url_image_body'], false),
+            "registrationId" => $registration->id, 
+            "userName" => $registration->owner->name,
+        ];
+
+        $content = $mustache->render($template,$params);
+
+        $email_params = [
+            'from' => $app->config['mailer.from'],
+            'to' => $registration->owner->user->email,
+            'subject' => $plugin->config['email_confirm_registration']['subject'],
+            'body' => $content
+        ];
+
+        $app->log->debug("ENVIANDO EMAIL DE STATUS DA {$registration->number}");
+        $app->createAndSendMailMessage($email_params);
     }
 }

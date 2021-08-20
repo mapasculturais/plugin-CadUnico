@@ -44,19 +44,16 @@ class Plugin extends \MapasCulturais\Plugin
 
             'layout' => "streamlined-opportunity",
 
-            /*TERMOS E CONDIÇÕES */
-            "terms" => [
-                "intro" => env("{$PREFIX}TERMS_INTRO", ""),
-                "title" =>  env("{$PREFIX}TERMS_TITLE", ""),
-                "items" =>  env("{$PREFIX}TERMS_ITEM", '[]'),
-                "help" => env("{$PREFIX}TERMS_HELP", ""),
-            ],
-
             /*TEXTOS EXIBIDOS NA TELA DO INÍCIO DO CADASTRO */
             'registration_screen' => [
                 'title' => env("{$PREFIX}_TITLE_REGISTRATION_SCREEN", ''),
                 'description' => env("{$PREFIX}_DESCRIPTION_REGISTRATION_SCREEN", ''),
                 'long_description' => env("{$PREFIX}_LONG_DESCRIPTION_REGISTRATION_SCREEN", ''),
+            ],
+
+            /*TEXTOS DA TELA DO FORMULÁRIO */
+            'form_screen' => [
+                'title' => env("{$PREFIX}_REGISTRATION_SCREEN_TITLE", '')
             ],
 
             'texto_home' => env("{$PREFIX}_TEXTO_HOME", ''),
@@ -105,12 +102,13 @@ class Plugin extends \MapasCulturais\Plugin
             'msg_recurso' => env("{$PREFIX}_MENSAGEM_RECURSO", ''),
             'oportunidades_desabilitar_envio' => (array) json_decode(env("{$PREFIX}_OPORTUNIDADES_DESABILITAR_ENVIO", '[]')),
             'mensagens_envio_desabilitado' => (array) json_decode(env("{$PREFIX}_MENSAGENS_ENVIO_DESABILITADO", '[]')),
-            // placeholder configuration for "terms" texts
+          
+            /*TERMOS E CONDIÇÕES */
             "terms" => [
-                "intro" => "terms-intro",
-                "title" => "terms-title",
-                "items" => ["terms-item0", "terms-item1"],
-                "help" => "terms-help"
+                "intro" => env("{$PREFIX}TERMS_INTRO", "terms-intro"),
+                "title" =>  env("{$PREFIX}TERMS_TITLE", "terms-title"),
+                "items" =>  env("{$PREFIX}TERMS_ITEM", '["terms-item0", "terms-item1"]'),
+                "help" => env("{$PREFIX}TERMS_HELP", "terms-help"),
             ],
         ];
 

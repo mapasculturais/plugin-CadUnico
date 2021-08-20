@@ -239,7 +239,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
 
             $params = [
                 "siteName" => $site_name,
-                "urlImageToUseInEmails" => $this->config['logotipo_central'],
+                "urlImageToUseInEmails" => $this->config['logo_center'],
                 "user" => $registration->owner->name,
                 "inscricaoId" => $registration->id, 
                 "inscricao" => $registration->number, 
@@ -269,7 +269,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
 
             $params = [
                 "siteName" => $site_name,
-                "urlImageToUseInEmails" => $this->config['logotipo_central'],
+                "urlImageToUseInEmails" => $this->config['logo_center'],
                 "user" => $registration->owner->name,
                 "inscricaoId" => $registration->id, 
                 "inscricao" => $registration->number, 
@@ -879,7 +879,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             
         $params = [
             "siteName" => $site_name,
-            "urlImageToUseInEmails" => $this->config['logotipo_central'],
+            "urlImageToUseInEmails" => $this->config['logo_center'],
             "user" => $registration->owner->name,
             "inscricao" => $registration->number,            
             "baseUrl" => $baseUrl,            

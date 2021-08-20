@@ -36,7 +36,7 @@ $_params = [
 <div id="editable-entity" class="clearfix sombra">
 </div>
 <article class="main-content registration" ng-controller="OpportunityController">
-    <h1> <?= i::__('Solicitação de trabalhadora ou trabalhador da cultura', 'streamlined-opportunity') ?></h1>
+    <h1> <?= i::__($config['form_screen']['title'], 'streamlined-opportunity') ?></h1>
     <?php $this->applyTemplateHook('form', 'begin'); ?>
 
     <?php $this->part('singles/registration-edit--header', $_params) ?>

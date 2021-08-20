@@ -59,13 +59,22 @@ class Plugin extends \MapasCulturais\Plugin
             /*TEXTO  HOME ANTES DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
             'text_home_before_searsh' => [
                 // true para usar um texto acima do formulário de pesquisa da home
-                'enabled' => env("{$PREFIX}_ENABLED_TEXT_HOME", false), 
+                'enabled' => env("{$PREFIX}_ENABLED_TEXT_HOME_BEFORE_SEARSH", false), 
 
                 //true para usar um template part ou false para usar diretamente texto da configuração
-                'use_part' => env("{$PREFIX}_USE_PART", false), 
+                'use_part' => env("{$PREFIX}_USE_PART_BEFORE_SEARSH", false), 
 
                 // Nome do template part ou texto que sera usado
-                'text_or_part' => env("{$PREFIX}_TEXT_OR_PART", "") 
+                'text_or_part' => env("{$PREFIX}_TEXT_OR_PART_BEFORE_SEARSH", ""),
+
+                //Habilita um botão abaixo do texto
+                'enabled_button' => env("{$PREFIX}_ENABLED_BUTTON_BEFORE_SEARSH", false),
+
+                //texto dentro do botão
+                'text_buton' => env("{$PREFIX}_TEXT_BUTTON_BEFORE_SEARSH",''),
+
+                //Link que o botão deve acessar
+                'link_buton' => env("{$PREFIX}_LINK_BUTTON_BEFORE_SEARSH",''),
             ],
 
             /*IMAGEM  HOME ANTES DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
@@ -186,7 +195,11 @@ class Plugin extends \MapasCulturais\Plugin
             $text_home = $config['text_home_before_searsh'];
             if ($text_home['enabled']) {
                 if ($text_home['use_part']) {
-                    $this->part($text_home['text_or_part']);
+                    $this->part($text_home['text_or_part'], [
+                        'enabled_button' => $text_home['enabled_button'],
+                        'text_buton' => $text_home['text_buton'],
+                        'link_buton' => $text_home['link_buton']
+                    ]);
                 } else {
                     echo $text_home['text_or_part'];
                 }

@@ -55,21 +55,38 @@ class Plugin extends \MapasCulturais\Plugin
             'form_screen' => [
                 'title' => env("{$PREFIX}_REGISTRATION_SCREEN_TITLE", '')
             ],
+            
+            /*TEXTO  HOME ANTES DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
+            'text_home_before_searsh' => [
+                // true para usar um texto acima do formulário de pesquisa da home
+                'enabled' => env("{$PREFIX}_ENABLED_TEXT_HOME", false), 
 
-            'texto_home' => env("{$PREFIX}_TEXTO_HOME", ''),
-            'botao_home' => env("{$PREFIX}_BOTAO_HOME", ''),
-            'titulo_home' => env("{$PREFIX}_TITULO_HOME", ''),
+                //true para usar um template part ou false para usar diretamente texto da configuração
+                'use_part' => env("{$PREFIX}_USE_PART", false), 
 
-            'text_home' => [
-                'enabled' => env("{$PREFIX}_ENABLED_TEXT_HOME", false), // true para usar um texto acima do formulário de pesquisa da home
-                'use_part' => env("{$PREFIX}_USE_PART", false), //true para usar um template part ou false para usar diretamente texto da configuração
-                'text_or_part' => env("{$PREFIX}_TEXT_OR_PART", "") // Nome do template part ou texto que sera usado
+                // Nome do template part ou texto que sera usado
+                'text_or_part' => env("{$PREFIX}_TEXT_OR_PART", "") 
             ],
-            'img_home' => [
-                'enabled' => env("{$PREFIX}_ENABLED_IMG_HOME", false), // true para usar uma imagem acima do texto que será inserido na home
-                'use_part' => env("{$PREFIX}_USE_PART_IMG", false),  //true para usar um template part ou false para usar diretamente o caminho de uma imagem
-                'patch_or_part' => env("{$PREFIX}_PATCH_OR_PART", "img-home"), // Nome do template part ou caminho da imagem que sera usada
+
+            /*IMAGEM  HOME ANTES DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
+            'img_home_before_searsh' => [
+                // true para usar uma imagem acima do texto que será inserido na home
+                'enabled' => env("{$PREFIX}_ENABLED_IMG_HOME", false), 
+
+                //true para usar um template part ou false para usar diretamente o caminho de uma imagem
+                'use_part' => env("{$PREFIX}_USE_PART_IMG", false),
+                // Nome do template part ou caminho da imagem que sera usada  
+                'patch_or_part' => env("{$PREFIX}_PATCH_OR_PART", "img-home"), 
+
+                // Classes css aplicadas a div da imagem
                 'styles_class' => env("{$PREFIX}_STYLES_CLASS", ""),
+            ],
+
+            /*TEXTO  HOME DEPOIS DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
+            'texto_home_after_searsh' => [
+                'text' => env("{$PREFIX}_TEXTO_HOME_AFTER_SEARSH", ''),
+                'button' => env("{$PREFIX}_BOTAO_HOME_AFTER_SEARSH", ''),
+                'title' => env("{$PREFIX}_TITULO_HOME_AFTER_SEARSH", ''),
             ],
 
             // STATUS_SENT = 1
@@ -151,7 +168,7 @@ class Plugin extends \MapasCulturais\Plugin
             $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');
 
             //Insere uma imagem acima do texto caso esteja configurada
-            $img_home = $config['img_home'];
+            $img_home = $config['img_home_before_searsh'];
             if ($img_home['enabled']) {
                 $params = [
                     'styles_class' => $img_home['styles_class'] ?: "",
@@ -166,7 +183,7 @@ class Plugin extends \MapasCulturais\Plugin
             }
 
             //Insere um texto caso esteja configurado
-            $text_home = $config['text_home'];
+            $text_home = $config['text_home_before_searsh'];
             if ($text_home['enabled']) {
                 if ($text_home['use_part']) {
                     $this->part($text_home['text_or_part']);
@@ -255,14 +272,14 @@ class Plugin extends \MapasCulturais\Plugin
 
         $app->hook('template(site.index.home-search):end', function () use ($plugin) {
             /** @var \MapasCulturais\Theme $this */
-            $texto = $plugin->config['texto_home'];
-            $botao = $plugin->config['botao_home'];
-            $titulo = $plugin->config['titulo_home'];
+            $text = $plugin->config['texto_home_after_searsh']['text'];
+            $button = $plugin->config['texto_home_after_searsh']['button'];
+            $title = $plugin->config['texto_home_after_searsh']['title'];
 
             $this->part('streamlinedopportunity/home-search', [
-                'texto' => $texto,
-                'botao' => $botao,
-                'titulo' => $titulo,
+                'text' => $text,
+                'button' => $button,
+                'title' => $title,
             ]);
         });
 

@@ -255,7 +255,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             $registrationStatusInfo = $this->getRegistrationStatusInfo($registration);
             $justificativaAvaliacao = "";
             foreach ($registrationStatusInfo['justificativaAvaliacao'] as $message) {
-                if (is_array($message) && !empty($this->config['exibir_resultado_padrao'])) {
+                if (is_array($message) && !empty($this->config['display_default_result'])) {
                 $justificativaAvaliacao .= $message['message'] . "<hr>";
                 } else {
                     $justificativaAvaliacao .= $message .'<hr>';
@@ -276,7 +276,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
                 "statusNum" => $registration->status,
                 "statusTitle" => $statusTitle,
                 "justificativaAvaliacao" => $justificativaAvaliacao,
-                "msgRecurso" => $this->config['msg_recurso'],
+                "msgRecurso" => $this->config['msg_appeal'],
                 "emailRecurso" => $this->config['email_recurso'],
                 "baseUrl" => $baseUrl
             ];
@@ -335,7 +335,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         // monta array de mensagens
         $justificativaAvaliacao = [];
 
-        if (in_array($registration->status, $this->config['exibir_resultado_padrao'])) {
+        if (in_array($registration->status, $this->config['display_default_result'])) {
             $justificativaAvaliacao[] = $getStatusMessages[$registration->status];
         }
         
@@ -572,7 +572,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             // retorna as avaliações da inscrição
             $evaluations = $app->repo('RegistrationEvaluation')->findByRegistrationAndUsersAndStatus($registration);
                         
-            if (in_array($registration->status, $this->config['exibir_resultado_padrao'])) {
+            if (in_array($registration->status, $this->config['display_default_result'])) {
 
                 $justificativaAvaliacao[] = $getStatusMessages[$registration->status];
 
@@ -718,7 +718,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
 
 
         $this->render('cadastro', [
-                'limite' => $this->config['limite'],
+                'limit' => $this->config['limit'],
                 'registrations' => $registrations,
                 'summaryStatusName'=>$summaryStatusName, 
                 'niceName' => $owner_name,

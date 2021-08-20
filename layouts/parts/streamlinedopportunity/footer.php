@@ -6,8 +6,8 @@ $app = \MapasCulturais\App::i();
 $plugin = $plugin ?? $this->controller->plugin;
 $config = $plugin->config;
 $controller = $app->controller($config["slug"]);
-$linkSuporte = isset($config["link_suporte"]) ? $config["link_suporte"] : '';
-$termosECondicoes = isset($config["privacidade_termos_condicoes"]) ? $config["privacidade_termos_condicoes"] : $app->createUrl("auth", "", array("termos-e-condicoes"));
+$linkSuporte = isset($config["link_support"]) ? $config["link_support"] : '';
+$termosECondicoes = isset($config["privacy_terms_conditions"]) ? $config["privacy_terms_conditions"] : $app->createUrl("auth", "", array("termos-e-condicoes"));
 $logotipo = isset($config["logo_institution"]) ? $this->asset($config["logo_institution"], false) : $this->asset("streamlinedopportunity/img/picture.png", false); ?>
 
 </section>

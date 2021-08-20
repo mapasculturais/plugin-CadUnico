@@ -38,7 +38,7 @@ class Plugin extends \MapasCulturais\Plugin
         $config += [
             'enabled_plugin' => env("{$PREFIX}_ENABLED", false), // true habilita o plugin false desabilita
             'opportunity_id' => env("{$PREFIX}_OPPORTUNITY_ID", false),
-            'limite' => env("{$PREFIX}_LIMITE", 1), // número máximo de inscrições por usuário
+            'limit' => env("{$PREFIX}_LIMIT", 1), // número máximo de inscrições por usuário
 
             /* TEXTOS E DEMAIS COMPONENTES DE INTERFACE */
 
@@ -83,8 +83,8 @@ class Plugin extends \MapasCulturais\Plugin
             ],
 
             /*TEXTO  HOME DEPOIS DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
-            'texto_home_after_searsh' => [
-                'text' => env("{$PREFIX}_TEXTO_HOME_AFTER_SEARSH", ''),
+            'text_home_after_searsh' => [
+                'text' => env("{$PREFIX}_TEXT_HOME_AFTER_SEARSH", ''),
                 'button' => env("{$PREFIX}_BOTAO_HOME_AFTER_SEARSH", ''),
                 'title' => env("{$PREFIX}_TITULO_HOME_AFTER_SEARSH", ''),
             ],
@@ -111,14 +111,14 @@ class Plugin extends \MapasCulturais\Plugin
 
             'logo_institution' => env("$PREFIX}_LOGO_INSTUCTION", ''),
             'logo_center' => env("$PREFIX}_LOGO_CENTER", ''),
-            'privacidade_termos_condicoes' => env("$PREFIX}_PRIVACIDADE_TERMOS", null),
-            'link_suporte' => env("$PREFIX}_LINK_SUPORTE", null),
-            'link_suporte_no_footer' => env("{$PREFIX}_LINK_SUPORTE", null),
+            'privacy_terms_conditions' => env("$PREFIX}_PRIVACY_TERMS", null),
+            'link_support' => env("$PREFIX}_LINK_SUPPORT", null),
+            'link_support_footer' => env("{$PREFIX}_LINK_SUPORTE_FOOTER", null),
             'msg_disabled' => env("{$PREFIX}_INCISO1_DISABLE_MESSAGE", 'Em breve!'),
-            'exibir_resultado_padrao' => (array) json_decode(env("{$PREFIX}_EXIBIR_RESULTADO_PADRAO", '["1", "2", "3", "8", "10"]')),
-            'msg_recurso' => env("{$PREFIX}_MENSAGEM_RECURSO", ''),
-            'oportunidades_desabilitar_envio' => (array) json_decode(env("{$PREFIX}_OPORTUNIDADES_DESABILITAR_ENVIO", '[]')),
-            'mensagens_envio_desabilitado' => (array) json_decode(env("{$PREFIX}_MENSAGENS_ENVIO_DESABILITADO", '[]')),
+            'display_default_result' => (array) json_decode(env("{$PREFIX}_DISPLAY_DEFAULT_RESULT", '["1", "2", "3", "8", "10"]')),
+            'msg_appeal' => env("{$PREFIX}_MESSAGE_APPEAL", ''),
+            'opportunities_disable_sending' => (array) json_decode(env("{$PREFIX}_OPPORTUNITIES_DISABLE_SENDING", '[]')),
+            'message_disable_sending' => (array) json_decode(env("{$PREFIX}_MESSAGE_DISABLE_SENDING", '[]')),
           
             /*TERMOS E CONDIÇÕES */
             "terms" => [
@@ -195,8 +195,8 @@ class Plugin extends \MapasCulturais\Plugin
 
         $app->hook('template(<<*>>.main-footer):begin', function () use ($plugin) {
             /** @var \MapasCulturais\Theme $this */
-            if ($plugin->config['link_suporte_no_footer'] && $plugin->config['link_suporte']) {
-                $this->part('streamlinedopportunity/support', ['linkSuporte' => $plugin->config['link_suporte']]);
+            if ($plugin->config['link_support_footer'] && $plugin->config['link_support']) {
+                $this->part('streamlinedopportunity/support', ['linkSuporte' => $plugin->config['link_support']]);
             }
         });
 
@@ -272,9 +272,9 @@ class Plugin extends \MapasCulturais\Plugin
 
         $app->hook('template(site.index.home-search):end', function () use ($plugin) {
             /** @var \MapasCulturais\Theme $this */
-            $text = $plugin->config['texto_home_after_searsh']['text'];
-            $button = $plugin->config['texto_home_after_searsh']['button'];
-            $title = $plugin->config['texto_home_after_searsh']['title'];
+            $text = $plugin->config['text_home_after_searsh']['text'];
+            $button = $plugin->config['text_home_after_searsh']['button'];
+            $title = $plugin->config['text_home_after_searsh']['title'];
 
             $this->part('streamlinedopportunity/home-search', [
                 'text' => $text,

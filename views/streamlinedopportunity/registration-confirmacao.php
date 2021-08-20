@@ -7,8 +7,8 @@ $plugin = $this->controller->plugin;
 $config = $plugin->config;
 $slug = $this->controller->plugin->slug;
 
-$PreventSend      = $config['oportunidades_desabilitar_envio'];
-$PreventSendMessages      = $config['mensagens_envio_desabilitado'];
+$PreventSend      = $config['opportunities_disable_sending'];
+$PreventSendMessages      = $config['message_disable_sending'];
 
 
 

@@ -32,7 +32,7 @@ $_params = [
 
             <?php if (!empty($justificativaAvaliacao) && sizeof($justificativaAvaliacao) != 0) : ?>
                 <?php foreach ($justificativaAvaliacao as $message) : ?>
-                    <?php if (is_array($message) && !empty($config['exibir_resultado_padrao'])) : ?>
+                    <?php if (is_array($message) && !empty($config['display_default_result'])) : ?>
                         <?= nl2br(str_replace(array('\r\n', '\r', '\n'), "<br />", $message['message'])); ?>
                         <hr>
                     <?php else : ?>
@@ -51,7 +51,7 @@ $_params = [
              * Exibe mensagem com informações sobre solicitação de recurso nas inscrições com status 2 (inválida) e 3 (não selecionada)
              *
              * Verifica se existe uma mensagem no campo `Mensagem de Recurso para o Status` da oportunidade.
-             * Se não tiver, verifica na configuração `msg_recurso`.
+             * Se não tiver, verifica na configuração `msg_appeal`.
              *
              */
             if (!$recursos && ($registration->status == 3 || $registration->status == 2)) {
@@ -59,8 +59,8 @@ $_params = [
 
                 if ($registration->opportunity->getMetadata("{$slug}_status_history")) {
                     $statusRecurso = $registration->opportunity->getMetadata("{$slug}_status_history");
-                } elseif (!empty($config['msg_recurso'])) {
-                    $statusRecurso = $config['msg_recurso'];
+                } elseif (!empty($config['msg_appeal'])) {
+                    $statusRecurso = $config['msg_appeal'];
                 }
 
                 if ($statusRecurso) {

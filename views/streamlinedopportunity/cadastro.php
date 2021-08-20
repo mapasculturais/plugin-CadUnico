@@ -34,7 +34,7 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
             
             $agent_id = $app->user->profile->id;
             
-            if (count($registrations) < $limite) {
+            if (count($registrations) < $limit) {
             ?>
                 <button onclick="location.href='<?= $this->controller->createUrl('novaInscricao', ['agent' => $agent_id]) ?>'" clickable id="option3" class="informative-box lab-option">
                     <div class="informative-box--icon">

@@ -109,8 +109,8 @@ class Plugin extends \MapasCulturais\Plugin
             'title_status_approved' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua solicitação não foi aprovada.')),
             'msg_status_approved' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('A inscrição foi aprovada')),
 
-            'logotipo_instituicao' => env("$PREFIX}_LOGOTIPO_INSTITUICAO", ''),
-            'logotipo_central' => env("$PREFIX}_LOGOTIPO_CENTRAL", ''),
+            'logo_institution' => env("$PREFIX}_LOGO_INSTUCTION", ''),
+            'logo_center' => env("$PREFIX}_LOGO_CENTER", ''),
             'privacidade_termos_condicoes' => env("$PREFIX}_PRIVACIDADE_TERMOS", null),
             'link_suporte' => env("$PREFIX}_LINK_SUPORTE", null),
             'link_suporte_no_footer' => env("{$PREFIX}_LINK_SUPORTE", null),

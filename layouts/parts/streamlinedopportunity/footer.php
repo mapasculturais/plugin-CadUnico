@@ -8,7 +8,7 @@ $config = $plugin->config;
 $controller = $app->controller($config["slug"]);
 $linkSuporte = isset($config["link_suporte"]) ? $config["link_suporte"] : '';
 $termosECondicoes = isset($config["privacidade_termos_condicoes"]) ? $config["privacidade_termos_condicoes"] : $app->createUrl("auth", "", array("termos-e-condicoes"));
-$logotipo = isset($config["logotipo_instituicao"]) ? $config["logotipo_instituicao"] : ""; ?>
+$logotipo = isset($config["logo_institution"]) ? $config["logo_institution"] : ""; ?>
 
 </section>
 

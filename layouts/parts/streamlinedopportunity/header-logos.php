@@ -7,22 +7,22 @@ $app = \MapasCulturais\App::i();
 $config = $plugin->config;
 $controller = $app->controller($config["slug"]);
 
-$logotipo_instituicao = isset($config["logotipo_instituicao"]) ? $config["logotipo_instituicao"] : $this->asset("streamlinedopportunity/img/picture.png", false);
-$logotipo_central = isset($config["logotipo_central"]) ? $config["logotipo_central"] : $this->asset("streamlinedopportunity/img/picture.png", false);
+$logo_institution = isset($config["logo_institution"]) ? $this->asset($config["logo_institution"], false) : $this->asset("streamlinedopportunity/img/picture.png", false);
+$logo_center = isset($config["logo_center"]) ? $this->asset($config["logo_center"], false) : $this->asset("streamlinedopportunity/img/picture.png", false);
 ?>
 
-<?php if ($logotipo_instituicao) {
+<?php if ($logo_institution) {
     ?>
    <div class="logo-state">
-        <img src="<?= $logotipo_instituicao ?>">
+        <img src="<?= $logo_institution ?>">
     </div>
     <?php
 }?>
 
-<?php if ($logotipo_central) {
+<?php if ($logo_center) {
     ?>
     <div class="logo">
-      <a href="<?= $app->createUrl($config["slug"], "cadastro") ?>"> <img src="<?= $logotipo_central ?>"></a>
+      <a href="<?= $app->createUrl($config["slug"], "cadastro") ?>"> <img src="<?= $logo_center ?>"></a>
     </div>
     <?php
 }?>

@@ -1,7 +1,7 @@
 
 <div class="box">
-    <h1><?= $titulo ?></h1>
+    <h1><?= $title ?></h1>
     <p style="text-align:justify">
-        <?= $texto ?>
+        <?= $text ?>
     </p>
 </div>

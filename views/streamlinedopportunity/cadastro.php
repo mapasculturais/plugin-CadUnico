@@ -23,11 +23,15 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
     </header>
 
     <div class="js-lab-item lab-item cadastro-options">
+            <div class="long-description">
+               <?= i::__($config['registration_screen']['long_description'], 'streamlined-opportunity') ?>
+           </div>
         <h2 class="featured-title">
             <?= i::__($config['registration_screen']['title']) ?>
         </h2>
 
         <div class="lab-form-filter opcoes-inciso">
+          
             <?php
             
             $title = i::__($config['registration_screen']['description']);
@@ -48,7 +52,7 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
 
                     <div class="informative-box--content active" data-content="">
                         <span class="more"> <?= i::__('Mais informações', 'streamlined-opportunity') ?> </span>
-                        <span class="content"><i><?= i::__($config['registration_screen']['long_description'], 'streamlined-opportunity') ?></i></span>
+                       
                     </div>
                 </button>
             <?php

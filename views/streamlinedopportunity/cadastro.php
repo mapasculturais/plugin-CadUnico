@@ -23,12 +23,15 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
     </header>
 
     <div class="js-lab-item lab-item cadastro-options">
+        <?php  if (count($registrations) < $limit) { ?>
             <div class="long-description">
-               <?= i::__($config['registration_screen']['long_description'], 'streamlined-opportunity') ?>
-           </div>
-        <h2 class="featured-title">
-            <?= i::__($config['registration_screen']['title']) ?>
-        </h2>
+                <?= i::__($config['registration_screen']['long_description'], 'streamlined-opportunity') ?>
+            </div>
+
+            <h2 class="featured-title">
+                <?= i::__($config['registration_screen']['title']) ?>
+            </h2>        
+        <?php } ?>
 
         <div class="lab-form-filter opcoes-inciso">
           

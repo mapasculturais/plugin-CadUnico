@@ -30,6 +30,10 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
 
             <h2 class="featured-title">
                 <?= i::__($config['registration_screen']['title']) ?>
+            </h2>
+        <?php } else {?>
+            <h2 class="featured-title">
+                <?= i::__($config['registration_screen']['title_application_summary']) ?>
             </h2>        
         <?php } ?>
 

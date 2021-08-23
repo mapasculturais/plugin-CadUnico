@@ -49,6 +49,7 @@ class Plugin extends \MapasCulturais\Plugin
                 'title' => env("{$PREFIX}_TITLE_REGISTRATION_SCREEN", ''),
                 'description' => env("{$PREFIX}_DESCRIPTION_REGISTRATION_SCREEN", ''),
                 'long_description' => env("{$PREFIX}_LONG_DESCRIPTION_REGISTRATION_SCREEN", ''),
+                'title_application_summary' => env("{$PREFIX}_TITLE_APPLICATION_SUMARY", ''),
             ],
 
             /*TEXTOS DA TELA DO FORMULÁRIO */

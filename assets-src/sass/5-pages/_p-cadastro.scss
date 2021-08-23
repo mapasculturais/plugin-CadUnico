@@ -21,6 +21,14 @@ section.cadastro {
     }   
 
     .cadastro-options {
+        
+        .long-description {
+            margin-left: 25%;
+            margin-right: 25%;
+            text-align: center;
+            margin-bottom: 2%;
+        }
+
         h2.featured-title {
             color: #111111;
             font-family: $f_title;

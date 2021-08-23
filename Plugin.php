@@ -124,7 +124,6 @@ class Plugin extends \MapasCulturais\Plugin
             'privacy_terms_conditions' => env("$PREFIX}_PRIVACY_TERMS", null),
             'link_support' => env("$PREFIX}_LINK_SUPPORT", null),
             'link_support_footer' => env("{$PREFIX}_LINK_SUPORTE_FOOTER", null),
-            'msg_disabled' => env("{$PREFIX}_INCISO1_DISABLE_MESSAGE", 'Em breve!'),
             'display_default_result' => (array) json_decode(env("{$PREFIX}_DISPLAY_DEFAULT_RESULT", '["1", "2", "3", "8", "10"]')),
             'msg_appeal' => env("{$PREFIX}_MESSAGE_APPEAL", ''),
             'opportunities_disable_sending' => (array) json_decode(env("{$PREFIX}_OPPORTUNITIES_DISABLE_SENDING", '[]')),

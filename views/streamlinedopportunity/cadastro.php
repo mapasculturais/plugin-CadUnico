@@ -56,10 +56,7 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
                     </div>
                 </button>
             <?php
-            } else if ($this->controller->config['msg_disabled'] != '') {
-                $mensagemDisabled = $this->controller->config['msg_disabled'];
-                $this->part('streamlinedopportunity/cadastro/disabled',  ['mensagem' => $mensagemDisabled, 'title' => $title]);
-            }
+            } 
             foreach ($registrations as $registration) {
                 $registrationUrl = $this->controller->createUrl('formulario', [$registration->id]);
                 switch ($registration->status) {

@@ -17,7 +17,7 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
         <div class="intro-message">
             <div class="name"> <?= i::__('Olá', 'streamlined-opportunity') ?> <?= $niceName ? ", " . $niceName : "" ?>!
                 <br>
-                <?= i::__('Clique', 'streamlined-opportunity') ?> <a href="<?= $registrationUrl = $app->createUrl('site'); ?>"><?= i::__('aqui', 'streamlined-opportunity') ?> </a> <?= i::__('para retornar à página inicial', 'streamlined-opportunity') ?>
+                <?= i::__('Clique', 'streamlined-opportunity') ?> <a href="<?= $registrationUrl = $app->baseUrl; ?>"><?= i::__('aqui', 'streamlined-opportunity') ?> </a> <?= i::__('para retornar à página inicial', 'streamlined-opportunity') ?>
             </div>
         </div>
     </header>

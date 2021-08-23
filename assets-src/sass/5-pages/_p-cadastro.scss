@@ -33,7 +33,7 @@ section.cadastro {
         }
 
         .opcoes-inciso {
-            display: grid;
+            display: block;
             grid-template-columns: repeat(1, 100%);
             grid-gap: 30px;
             max-width: calc(100% - 23px);
@@ -42,7 +42,7 @@ section.cadastro {
             
             @include desktop {
                 grid-template-columns: repeat(2, 50%);
-                max-width: 58%;
+                max-width: 30%;
                 margin: 0 auto;
             }
 

@@ -80,7 +80,7 @@ class Plugin extends \MapasCulturais\Plugin
                  'text_info_link_documentation' => "",
 
                 //Habilita um botão abaixo do texto
-                'enabled_button' => env("{$PREFIX}_ENABLED_BUTTON_BEFORE_SEARSH", false),
+                'enabled_button' => false,
 
                 //texto dentro do botão
                 'text_button' => "",

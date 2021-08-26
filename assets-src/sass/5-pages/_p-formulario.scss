@@ -28,6 +28,7 @@ article.registration {
     margin-left: auto;
     margin-right: auto;
     word-wrap: break-word;
+    padding: 0rem;
 
     h1 {
         font-size: $font-size-h3;
@@ -412,7 +413,6 @@ article.registration {
                     font-family: "Open Sans";
                     font-size: $font-size-base;
                     font-weight: lighter;
-                    text-transform: capitalize;
                     word-wrap: break-word;
                 }
 

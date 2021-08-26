@@ -15,7 +15,8 @@ use MapasCulturais\Entities\Opportunity;
 class Plugin extends \MapasCulturais\Plugin
 {
 
-    protected static $instances = [];
+    protected static $instancesBySlug = [];
+    protected static $instancesByOpportunity = [];
 
     public function __construct(array $config = [])
     {
@@ -27,7 +28,9 @@ class Plugin extends \MapasCulturais\Plugin
             throw new Exception(i::__('A chave de configuração "slug" é obrigatória no plugin StreamlinedOpportunity'));
         }
 
-        self::$instances[$slug] = $this;
+        
+        self::$instancesBySlug[$slug] = $this;
+        self::$instancesByOpportunity[$config['opportunity_id']] = $this;
 
         $PREFIX = strtoupper($slug);
 
@@ -163,14 +166,37 @@ class Plugin extends \MapasCulturais\Plugin
 
         parent::__construct($config);
     }
-
-    static function getInstance(string $slug)
+    
+    /**
+     * Retorna a instância do streamLinedOpportunity com referência ao slug
+     *
+     * @param  string $slug
+     * @return StreamlinedOpportunity\Plugin
+     */
+    static function getInstanceBySlug(string $slug)
     {
-        if (!isset(self::$instances[$slug])) {
+        if (!isset(self::$instancesBySlug[$slug])) {
             throw new Exception(i::__("Instância do plugin StremlinedOpportunity não encontrada: ") . $slug);
         }
 
-        return self::$instances[$slug];
+        return self::$instancesBySlug[$slug];
+    }
+
+    
+    /**
+     * Retorna a instância do streamLinedOpportunity com referência a oportunidade
+     *
+     * @param  int $opportunity_id
+     * @return StreamlinedOpportunity\Plugin
+     */
+    public static function getInstanceByOpportunityId(int $opportunity_id)
+    {
+        if (!isset(self::$instancesByOpportunity[$opportunity_id])) {
+            throw new Exception(i::__("Instância do plugin StremlinedOpportunity não encontrada: ") . $opportunity_id);
+        }
+
+        return self::$instancesByOpportunity[$opportunity_id];
+
     }
 
     public function registerAssets()

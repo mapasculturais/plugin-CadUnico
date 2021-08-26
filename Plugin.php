@@ -76,6 +76,9 @@ class Plugin extends \MapasCulturais\Plugin
 
                 //Link que o botão deve acessar
                 'link_buton' => env("{$PREFIX}_LINK_BUTTON_BEFORE_SEARSH",''),
+
+                // Texto que será exibido no local do botão quando o mesmo esteja desabilitado
+                'text_button_disabled' => "",
             ],
 
             /*IMAGEM  HOME ANTES DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
@@ -213,7 +216,8 @@ class Plugin extends \MapasCulturais\Plugin
                     $this->part($text_home['text_or_part'], [
                         'enabled_button' => $text_home['enabled_button'],
                         'text_buton' => $text_home['text_buton'],
-                        'link_buton' => $text_home['link_buton']
+                        'link_buton' => $text_home['link_buton'],
+                        'text_button_disabled' => $text_home['text_button_disabled'],
                     ]);
                 } else {
                     echo $text_home['text_or_part'];

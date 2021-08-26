@@ -65,17 +65,28 @@ class Plugin extends \MapasCulturais\Plugin
                 //true para usar um template part ou false para usar diretamente texto da configuração
                 'use_part' => env("{$PREFIX}_USE_PART_BEFORE_SEARSH", false), 
 
-                // Nome do template part ou texto que sera usado
-                'text_or_part' => env("{$PREFIX}_TEXT_OR_PART_BEFORE_SEARSH", ""),
+                'template_part' => env("{$PREFIX}_TEMPLATE_PART_BEFORE_SEARSH", 'text-home'),
+
+                // Texto que será exibido
+                'text' => "",
+
+                 // Link que leva a documentação do edital
+                 'link_documentation' => "",
+
+                 // Texto que contem o link da documentação do edital
+                 'text_link_documentation' => "",
+
+                 // Texto informativo ao lado do link
+                 'text_info_link_documentation' => "",
 
                 //Habilita um botão abaixo do texto
                 'enabled_button' => env("{$PREFIX}_ENABLED_BUTTON_BEFORE_SEARSH", false),
 
                 //texto dentro do botão
-                'text_button' => env("{$PREFIX}_TEXT_BUTTON_BEFORE_SEARSH",''),
+                'text_button' => "",
 
                 //Link que o botão deve acessar
-                'link_button' => env("{$PREFIX}_LINK_BUTTON_BEFORE_SEARSH",''),
+                'link_buton' => "",
 
                 // Texto que será exibido no local do botão quando o mesmo esteja desabilitado
                 'text_button_disabled' => "",
@@ -213,14 +224,18 @@ class Plugin extends \MapasCulturais\Plugin
             $text_home = $config['text_home_before_searsh'];
             if ($text_home['enabled']) {
                 if ($text_home['use_part']) {
-                    $this->part($text_home['text_or_part'], [
+                    $this->part($text_home['template_part'], [
                         'enabled_button' => $text_home['enabled_button'],
                         'text_button' => $text_home['text_button'],
                         'link_button' => $text_home['link_button'],
                         'text_button_disabled' => $text_home['text_button_disabled'],
+                        'text' => $text_home['text'],
+                        'link_documentation' => $text_home['link_documentation'],
+                        'text_link_documentation' => $text_home['text_link_documentation'],
+                        'text_info_link_documentation' => $text_home['text_info_link_documentation']
                     ]);
                 } else {
-                    echo $text_home['text_or_part'];
+                    echo $text_home['text'];
                 }
             }
         });

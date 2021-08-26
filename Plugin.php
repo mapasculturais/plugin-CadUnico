@@ -72,10 +72,10 @@ class Plugin extends \MapasCulturais\Plugin
                 'enabled_button' => env("{$PREFIX}_ENABLED_BUTTON_BEFORE_SEARSH", false),
 
                 //texto dentro do botão
-                'text_buton' => env("{$PREFIX}_TEXT_BUTTON_BEFORE_SEARSH",''),
+                'text_button' => env("{$PREFIX}_TEXT_BUTTON_BEFORE_SEARSH",''),
 
                 //Link que o botão deve acessar
-                'link_buton' => env("{$PREFIX}_LINK_BUTTON_BEFORE_SEARSH",''),
+                'link_button' => env("{$PREFIX}_LINK_BUTTON_BEFORE_SEARSH",''),
 
                 // Texto que será exibido no local do botão quando o mesmo esteja desabilitado
                 'text_button_disabled' => "",
@@ -215,8 +215,8 @@ class Plugin extends \MapasCulturais\Plugin
                 if ($text_home['use_part']) {
                     $this->part($text_home['text_or_part'], [
                         'enabled_button' => $text_home['enabled_button'],
-                        'text_buton' => $text_home['text_buton'],
-                        'link_buton' => $text_home['link_buton'],
+                        'text_button' => $text_home['text_button'],
+                        'link_button' => $text_home['link_button'],
                         'text_button_disabled' => $text_home['text_button_disabled'],
                     ]);
                 } else {

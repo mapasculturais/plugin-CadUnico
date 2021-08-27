@@ -114,8 +114,10 @@ class Plugin extends \MapasCulturais\Plugin
             ],
 
             // STATUS_SENT = 1
-            'title_status_sent' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua solicitação segue em análise.')),
-            'msg_status_sent' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Consulte novamente em outro momento. Você também receberá o resultado por e-mail.')),
+            'title_status_sent' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição no programa MS Cultura Cidadã esta análise.')),
+            'msg_status_sent' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Você receberá um e-mail de confirmação.')),
+            'text_button_status' => "Consulte o status da inscrição",
+            'text_link_button_status' => "clicando aqui",
 
             // STATUS_INVALID = 2
             'title_status_invalid' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua solicitação não foi aprovada.')),

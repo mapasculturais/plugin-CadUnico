@@ -290,16 +290,25 @@ class Plugin extends \MapasCulturais\Plugin
             $opportunities_id = $plugin->config['opportunity_id'];
 
             $opportunity = $app->repo('Opportunity')->find($opportunities_id) ?? null;
-
+            
             if ($opportunity && $opportunity->canUser('@control')) {
+
                 $_SESSION['mapasculturais.auth.redirect_path'] = $app->createUrl('panel', 'index');
+
+            }else if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) === 0) {
+                
+                $app->hook('auth.successful:redirectUrl', function (&$redirectUrl) use ($plugin, $app) {
+           
+                    $redirectUrl = $app->createUrl($plugin->getSlug(), 'cadastro');
+                });
             }
+            
         });
 
          // Modifica o template do autenticador quando o redirect url for para um slug configurado
          $app->hook('controller(auth).render(<<*>>)', function (&$template, &$data) use ($app, $plugin) {
             $redirect_url = $_SESSION['mapasculturais.auth.redirect_path'] ?? '';
-
+          
             if (strpos($redirect_url, "/{$plugin->getSlug()}") === 0) {
                 $req = $app->request;
                 $data['plugin'] = $plugin;
@@ -309,6 +318,7 @@ class Plugin extends \MapasCulturais\Plugin
 
         //Altera o redirectUrl caso encontre um slug  configurado na sessão mapasculturais.auth.redirect_path
         $app->hook('auth.createUser:redirectUrl', function (&$redirectUrl) use ($plugin) {
+           
             if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) === 0) {
                 $redirectUrl =  $plugin->getSlug();
             }

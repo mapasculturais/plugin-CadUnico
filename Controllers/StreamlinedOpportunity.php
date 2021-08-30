@@ -634,7 +634,30 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             'recursos' => $recursos,
             'avaliacoesRecusadas' => $avaliacoesRecusadas,
         ]);
-    }          
+    }     
+    
+    /**
+     * Seta um metadado indicando que se iniciou o streamLined da opportunidade
+     */
+    public function GET_startstreamlined ()
+    {
+        $this->requireAuthentication();
+
+        $app = App::i();
+
+        if(!$app->user->is('admin')) {
+            $this->errorJson('Permissao negada', 403);
+        }
+        
+        $request = $this->data;
+
+        $opportunity = $this->getOpportunity();
+
+        $opportunity->{$this->prefix("streamlined_start")} = ($request['start'] == "true") ? true : false;
+        
+        $opportunity->save();
+
+    }
 
 
     /**

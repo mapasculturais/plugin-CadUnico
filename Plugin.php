@@ -43,7 +43,7 @@ class Plugin extends \MapasCulturais\Plugin
             'schedule_datetime' => null,
 
             // Opportunidade configurada no StreamLinedOpportunity
-            'opportunity_id' => env("{$PREFIX}_OPPORTUNITY_ID", false),
+            'opportunity_id' => false,
 
             // número máximo de inscrições por usuário
             'limit' => env("{$PREFIX}_LIMIT", 1), 

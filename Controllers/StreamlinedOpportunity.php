@@ -495,6 +495,12 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             throw new \Exception(i::__('O tipo do agente deve ser individual', 'streamlined-opportunity'));
         }
         $agent->checkPermission('@control');
+
+        if($registrations = $app->repo('Registration')->findBy(['owner' => $agent])){
+            if(count($registrations) >= $this->config['limit'] ){
+                $app->redirect($this->createUrl('cadastro'));
+            }
+        }
         
         $registration = new \MapasCulturais\Entities\Registration;
         $registration->owner = $agent;

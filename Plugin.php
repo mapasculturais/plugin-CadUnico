@@ -36,9 +36,17 @@ class Plugin extends \MapasCulturais\Plugin
         demais somente adiciona o prefixo
         */
         $config += [
-            'enabled_plugin' => env("{$PREFIX}_ENABLED", false), // true habilita o plugin false desabilita
+            // true habilita o plugin false desabilita
+            'enabled_plugin' => env("{$PREFIX}_ENABLED", false), 
+
+            // Define o horario que deve ser liberado as inscrições
+            'schedule_datetime' => null,
+
+            // Opportunidade configurada no StreamLinedOpportunity
             'opportunity_id' => env("{$PREFIX}_OPPORTUNITY_ID", false),
-            'limit' => env("{$PREFIX}_LIMIT", 1), // número máximo de inscrições por usuário
+
+            // número máximo de inscrições por usuário
+            'limit' => env("{$PREFIX}_LIMIT", 1), 
 
             /* TEXTOS E DEMAIS COMPONENTES DE INTERFACE */
 
@@ -203,7 +211,7 @@ class Plugin extends \MapasCulturais\Plugin
         }); 
 
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
-        $app->hook('template(site.index.home-search-form):begin', function () use ($config) {
+        $app->hook('template(site.index.home-search-form):begin', function () use ($config, $plugin) {
             /** @var \MapasCulturais\Theme $this */
             $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');
 
@@ -234,7 +242,8 @@ class Plugin extends \MapasCulturais\Plugin
                         'text' => $text_home['text'],
                         'link_documentation' => $text_home['link_documentation'],
                         'text_link_documentation' => $text_home['text_link_documentation'],
-                        'text_info_link_documentation' => $text_home['text_info_link_documentation']
+                        'text_info_link_documentation' => $text_home['text_info_link_documentation'],
+                        'isStartStreamLined' => $plugin->isStartStreamLined(),
                     ]);
                 } else {
                     echo $text_home['text'];
@@ -346,7 +355,7 @@ class Plugin extends \MapasCulturais\Plugin
                 $requestedOpportunity->canUser('evaluateRegistrations');
 
 
-            if (!$can_view && $requestedOpportunity->id == $opportunities_id) {
+            if (!$can_view && ($requestedOpportunity->id == $opportunities_id) && $plugin->isStartStreamLined()) {
                 $url = $app->createUrl($plugin->getSlug(), 'cadastro');
                 $app->redirect($url);
             }
@@ -365,7 +374,7 @@ class Plugin extends \MapasCulturais\Plugin
                 $requestedOpportunity->canUser('viewEvaluations') ||
                 $requestedOpportunity->canUser('evaluateRegistrations');
 
-            if (!$can_view && $requestedOpportunity->id == $opportunities_id) {
+            if (!$can_view && ($requestedOpportunity->id == $opportunities_id) && $plugin->isStartStreamLined()) {
                 $url = $app->createUrl($plugin->getSlug(), 'formulario', [$registration->id]);
                 $app->redirect($url);
             }
@@ -416,6 +425,13 @@ class Plugin extends \MapasCulturais\Plugin
             'private' => true
         ]);
 
+        $this->registerMetadata('MapasCulturais\Entities\Opportunity',  $this->prefix("streamlined_start"), [
+            'label' => i::__('Aberto processo de inscrição'),
+            'type' => 'boolean',
+            'private' => false,
+            'default' => false
+        ]);
+
         /**
          * Registra campo adicional "Mensagem de Recurso" nas oportunidades
          * @return void
@@ -452,6 +468,32 @@ class Plugin extends \MapasCulturais\Plugin
     public function prefix($value)
     {
         return $this->config['slug']."_".$value;
+    }
+    
+    /**
+     * Retorna se esta aberto o processo de inscrição analisando a data e hora que esta liberado ou metadado streamlined_start
+     * @TODO Refatorar para buscar data e hora de início da opportunidade
+     *
+     * @return void
+     */
+    public function isStartStreamLined()
+    {
+        $app = App::i();
+
+        $config = $this->config;
+
+        
+        $open_registrations =  (new \DateTime('now') >= new \DateTime($config['schedule_datetime'])) ? true : false;
+        
+        $opportunity = $app->repo("Opportunity")->find($config['opportunity_id']);
+        $metadata = $opportunity->getMetadata();        
+        $streamlined_start = $metadata[$this->prefix('streamlined_start')];
+        
+        if($open_registrations || $streamlined_start){
+            return true;
+        }
+
+        return false;
     }
        
     /**

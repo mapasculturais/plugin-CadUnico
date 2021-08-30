@@ -487,7 +487,7 @@ class Plugin extends \MapasCulturais\Plugin
         
         if($opportunity = $app->repo("Opportunity")->find($config['opportunity_id'])){
             $metadata = $opportunity->getMetadata();        
-            $streamlined_start = $metadata[$this->prefix('streamlined_start')];
+            $streamlined_start = $metadata[$this->prefix('streamlined_start')] ?? null;
             
             if($open_registrations || $streamlined_start){
                 return true;

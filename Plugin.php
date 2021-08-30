@@ -485,13 +485,15 @@ class Plugin extends \MapasCulturais\Plugin
         
         $open_registrations =  (new \DateTime('now') >= new \DateTime($config['schedule_datetime'])) ? true : false;
         
-        $opportunity = $app->repo("Opportunity")->find($config['opportunity_id']);
-        $metadata = $opportunity->getMetadata();        
-        $streamlined_start = $metadata[$this->prefix('streamlined_start')];
-        
-        if($open_registrations || $streamlined_start){
-            return true;
+        if($opportunity = $app->repo("Opportunity")->find($config['opportunity_id'])){
+            $metadata = $opportunity->getMetadata();        
+            $streamlined_start = $metadata[$this->prefix('streamlined_start')];
+            
+            if($open_registrations || $streamlined_start){
+                return true;
+            }
         }
+        
 
         return false;
     }

@@ -66,14 +66,14 @@ class Plugin extends \MapasCulturais\Plugin
             ],
             
             /*TEXTO  HOME ANTES DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
-            'text_home_before_searsh' => [
+            'text_home_before_search' => [
                 // true para usar um texto acima do formulário de pesquisa da home
-                'enabled' => env("{$PREFIX}_ENABLED_TEXT_HOME_BEFORE_SEARSH", false), 
+                'enabled' => env("{$PREFIX}_ENABLED_TEXT_HOME_BEFORE_SEARCH", false), 
 
                 //true para usar um template part ou false para usar diretamente texto da configuração
-                'use_part' => env("{$PREFIX}_USE_PART_BEFORE_SEARSH", false), 
+                'use_part' => env("{$PREFIX}_USE_PART_BEFORE_SEARCH", false), 
 
-                'template_part' => env("{$PREFIX}_TEMPLATE_PART_BEFORE_SEARSH", 'text-home'),
+                'template_part' => env("{$PREFIX}_TEMPLATE_PART_BEFORE_SEARCH", 'text-home'),
 
                 // Texto que será exibido
                 'text' => "",
@@ -101,7 +101,7 @@ class Plugin extends \MapasCulturais\Plugin
             ],
 
             /*IMAGEM  HOME ANTES DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
-            'img_home_before_searsh' => [
+            'img_home_before_search' => [
                 // true para usar uma imagem acima do texto que será inserido na home
                 'enabled' => env("{$PREFIX}_ENABLED_IMG_HOME", false), 
 
@@ -115,10 +115,10 @@ class Plugin extends \MapasCulturais\Plugin
             ],
 
             /*TEXTO  HOME DEPOIS DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
-            'text_home_after_searsh' => [
-                'text' => env("{$PREFIX}_TEXT_HOME_AFTER_SEARSH", ''),
-                'button' => env("{$PREFIX}_BOTAO_HOME_AFTER_SEARSH", ''),
-                'title' => env("{$PREFIX}_TITULO_HOME_AFTER_SEARSH", ''),
+            'text_home_after_search' => [
+                'text' => env("{$PREFIX}_TEXT_HOME_AFTER_SEARCH", ''),
+                'button' => env("{$PREFIX}_BOTAO_HOME_AFTER_SEARCH", ''),
+                'title' => env("{$PREFIX}_TITULO_HOME_AFTER_SEARCH", ''),
             ],
 
             // STATUS_SENT = 1
@@ -216,7 +216,7 @@ class Plugin extends \MapasCulturais\Plugin
             $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');
 
             //Insere uma imagem acima do texto caso esteja configurada
-            $img_home = $config['img_home_before_searsh'];
+            $img_home = $config['img_home_before_search'];
             if ($img_home['enabled']) {
                 $params = [
                     'styles_class' => $img_home['styles_class'] ?: "",
@@ -231,7 +231,7 @@ class Plugin extends \MapasCulturais\Plugin
             }
 
             //Insere um texto caso esteja configurado
-            $text_home = $config['text_home_before_searsh'];
+            $text_home = $config['text_home_before_search'];
             if ($text_home['enabled']) {
                 if ($text_home['use_part']) {
                     $this->part($text_home['template_part'], [
@@ -345,9 +345,9 @@ class Plugin extends \MapasCulturais\Plugin
 
         $app->hook('template(site.index.home-search):end', function () use ($plugin) {
             /** @var \MapasCulturais\Theme $this */
-            $text = $plugin->config['text_home_after_searsh']['text'];
-            $button = $plugin->config['text_home_after_searsh']['button'];
-            $title = $plugin->config['text_home_after_searsh']['title'];
+            $text = $plugin->config['text_home_after_search']['text'];
+            $button = $plugin->config['text_home_after_search']['button'];
+            $title = $plugin->config['text_home_after_search']['title'];
 
             $this->part('streamlinedopportunity/home-search', [
                 'text' => $text,

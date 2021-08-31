@@ -306,17 +306,8 @@ class Plugin extends \MapasCulturais\Plugin
             $opportunity = $app->repo('Opportunity')->find($opportunities_id) ?? null;
             
             if ($opportunity && $opportunity->canUser('@control')) {
-
                 $_SESSION['mapasculturais.auth.redirect_path'] = $app->createUrl('panel', 'index');
-
-            }else if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) === 0) {
-                
-                $app->hook('auth.successful:redirectUrl', function (&$redirectUrl) use ($plugin, $app) {
-           
-                    $redirectUrl = $app->createUrl($plugin->getSlug(), 'cadastro');
-                });
             }
-            
         });
 
          // Modifica o template do autenticador quando o redirect url for para um slug configurado

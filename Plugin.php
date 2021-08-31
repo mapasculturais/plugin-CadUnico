@@ -285,6 +285,20 @@ class Plugin extends \MapasCulturais\Plugin
             });
         });
 
+        //Seta sessão que identifica que ao criar uma nova conta, o usuário veio do plugin steamLined
+        $app->hook('auth.createUser:before', function () use ($plugin, &$isStreamlined) {            
+            if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) >= 0) {
+                $_SESSION['mapasculturais.auth.FromStreamlined'] = $plugin->getSlug();
+            }
+        });
+        
+        //Se ao criar a conta, o usuário acessou pelo plugin streanlined, leva ele para o cadastro
+        $app->hook('auth.successful:redirectUrl', function (&$redirectUrl) use ($plugin, $app) {
+            if ($_SESSION['mapasculturais.auth.FromStreamlined'] ?? null == $plugin->getSlug()) {            
+                $redirectUrl = $app->createUrl($plugin->getSlug(), 'cadastro');
+            }
+        },1000);
+
         //Seta uma sessão com redirect_path do painel
         $app->hook('auth.successful', function () use ($plugin, $app) {
             $opportunities_id = $plugin->config['opportunity_id'];
@@ -319,7 +333,7 @@ class Plugin extends \MapasCulturais\Plugin
         //Altera o redirectUrl caso encontre um slug  configurado na sessão mapasculturais.auth.redirect_path
         $app->hook('auth.createUser:redirectUrl', function (&$redirectUrl) use ($plugin) {
            
-            if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) === 0) {
+            if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) >= 0) {
                 $redirectUrl =  $plugin->getSlug();
             }
         });

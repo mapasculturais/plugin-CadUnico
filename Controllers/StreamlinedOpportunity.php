@@ -50,7 +50,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         if(!$this->_initiated) {
             
             $app = App::i();
-            $this->plugin = Plugin::getInstance($controller_id);
+            $this->plugin = Plugin::getInstanceBySlug($controller_id);
             $this->layout = 'streamlined-opportunity';
 
             $slug = $this->plugin->getSlug();

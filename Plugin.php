@@ -121,6 +121,12 @@ class Plugin extends \MapasCulturais\Plugin
                 'title' => env("{$PREFIX}_TITULO_HOME_AFTER_SEARCH", ''),
             ],
 
+            // AVALIAÇÕES E RESULTADOS
+            'nao_exibir_resultados' => (array) json_decode(env("{$PREFIX}_NAO_EXIBIR_RESULTADOS', '[]")),
+            'avaliadores_dataprev_user_id' => (array) json_decode(env("{$PREFIX}_AVALIADORES_DATAPREV_USER_ID", '[]')),
+            'avaliadores_genericos_user_id' => (array) json_decode(env("{$PREFIX}_AVALIADORES_GENERICOS_USER_ID", '[]')),
+            'exibir_resultado_avaliadores' => (array) json_decode(env("{$PREFIX}_EXIBIR_RESULTADO_AVALIADORES", '["3", "10"]')),
+
             // STATUS_SENT = 1
             'title_status_sent' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição no programa MS Cultura Cidadã esta análise.')),
             'msg_status_sent' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Você receberá um e-mail de confirmação.')),

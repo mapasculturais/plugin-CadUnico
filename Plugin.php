@@ -394,6 +394,16 @@ class Plugin extends \MapasCulturais\Plugin
                 $app->redirect($url);
             }
         });
+
+        //Publica o agente ao enviar a inscrição
+        $app->hook('POST(registration.send):before', function () use ($plugin, $app) {
+            $agent = $app->repo("Agent")->find($app->user->profile->id);
+            $registration = $this->requestedEntity;
+            if($agent->status == 0 && $registration->{$plugin->prefix("has_accepted_terms")}) {
+                $agent->status = 1;
+                $agent->save(true);
+            }
+        });
     }
 
     public function register()

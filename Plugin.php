@@ -279,7 +279,8 @@ class Plugin extends \MapasCulturais\Plugin
                         'text' => $text_home['text'],
                         'link_documentation' => $text_home['link_documentation'],
                         'text_link_documentation' => $text_home['text_link_documentation'],
-                        'text_info_link_documentation' => $text_home['text_info_link_documentation']
+                        'text_info_link_documentation' => $text_home['text_info_link_documentation'],
+                        'isStartStreamLined' => $plugin->isStartStreamLined(),
                     ]);
                 } else {
                     echo $text_home['text'];

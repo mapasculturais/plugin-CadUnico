@@ -496,12 +496,6 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         }
         $agent->checkPermission('@control');
 
-        if($registrations = $app->repo('Registration')->findBy(['owner' => $agent])){
-            if(count($registrations) >= $this->config['limit'] ){
-                $app->redirect($this->createUrl('cadastro'));
-            }
-        }
-        
         $registration = new \MapasCulturais\Entities\Registration;
         $registration->owner = $agent;
         $registration->opportunity = $this->getOpportunity();
@@ -731,20 +725,10 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $summaryStatusName = $this->getStatusNames();
 
         $owner_name = $app->user->profile->name;
-
-        $repo = $app->repo('Registration');
         
         $opportunity = $this->getOpportunity();
-
-        // pega as inscrições do proponente
-        $registrations = $controller->apiQuery([
-            '@select' => 'id', 
-            'opportunity' => "EQ({$opportunity->id})", 
-            'status' => 'GTE(0)'
-        ]);
-        $registrations_ids = array_map(function($r) { return $r['id']; }, $registrations);
-        $registrations = $repo->findBy(['id' => $registrations_ids ]);
-
+       
+        $registrations =  $app->repo('Registration')->findBy(['opportunity' => $opportunity, 'status' => [0], 'owner' => $app->user->profile->id]);
 
         $this->render('cadastro', [
                 'limit' => $this->config['limit'],

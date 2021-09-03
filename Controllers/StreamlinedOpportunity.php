@@ -480,7 +480,6 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         //verifica se existe e se o agente owner é individual
           //se é coletivo cria um agente individual
         if ($agent->type->id == 2){
-            unset($agent);
             $app->disableAccessControl();
             $agent = new \MapasCulturais\Entities\Agent($agent->user);
             //@TODO: confirmar nome e tipo do Agente coletivo
@@ -489,7 +488,6 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             $agent->save(true);
             $app->enableAccessControl();
         }
-       
         if(!$agent || $agent->type->id != 1){
             // @todo tratar esse erro
             throw new \Exception(i::__('O tipo do agente deve ser individual', 'streamlined-opportunity'));
@@ -725,10 +723,19 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $summaryStatusName = $this->getStatusNames();
 
         $owner_name = $app->user->profile->name;
+
+        $repo = $app->repo('Registration');
         
         $opportunity = $this->getOpportunity();
        
-        $registrations =  $app->repo('Registration')->findBy(['opportunity' => $opportunity, 'status' => [0], 'owner' => $app->user->profile->id]);
+        $registrations = $controller->apiQuery([
+            '@select' => 'id', 
+            'opportunity' => "EQ({$opportunity->id})", 
+            'status' => 'GTE(0)'
+        ]);
+        
+        $registrations_ids = array_map(function($r) { return $r['id']; }, $registrations);
+        $registrations = $repo->findBy(['id' => $registrations_ids ]);
 
         $this->render('cadastro', [
                 'limit' => $this->config['limit'],

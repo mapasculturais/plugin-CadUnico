@@ -133,7 +133,10 @@ class Plugin extends \MapasCulturais\Plugin
             'nao_exibir_resultados' => (array) json_decode(env("{$PREFIX}_NAO_EXIBIR_RESULTADOS', '[]")),
             'avaliadores_dataprev_user_id' => (array) json_decode(env("{$PREFIX}_AVALIADORES_DATAPREV_USER_ID", '[]')),
             'avaliadores_genericos_user_id' => (array) json_decode(env("{$PREFIX}_AVALIADORES_GENERICOS_USER_ID", '[]')),
-            'exibir_resultado_avaliadores' => (array) json_decode(env("{$PREFIX}_EXIBIR_RESULTADO_AVALIADORES", '["3", "10"]')),
+            'exibir_resultado_avaliadores' => (array) json_decode(env("{$PREFIX}_EXIBIR_RESULTADO_AVALIADORES", '["2", "3", "10"]')),
+
+            // só consolida a a homologaćão se todos as validaćões já tiverem sido feitas
+            'consolidation_requires_validations' => (array) json_decode(env('HOMOLOG_REQ_VALIDACOES', '[]')),
 
             // STATUS_SENT = 1
             'title_status_sent' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição no programa MS Cultura Cidadã esta análise.')),
@@ -146,7 +149,7 @@ class Plugin extends \MapasCulturais\Plugin
             'msg_status_invalid' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Não atendeu aos requisitos necessários ou os recursos disponíveis foram esgotados.')),
 
             // STATUS_NOTAPPROVED = 3
-            'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua solicitação foi aprovada.')),
+            'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua solicitação não foi aprovada.')),
             'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Não atendeu aos requisitos necessários. Caso não concorde com o resultado você pode entrar com recurso.')), // STATUS_NOTAPPROVED = 3
 
             //STATUS_WAITLIST = 8
@@ -154,7 +157,7 @@ class Plugin extends \MapasCulturais\Plugin
             'msg_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_MESSAGE", i::__('Inscrição suplente.')),
 
             // STATUS_APPROVED = 10
-            'title_status_approved' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua solicitação não foi aprovada.')),
+            'title_status_approved' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua solicitação foi aprovada.')),
             'msg_status_approved' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('A inscrição foi aprovada')),
 
             'logo_institution' => env("$PREFIX}_LOGO_INSTUCTION", ''),

@@ -241,6 +241,87 @@ class Plugin extends \MapasCulturais\Plugin
             return;
         }
 
+          /**
+         * só consolida as avaliações para "selecionado" se tiver acontecido as validações (dataprev, etc)
+         * 
+         * @TODO: implementar para método de avaliaçào documental
+         */
+        $app->hook('entity(Registration).consolidateResult', function(&$result, $caller) use($plugin, $app) {
+
+            
+            $opportunities_id = $plugin->config['opportunity_id'];
+            
+            if ($this->opportunity->id != $opportunities_id) {
+                return;
+            }
+            
+            // só aplica o hook para usuários homologadores
+            if ($caller->user->{$plugin->prefix("validator_for")}) {
+                return;
+            }
+
+            $evaluations = $app->repo('RegistrationEvaluation')->findBy(['registration' => $this, 'status' => 1]);
+
+            $result = $caller->result;
+                        
+            foreach ($evaluations as $eval) {
+                if ($eval->user->{$plugin->prefix("validator_for")}) {
+                    continue;
+                }
+
+                if(intval($eval->result) < intval($result)) {
+                    $result = "$eval->result";
+                }
+            }
+            
+            
+            // se a consolidação não é para selecionada (statu = 10) pode continuar
+            if ($result != '10') {
+                return;
+            } 
+
+            $can_consolidate = true;
+
+            /**
+             * Se a consolidação requer validações, verifica se existe alguma
+             * avaliação dos usuários validadores
+             */
+            if ($validations = $plugin->config['consolidation_requires_validations']) {
+                
+                foreach($validations as $slug) {
+                    $can = false;
+                    foreach ($evaluations as $eval) {
+                        if ($eval->user->{$plugin->prefix("validator_for")} == $slug) {
+                            $can = true;
+                        }
+                    }
+                    
+                    if (!$can) {
+                        $can_consolidate = false;
+                    }
+                }
+            }
+            
+            $has_validations = false;
+            foreach ($evaluations as $eval) {
+                if ($eval->user->aldirblanc_validador) {
+                    $has_validations = true;
+                }
+            }
+
+            // se não pode consolidar, coloca a string 'homologado'
+            if (!$can_consolidate) {
+                if (!$this->consolidatedResult || count($evaluations) <= 1 || !$has_validations) {
+                    $result = 'homologado';
+                } else if (strpos($this->consolidatedResult, 'homologado') === false) {
+                    $result = "homologado, {$this->consolidatedResult}";
+                } else {
+                    $result = $this->consolidatedResult;
+                }
+            }
+        });
+
+
         // Envia um e-mail quando o proponenhte se inscreve 
         $app->hook('POST(registration.send):before', function() use ($plugin){
             $registration = $this->requestedEntity;

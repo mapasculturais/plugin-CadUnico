@@ -145,19 +145,19 @@ class Plugin extends \MapasCulturais\Plugin
             'text_link_button_status' => "clicando aqui",
 
             // STATUS_INVALID = 2
-            'title_status_invalid' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua solicitação não foi aprovada.')),
+            'title_status_invalid' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua inscrição não foi aprovada.')),
             'msg_status_invalid' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Não atendeu aos requisitos necessários ou os recursos disponíveis foram esgotados.')),
 
             // STATUS_NOTAPPROVED = 3
-            'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua solicitação não foi aprovada.')),
+            'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua inscrição não foi aprovada.')),
             'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Não atendeu aos requisitos necessários. Caso não concorde com o resultado você pode entrar com recurso.')), // STATUS_NOTAPPROVED = 3
 
             //STATUS_WAITLIST = 8
-            'title_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_TITLE", i::__('Sua solicitação foi validada.')),
+            'title_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_TITLE", i::__('Sua inscrição foi validada.')),
             'msg_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_MESSAGE", i::__('Inscrição suplente.')),
 
             // STATUS_APPROVED = 10
-            'title_status_approved' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua solicitação foi aprovada.')),
+            'title_status_approved' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua inscrição foi aprovada.')),
             'msg_status_approved' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('A inscrição foi aprovada')),
 
             'logo_institution' => env("$PREFIX}_LOGO_INSTUCTION", ''),

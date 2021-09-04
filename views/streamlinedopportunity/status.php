@@ -44,7 +44,7 @@ $_params = [
             <?php else : ?>
                 <hr>
             <?php endif; ?>
-                <?php if($config['text_link_button_status'] && $config['text_button_status']){ ?>
+                <?php if($config['text_link_button_status'] && $config['text_button_status'] && $registration->status == 1){ ?>
                     <?=$config['text_button_status']?> <a href="<?php echo $app->createUrl($slug, 'cadastro'); ?>"><?=$config['text_link_button_status']?> </a>
                 <?php } ?>
             <?php

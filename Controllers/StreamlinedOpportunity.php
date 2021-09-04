@@ -481,7 +481,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
           //se é coletivo cria um agente individual
         if ($agent->type->id == 2){
             $app->disableAccessControl();
-            $agent = new \MapasCulturais\Entities\Agent($agent->user);
+            $agent = new \MapasCulturais\Entities\Agent();
             //@TODO: confirmar nome e tipo do Agente coletivo
             $agent->name = ' ';
             $agent->type = 1;
@@ -740,7 +740,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $this->render('cadastro', [
                 'limit' => $this->config['limit'],
                 'registrations' => $registrations,
-                'summaryStatusName'=>$summaryStatusName, 
+                'summaryStatusName'=> $summaryStatusName, 
                 'niceName' => $owner_name,
         ]);
     }

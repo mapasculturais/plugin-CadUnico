@@ -451,13 +451,13 @@ class Plugin extends \MapasCulturais\Plugin
         });
 
         /**
-         * Na criação da inscrição, define os metadados inciso2_opportunity_id ou
-         * inciso1_opportunity_id do agente responsável pela inscrição
+         * Na criação da inscrição, define os metadados {$slug}_registration do agente responsável pela inscrição
+         * @TODO: Verificar se metadado é necessário
          */
-        $app->hook('entity(Registration).save:after', function () use ($plugin) {
+        $app->hook('entity(Registration).insert:after', function () use ($plugin) {
             /** @var \MapasCulturais\Entities\Registration $this */
             if ($this->opportunity->id == $plugin->config['opportunity_id']) {
-                $slug = "{$plugin->getSlug()}_registration";
+                $slug = $plugin->prefix("registration");
                 $agent = $this->owner;
                 $agent->$slug = $this->id;
                 $agent->save(true);

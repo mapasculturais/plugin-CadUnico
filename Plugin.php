@@ -247,7 +247,7 @@ class Plugin extends \MapasCulturais\Plugin
             return;
         }
 
-        /**Insere declarações iniciais na ficha de inscrição para quem tem controla da inscrição */
+        /**Insere declarações iniciais na ficha de inscrição para quem tem controle da inscrição */
         $app->hook("template(registration.view.registration-field-list):after", function() use ($plugin){
             $registration = $this->controller->requestedEntity;
             if($plugin->config['initial_statement_enabled'] && $registration->canUser('@control')){

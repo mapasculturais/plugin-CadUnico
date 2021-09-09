@@ -20,7 +20,8 @@ $this->includeEditableEntityAssets();
 
 $_params = [
     'entity'      => $registration,
-    'opportunity' => $registration->opportunity
+    'opportunity' => $registration->opportunity,
+    'slug' => $slug
 ]; ?>
 
 <section id="lab-status" class="lab-main-content">
@@ -43,8 +44,11 @@ $_params = [
             <?php else : ?>
                 <hr>
             <?php endif; ?>
-
+                <?php if($config['text_link_button_status'] && $config['text_button_status'] && $registration->status == 1){ ?>
+                    <?=$config['text_button_status']?> <a href="<?php echo $app->createUrl($slug, 'cadastro'); ?>"><?=$config['text_link_button_status']?> </a>
+                <?php } ?>
             <?php
+            
 
             /**
              *
@@ -95,19 +99,14 @@ $_params = [
         <?php $this->applyTemplateHook('reason-failure', 'begin', [$_params]); ?>
         <?php $this->applyTemplateHook('reason-failure', 'end'); ?>
 
-        <div class="wrap-button">
-            <a href="<?php echo $app->createUrl($slug, 'cadastro'); ?>" class="btn secondary"><?= i::__('Voltar para os Cadastros', 'streamlined-opportunity') ?></a>
-        </div><!-- /.wrap-button -->
-
-
-        <h1><?= i::__('Cadastro de pessoa física', 'streamlined-opportunity') ?></h1>
+        <h1><?= i::__('', 'streamlined-opportunity') ?></h1>
 
         <?php $this->part('streamlinedopportunity/registration-single--header', $_params) ?>
 
         <?php $this->part('singles/registration-single--fields', $_params) ?>
 
         <div class="wrap-button">
-            <a href="<?php echo $app->createUrl($slug, 'cadastro'); ?>" class="btn secondary"><?= i::__('Voltar para os Cadastros', 'streamlined-opportunity') ?></a>
+            <a href="<?php echo $app->createUrl($slug, 'cadastro'); ?>" class="btn secondary"><?= i::__('Voltar para inscrição', 'streamlined-opportunity') ?></a>
         </div><!-- /.wrap-button -->
 
     </article>

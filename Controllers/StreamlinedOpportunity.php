@@ -343,15 +343,15 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
 
             if ($evaluation->getResult() == $registration->status) {
                 
-                if (in_array($evaluation->user->id, $this->config['avaliadores_dataprev_user_id']) && in_array($registration->status, $this->config['exibir_resultado_dataprev'])) {
+                if (in_array($evaluation->user->id, $this->config['evaluators_user_id']) && in_array($registration->status, $this->config['exibir_resultado_dataprev'])) {
                     // resultados do dataprev
                     $justificativaAvaliacao[] = $evaluation->getEvaluationData()->obs ?? '';
-                } elseif (in_array($evaluation->user->id, $this->config['avaliadores_genericos_user_id']) && in_array($registration->status, $this->config['exibir_resultado_generico'])) {
+                } elseif (in_array($evaluation->user->id, $this->config['evaluators_generic_user_id']) && in_array($registration->status, $this->config['exibir_resultado_generico'])) {
                     // resultados dos avaliadores genericos
                     $justificativaAvaliacao[] = $evaluation->getEvaluationData()->obs ?? '';
                 } 
                 
-                if (in_array($registration->status, $this->config['exibir_resultado_avaliadores']) && !in_array($evaluation->user->id, $this->config['avaliadores_dataprev_user_id']) && !in_array($evaluation->user->id, $this->config['avaliadores_genericos_user_id'])) {
+                if (in_array($registration->status, $this->config['display_result_evaluators']) && !in_array($evaluation->user->id, $this->config['evaluators_user_id']) && !in_array($evaluation->user->id, $this->config['evaluators_generic_user_id'])) {
                     // resultados dos demais avaliadores
                     $justificativaAvaliacao[] = $evaluation->getEvaluationData()->obs ?? '';
                 }
@@ -480,22 +480,20 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         //verifica se existe e se o agente owner é individual
           //se é coletivo cria um agente individual
         if ($agent->type->id == 2){
-            unset($agent);
             $app->disableAccessControl();
-            $agent = new \MapasCulturais\Entities\Agent($agent->user);
+            $agent = new \MapasCulturais\Entities\Agent();
             //@TODO: confirmar nome e tipo do Agente coletivo
             $agent->name = ' ';
             $agent->type = 1;
             $agent->save(true);
             $app->enableAccessControl();
         }
-       
         if(!$agent || $agent->type->id != 1){
             // @todo tratar esse erro
             throw new \Exception(i::__('O tipo do agente deve ser individual', 'streamlined-opportunity'));
         }
         $agent->checkPermission('@control');
-        
+
         $registration = new \MapasCulturais\Entities\Registration;
         $registration->owner = $agent;
         $registration->opportunity = $this->getOpportunity();
@@ -584,10 +582,10 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
     
                     if ($evaluation->getResult() == $registration->status) {
 
-                        // Verifica a configuração `nao_exibir_resultados`
-                        if (!in_array($evaluation->user->id, $this->config['nao_exibir_resultados'])) {
+                        // Verifica a configuração `not_display_results`
+                        if (!in_array($evaluation->user->id, $this->config['not_display_results'])) {
                         
-                            if (in_array($evaluation->user->id, $this->config['avaliadores_dataprev_user_id']) && in_array($registration->status, $this->config['exibir_resultado_dataprev'])) {
+                            if (in_array($evaluation->user->id, $this->config['evaluators_user_id']) && in_array($registration->status, $this->config['exibir_resultado_dataprev'])) {
                                 // resultados do dataprev
                                 $avaliacao = $evaluation->getEvaluationData()->obs ?? '';
                                 if (!empty($avaliacao)) {
@@ -603,12 +601,12 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
                                         $justificativaAvaliacao[] = $avaliacao;
                                     }
                                 }
-                            } elseif (in_array($evaluation->user->id, $this->config['avaliadores_genericos_user_id']) && in_array($registration->status, $this->config['exibir_resultado_generico'])) {
+                            } elseif (in_array($evaluation->user->id, $this->config['evaluators_generic_user_id']) && in_array($registration->status, $this->config['exibir_resultado_generico'])) {
                                 // resultados dos avaliadores genericos
                                 $justificativaAvaliacao[] = $evaluation->getEvaluationData()->obs ?? '';
                             }
 
-                            if (in_array($registration->status, $this->config['exibir_resultado_avaliadores']) && !in_array($evaluation->user->id, $this->config['avaliadores_dataprev_user_id']) && !in_array($evaluation->user->id, $this->config['avaliadores_genericos_user_id'])) {
+                            if (in_array($registration->status, $this->config['display_result_evaluators']) && !in_array($evaluation->user->id, $this->config['evaluators_user_id']) && !in_array($evaluation->user->id, $this->config['evaluators_generic_user_id'])) {
                                 if (!in_array($evaluation, $recursos)) {
                                     // resultados dos demais avaliadores
                                     $justificativaAvaliacao[] = $evaluation->getEvaluationData()->obs ?? '';
@@ -634,7 +632,30 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             'recursos' => $recursos,
             'avaliacoesRecusadas' => $avaliacoesRecusadas,
         ]);
-    }          
+    }     
+    
+    /**
+     * Seta um metadado indicando que se iniciou o streamLined da opportunidade
+     */
+    public function GET_startstreamlined ()
+    {
+        $this->requireAuthentication();
+
+        $app = App::i();
+
+        if(!$app->user->is('admin')) {
+            $this->errorJson('Permissao negada', 403);
+        }
+        
+        $request = $this->data;
+
+        $opportunity = $this->getOpportunity();
+
+        $opportunity->{$this->prefix("streamlined_start")} = ($request['start'] == "true") ? true : false;
+        
+        $opportunity->save();
+
+    }
 
 
     /**
@@ -706,21 +727,20 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $repo = $app->repo('Registration');
         
         $opportunity = $this->getOpportunity();
-
-        // pega as inscrições do proponente
+       
         $registrations = $controller->apiQuery([
             '@select' => 'id', 
             'opportunity' => "EQ({$opportunity->id})", 
             'status' => 'GTE(0)'
         ]);
+        
         $registrations_ids = array_map(function($r) { return $r['id']; }, $registrations);
         $registrations = $repo->findBy(['id' => $registrations_ids ]);
-
 
         $this->render('cadastro', [
                 'limit' => $this->config['limit'],
                 'registrations' => $registrations,
-                'summaryStatusName'=>$summaryStatusName, 
+                'summaryStatusName'=> $summaryStatusName, 
                 'niceName' => $owner_name,
         ]);
     }

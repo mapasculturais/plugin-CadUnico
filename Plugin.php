@@ -39,9 +39,17 @@ class Plugin extends \MapasCulturais\Plugin
         demais somente adiciona o prefixo
         */
         $config += [
-            'enabled_plugin' => env("{$PREFIX}_ENABLED", false), // true habilita o plugin false desabilita
-            'opportunity_id' => env("{$PREFIX}_OPPORTUNITY_ID", false),
-            'limit' => env("{$PREFIX}_LIMIT", 1), // número máximo de inscrições por usuário
+            // true habilita o plugin false desabilita
+            'enabled_plugin' => env("{$PREFIX}_ENABLED", false), 
+
+            // Define o horario que deve ser liberado as inscrições
+            'schedule_datetime' => null,
+
+            // Opportunidade configurada no StreamLinedOpportunity
+            'opportunity_id' => false,
+
+            // número máximo de inscrições por usuário
+            'limit' => env("{$PREFIX}_LIMIT", 1), 
 
             /* TEXTOS E DEMAIS COMPONENTES DE INTERFACE */
 
@@ -61,12 +69,17 @@ class Plugin extends \MapasCulturais\Plugin
             ],
             
             /*TEXTO  HOME ANTES DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
-            'text_home_before_searsh' => [
+            'text_home_before_search' => [
                 // true para usar um texto acima do formulário de pesquisa da home
-                'enabled' => env("{$PREFIX}_ENABLED_TEXT_HOME_BEFORE_SEARSH", false), 
+                'enabled' => env("{$PREFIX}_ENABLED_TEXT_HOME_BEFORE_SEARCH", false), 
 
                 //true para usar um template part ou false para usar diretamente texto da configuração
-                'use_part' => env("{$PREFIX}_USE_PART_BEFORE_SEARSH", false), 
+                'use_part' => env("{$PREFIX}_USE_PART_BEFORE_SEARCH", false), 
+
+                'template_part' => env("{$PREFIX}_TEMPLATE_PART_BEFORE_SEARCH", 'text-home'),
+
+                // Texto que será exibido
+                'text' => "",
 
                 'template_part' => env("{$PREFIX}_TEMPLATE_PART_BEFORE_SEARSH", 'text-home'),
 
@@ -96,7 +109,7 @@ class Plugin extends \MapasCulturais\Plugin
             ],
 
             /*IMAGEM  HOME ANTES DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
-            'img_home_before_searsh' => [
+            'img_home_before_search' => [
                 // true para usar uma imagem acima do texto que será inserido na home
                 'enabled' => env("{$PREFIX}_ENABLED_IMG_HOME", false), 
 
@@ -110,30 +123,41 @@ class Plugin extends \MapasCulturais\Plugin
             ],
 
             /*TEXTO  HOME DEPOIS DO FORMULARIO DE PESQUISA POR PALAVRA CHAVE*/
-            'text_home_after_searsh' => [
-                'text' => env("{$PREFIX}_TEXT_HOME_AFTER_SEARSH", ''),
-                'button' => env("{$PREFIX}_BOTAO_HOME_AFTER_SEARSH", ''),
-                'title' => env("{$PREFIX}_TITULO_HOME_AFTER_SEARSH", ''),
+            'text_home_after_search' => [
+                'text' => env("{$PREFIX}_TEXT_HOME_AFTER_SEARCH", ''),
+                'button' => env("{$PREFIX}_BOTAO_HOME_AFTER_SEARCH", ''),
+                'title' => env("{$PREFIX}_TITULO_HOME_AFTER_SEARCH", ''),
             ],
 
+            // AVALIAÇÕES E RESULTADOS
+            'not_display_results' => (array) json_decode(env("{$PREFIX}_NAO_EXIBIR_RESULTADOS', '[]")),
+            'evaluators_user_id' => (array) json_decode(env("{$PREFIX}_AVALIADORES_DATAPREV_USER_ID", '[]')),
+            'evaluators_generic_user_id' => (array) json_decode(env("{$PREFIX}_AVALIADORES_GENERICOS_USER_ID", '[]')),
+            'display_result_evaluators' => (array) json_decode(env("{$PREFIX}_EXIBIR_RESULTADO_AVALIADORES", '["2", "3", "10"]')),
+
+            // só consolida a a homologaćão se todos as validaćões já tiverem sido feitas
+            'consolidation_requires_validations' => (array) json_decode(env('HOMOLOG_REQ_VALIDACOES', '[]')),
+
             // STATUS_SENT = 1
-            'title_status_sent' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua solicitação segue em análise.')),
-            'msg_status_sent' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Consulte novamente em outro momento. Você também receberá o resultado por e-mail.')),
+            'title_status_sent' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição no programa MS Cultura Cidadã esta análise.')),
+            'msg_status_sent' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Você receberá um e-mail de confirmação.')),
+            'text_button_status' => "Consulte o status da inscrição",
+            'text_link_button_status' => "clicando aqui",
 
             // STATUS_INVALID = 2
-            'title_status_invalid' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua solicitação não foi aprovada.')),
+            'title_status_invalid' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua inscrição não foi aprovada.')),
             'msg_status_invalid' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Não atendeu aos requisitos necessários ou os recursos disponíveis foram esgotados.')),
 
             // STATUS_NOTAPPROVED = 3
-            'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua solicitação foi aprovada.')),
+            'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua inscrição não foi aprovada.')),
             'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Não atendeu aos requisitos necessários. Caso não concorde com o resultado você pode entrar com recurso.')), // STATUS_NOTAPPROVED = 3
 
             //STATUS_WAITLIST = 8
-            'title_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_TITLE", i::__('Sua solicitação foi validada.')),
+            'title_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_TITLE", i::__('Sua inscrição foi validada.')),
             'msg_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_MESSAGE", i::__('Inscrição suplente.')),
 
             // STATUS_APPROVED = 10
-            'title_status_approved' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua solicitação não foi aprovada.')),
+            'title_status_approved' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua inscrição foi aprovada.')),
             'msg_status_approved' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('A inscrição foi aprovada')),
 
             'logo_institution' => env("$PREFIX}_LOGO_INSTUCTION", ''),
@@ -220,6 +244,87 @@ class Plugin extends \MapasCulturais\Plugin
             return;
         }
 
+          /**
+         * só consolida as avaliações para "selecionado" se tiver acontecido as validações (dataprev, etc)
+         * 
+         * @TODO: implementar para método de avaliaçào documental
+         */
+        $app->hook('entity(Registration).consolidateResult', function(&$result, $caller) use($plugin, $app) {
+
+            
+            $opportunities_id = $plugin->config['opportunity_id'];
+            
+            if ($this->opportunity->id != $opportunities_id) {
+                return;
+            }
+            
+            // só aplica o hook para usuários homologadores
+            if ($caller->user->{$plugin->prefix("validator_for")}) {
+                return;
+            }
+
+            $evaluations = $app->repo('RegistrationEvaluation')->findBy(['registration' => $this, 'status' => 1]);
+
+            $result = $caller->result;
+                        
+            foreach ($evaluations as $eval) {
+                if ($eval->user->{$plugin->prefix("validator_for")}) {
+                    continue;
+                }
+
+                if(intval($eval->result) < intval($result)) {
+                    $result = "$eval->result";
+                }
+            }
+            
+            
+            // se a consolidação não é para selecionada (statu = 10) pode continuar
+            if ($result != '10') {
+                return;
+            } 
+
+            $can_consolidate = true;
+
+            /**
+             * Se a consolidação requer validações, verifica se existe alguma
+             * avaliação dos usuários validadores
+             */
+            if ($validations = $plugin->config['consolidation_requires_validations']) {
+                
+                foreach($validations as $slug) {
+                    $can = false;
+                    foreach ($evaluations as $eval) {
+                        if ($eval->user->{$plugin->prefix("validator_for")} == $slug) {
+                            $can = true;
+                        }
+                    }
+                    
+                    if (!$can) {
+                        $can_consolidate = false;
+                    }
+                }
+            }
+            
+            $has_validations = false;
+            foreach ($evaluations as $eval) {
+                if ($eval->user->aldirblanc_validador) {
+                    $has_validations = true;
+                }
+            }
+
+            // se não pode consolidar, coloca a string 'homologado'
+            if (!$can_consolidate) {
+                if (!$this->consolidatedResult || count($evaluations) <= 1 || !$has_validations) {
+                    $result = 'homologado';
+                } else if (strpos($this->consolidatedResult, 'homologado') === false) {
+                    $result = "homologado, {$this->consolidatedResult}";
+                } else {
+                    $result = $this->consolidatedResult;
+                }
+            }
+        });
+
+
         // Envia um e-mail quando o proponenhte se inscreve 
         $app->hook('POST(registration.send):before', function() use ($plugin){
             $registration = $this->requestedEntity;
@@ -227,12 +332,12 @@ class Plugin extends \MapasCulturais\Plugin
         }); 
 
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
-        $app->hook('template(site.index.home-search-form):begin', function () use ($config) {
+        $app->hook('template(site.index.home-search-form):begin', function () use ($config, $plugin) {
             /** @var \MapasCulturais\Theme $this */
             $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');
 
             //Insere uma imagem acima do texto caso esteja configurada
-            $img_home = $config['img_home_before_searsh'];
+            $img_home = $config['img_home_before_search'];
             if ($img_home['enabled']) {
                 $params = [
                     'styles_class' => $img_home['styles_class'] ?: "",
@@ -247,7 +352,7 @@ class Plugin extends \MapasCulturais\Plugin
             }
 
             //Insere um texto caso esteja configurado
-            $text_home = $config['text_home_before_searsh'];
+            $text_home = $config['text_home_before_search'];
             if ($text_home['enabled']) {
                 if ($text_home['use_part']) {
                     $this->part($text_home['template_part'], [
@@ -258,7 +363,8 @@ class Plugin extends \MapasCulturais\Plugin
                         'text' => $text_home['text'],
                         'link_documentation' => $text_home['link_documentation'],
                         'text_link_documentation' => $text_home['text_link_documentation'],
-                        'text_info_link_documentation' => $text_home['text_info_link_documentation']
+                        'text_info_link_documentation' => $text_home['text_info_link_documentation'],
+                        'isStartStreamLined' => $plugin->isStartStreamLined(),
                     ]);
                 } else {
                     echo $text_home['text'];
@@ -300,12 +406,26 @@ class Plugin extends \MapasCulturais\Plugin
             });
         });
 
+        //Seta sessão que identifica que ao criar uma nova conta, o usuário veio do plugin steamLined
+        $app->hook('auth.createUser:before', function () use ($plugin, &$isStreamlined) {            
+            if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) >= 0) {
+                $_SESSION['mapasculturais.auth.FromStreamlined'] = $plugin->getSlug();
+            }
+        });
+        
+        //Se ao criar a conta, o usuário acessou pelo plugin streanlined, leva ele para o cadastro
+        $app->hook('auth.successful:redirectUrl', function (&$redirectUrl) use ($plugin, $app) {
+            if ($_SESSION['mapasculturais.auth.FromStreamlined'] ?? null == $plugin->getSlug()) {            
+                $redirectUrl = $app->createUrl($plugin->getSlug(), 'cadastro');
+            }
+        },1000);
+
         //Seta uma sessão com redirect_path do painel
         $app->hook('auth.successful', function () use ($plugin, $app) {
             $opportunities_id = $plugin->config['opportunity_id'];
 
             $opportunity = $app->repo('Opportunity')->find($opportunities_id) ?? null;
-
+            
             if ($opportunity && $opportunity->canUser('@control')) {
                 $_SESSION['mapasculturais.auth.redirect_path'] = $app->createUrl('panel', 'index');
             }
@@ -314,7 +434,7 @@ class Plugin extends \MapasCulturais\Plugin
          // Modifica o template do autenticador quando o redirect url for para um slug configurado
          $app->hook('controller(auth).render(<<*>>)', function (&$template, &$data) use ($app, $plugin) {
             $redirect_url = $_SESSION['mapasculturais.auth.redirect_path'] ?? '';
-
+          
             if (strpos($redirect_url, "/{$plugin->getSlug()}") === 0) {
                 $req = $app->request;
                 $data['plugin'] = $plugin;
@@ -324,19 +444,20 @@ class Plugin extends \MapasCulturais\Plugin
 
         //Altera o redirectUrl caso encontre um slug  configurado na sessão mapasculturais.auth.redirect_path
         $app->hook('auth.createUser:redirectUrl', function (&$redirectUrl) use ($plugin) {
-            if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) === 0) {
+           
+            if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) >= 0) {
                 $redirectUrl =  $plugin->getSlug();
             }
         });
 
         /**
-         * Na criação da inscrição, define os metadados inciso2_opportunity_id ou
-         * inciso1_opportunity_id do agente responsável pela inscrição
+         * Na criação da inscrição, define os metadados {$slug}_registration do agente responsável pela inscrição
+         * @TODO: Verificar se metadado é necessário
          */
-        $app->hook('entity(Registration).save:after', function () use ($plugin) {
+        $app->hook('entity(Registration).insert:after', function () use ($plugin) {
             /** @var \MapasCulturais\Entities\Registration $this */
             if ($this->opportunity->id == $plugin->config['opportunity_id']) {
-                $slug = "{$plugin->getSlug()}_registration";
+                $slug = $plugin->prefix("registration");
                 $agent = $this->owner;
                 $agent->$slug = $this->id;
                 $agent->save(true);
@@ -345,9 +466,9 @@ class Plugin extends \MapasCulturais\Plugin
 
         $app->hook('template(site.index.home-search):end', function () use ($plugin) {
             /** @var \MapasCulturais\Theme $this */
-            $text = $plugin->config['text_home_after_searsh']['text'];
-            $button = $plugin->config['text_home_after_searsh']['button'];
-            $title = $plugin->config['text_home_after_searsh']['title'];
+            $text = $plugin->config['text_home_after_search']['text'];
+            $button = $plugin->config['text_home_after_search']['button'];
+            $title = $plugin->config['text_home_after_search']['title'];
 
             $this->part('streamlinedopportunity/home-search', [
                 'text' => $text,
@@ -370,7 +491,7 @@ class Plugin extends \MapasCulturais\Plugin
                 $requestedOpportunity->canUser('evaluateRegistrations');
 
 
-            if (!$can_view && $requestedOpportunity->id == $opportunities_id) {
+            if (!$can_view && ($requestedOpportunity->id == $opportunities_id) && $plugin->isStartStreamLined()) {
                 $url = $app->createUrl($plugin->getSlug(), 'cadastro');
                 $app->redirect($url);
             }
@@ -389,9 +510,19 @@ class Plugin extends \MapasCulturais\Plugin
                 $requestedOpportunity->canUser('viewEvaluations') ||
                 $requestedOpportunity->canUser('evaluateRegistrations');
 
-            if (!$can_view && $requestedOpportunity->id == $opportunities_id) {
+            if (!$can_view && ($requestedOpportunity->id == $opportunities_id) && $plugin->isStartStreamLined()) {
                 $url = $app->createUrl($plugin->getSlug(), 'formulario', [$registration->id]);
                 $app->redirect($url);
+            }
+        });
+
+        //Publica o agente ao enviar a inscrição
+        $app->hook('POST(registration.send):before', function () use ($plugin, $app) {
+            $agent = $app->repo("Agent")->find($app->user->profile->id);
+            $registration = $this->requestedEntity;
+            if($agent->status == 0 && $registration->{$plugin->prefix("has_accepted_terms")}) {
+                $agent->status = 1;
+                $agent->save(true);
             }
         });
     }
@@ -440,6 +571,13 @@ class Plugin extends \MapasCulturais\Plugin
             'private' => true
         ]);
 
+        $this->registerMetadata('MapasCulturais\Entities\Opportunity',  $this->prefix("streamlined_start"), [
+            'label' => i::__('Aberto processo de inscrição'),
+            'type' => 'boolean',
+            'private' => false,
+            'default' => false
+        ]);
+
         /**
          * Registra campo adicional "Mensagem de Recurso" nas oportunidades
          * @return void
@@ -476,6 +614,34 @@ class Plugin extends \MapasCulturais\Plugin
     public function prefix($value)
     {
         return $this->config['slug']."_".$value;
+    }
+    
+    /**
+     * Retorna se esta aberto o processo de inscrição analisando a data e hora que esta liberado ou metadado streamlined_start
+     * @TODO Refatorar para buscar data e hora de início da opportunidade
+     *
+     * @return void
+     */
+    public function isStartStreamLined()
+    {
+        $app = App::i();
+
+        $config = $this->config;
+
+        
+        $open_registrations =  (new \DateTime('now') >= new \DateTime($config['schedule_datetime'])) ? true : false;
+        
+        if($opportunity = $app->repo("Opportunity")->find($config['opportunity_id'])){
+            $metadata = $opportunity->getMetadata();        
+            $streamlined_start = $metadata[$this->prefix('streamlined_start')] ?? null;
+            
+            if($open_registrations || $streamlined_start){
+                return true;
+            }
+        }
+        
+
+        return false;
     }
        
     /**

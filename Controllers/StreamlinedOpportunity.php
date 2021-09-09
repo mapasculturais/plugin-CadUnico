@@ -494,13 +494,21 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         }
         $agent->checkPermission('@control');
 
-        $registration = new \MapasCulturais\Entities\Registration;
-        $registration->owner = $agent;
-        $registration->opportunity = $this->getOpportunity();
+        $opportunity = $this->getOpportunity();
 
-        $registration->save(true);
+        $registrations = $app->repo('Registration')->findBy(['owner' => $agent->id, 'opportunity' => $opportunity->id]);
 
-        $app->redirect($this->createUrl('formulario', [$registration->id]));
+        if(count($registrations) >=  $this->plugin->config['limit']){
+            $registration_id = $registrations[0]->id;
+        }else{
+            $registration = new \MapasCulturais\Entities\Registration;
+            $registration->owner = $agent;
+            $registration->opportunity = $this->getOpportunity();    
+            $registration->save(true);
+            $registration_id =  $registration->id;
+        }
+
+        $app->redirect($this->createUrl('formulario', [$registration_id]));
     }
 
 

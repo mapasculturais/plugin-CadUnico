@@ -251,6 +251,7 @@ class Plugin extends \MapasCulturais\Plugin
         $app->hook("template(registration.view.registration-field-list):after", function() use ($plugin){
             $registration = $this->controller->requestedEntity;
             if($plugin->config['initial_statement_enabled'] && $registration->canUser('@control')){
+                  /** @var \MapasCulturais\Theme $this */
                 $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');
                 $this->part('streamlinedopportunity/initial-statements', ['terms' => $plugin->config['terms']]);
             }

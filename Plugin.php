@@ -51,9 +51,6 @@ class Plugin extends \MapasCulturais\Plugin
             // número máximo de inscrições por usuário
             'limit' => env("{$PREFIX}_LIMIT", 1), 
 
-            /** Força a planilha de inscritos dar saida como XLS (Excel) */
-            'output_file_registration_list_xls' => null,
-
             /* TEXTOS E DEMAIS COMPONENTES DE INTERFACE */
 
             'layout' => "streamlined-opportunity",
@@ -247,16 +244,7 @@ class Plugin extends \MapasCulturais\Plugin
             return;
         }
 
-        /**
-         * Possibilita alterar o formato do arquivo da planilha de inscritos para XLS (Excel)
-         * @TODO: Analisar se esse essa opção de troca deve ficar aqui nesse plugin
-         */
-        $app->hook("report.outputFile:before", function(&$type_file) use($plugin, $app){
-            if($plugin->config['output_file_registration_list_xls']){
-                $type_file = "xls";
-            }
-        });
-
+        
           /**
          * só consolida as avaliações para "selecionado" se tiver acontecido as validações de algum validador
          * 

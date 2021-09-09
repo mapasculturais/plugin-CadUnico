@@ -7,3 +7,8 @@
 .streamlinedopportunity img{
    width: 30%;
 }
+
+.initial-statements li{
+    list-style:none;
+    list-style-type:none;
+}

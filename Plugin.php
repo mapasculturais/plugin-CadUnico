@@ -51,6 +51,8 @@ class Plugin extends \MapasCulturais\Plugin
             // número máximo de inscrições por usuário
             'limit' => env("{$PREFIX}_LIMIT", 1), 
 
+            'initial_statement_enabled' => false,
+
             /* TEXTOS E DEMAIS COMPONENTES DE INTERFACE */
 
             'layout' => "streamlined-opportunity",
@@ -240,10 +242,19 @@ class Plugin extends \MapasCulturais\Plugin
         $plugin = $this;
         $config = $plugin->_config;
 
+
         if (!$config['enabled_plugin']) {
             return;
         }
 
+        /**Insere declarações iniciais na ficha de inscrição para quem tem controla da inscrição */
+        $app->hook("template(registration.view.registration-field-list):after", function() use ($plugin){
+            $registration = $this->controller->requestedEntity;
+            if($plugin->config['initial_statement_enabled'] && $registration->canUser('@control')){
+                $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');
+                $this->part('streamlinedopportunity/initial-statements', ['terms' => $plugin->config['terms']]);
+            }
+        });
         
           /**
          * só consolida as avaliações para "selecionado" se tiver acontecido as validações de algum validador

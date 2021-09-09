@@ -48,7 +48,6 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
 
     protected function init($controller_id) {
         if(!$this->_initiated) {
-            
             $app = App::i();
             $this->plugin = Plugin::getInstanceBySlug($controller_id);
             $this->layout = 'streamlined-opportunity';
@@ -67,6 +66,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
                 $this->registerRegistrationMetadata($opportunity);
             });
 
+            $this->_initiated = true;
         }
 
     }

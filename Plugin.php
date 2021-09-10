@@ -141,26 +141,26 @@ class Plugin extends \MapasCulturais\Plugin
             'consolidation_requires_validations' => (array) json_decode(env('HOMOLOG_REQ_VALIDACOES', '[]')),
 
             // STATUS_SENT = 1
-            'title_status_sent' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição no programa MS Cultura Cidadã esta análise.')),
-            'msg_status_sent' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Você receberá um e-mail de confirmação.')),
+            'title_status_sent' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição está em análise')),
+            'msg_status_sent' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Consulte novamente em outro momento.')),
             'text_button_status' => null,
             'text_link_button_status' => null,
 
             // STATUS_INVALID = 2
-            'title_status_invalid' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua inscrição não foi aprovada.')),
-            'msg_status_invalid' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Não atendeu aos requisitos necessários ou os recursos disponíveis foram esgotados.')),
+            'title_status_invalid' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua solicitação não foi aprovada')),
+            'msg_status_invalid' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Sua inscrição foi analisada e homologada, mas invalidada após consulta em outras bases de dados oficiais.')),
 
             // STATUS_NOTAPPROVED = 3
-            'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua inscrição não foi aprovada.')),
-            'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Não atendeu aos requisitos necessários. Caso não concorde com o resultado você pode entrar com recurso.')), // STATUS_NOTAPPROVED = 3
+            'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua solicitação não foi homologada')),
+            'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Sua inscrição foi analisada, mas não foi homologada por não atender aos requisitos de elegibilidade.')), // STATUS_NOTAPPROVED = 3
 
             //STATUS_WAITLIST = 8
             'title_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_TITLE", i::__('Sua inscrição foi validada.')),
             'msg_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_MESSAGE", i::__('Inscrição suplente.')),
 
             // STATUS_APPROVED = 10
-            'title_status_approved' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua inscrição foi aprovada.')),
-            'msg_status_approved' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('A inscrição foi aprovada')),
+            'title_status_approved' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua solicitação foi aprovada.')),
+            'msg_status_approved' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('Sua inscrição foi analisada e homologada e a solicitação do benefício validada pela FCMS. Aguardando o pagamento do benefício.')),
 
             'logo_institution' => env("$PREFIX}_LOGO_INSTUCTION", ''),
             'logo_footer' => env("$PREFIX}_LOGO_FOOTER", ''),

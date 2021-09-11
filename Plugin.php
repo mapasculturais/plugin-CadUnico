@@ -191,29 +191,32 @@ class Plugin extends \MapasCulturais\Plugin
 
             /**EMAIL DURANTE TROCA DE STATUS DA INSCRIÇÃO */
             "email_alter_status" => [
+                "url_image_body" => env("{$PREFIX}EMAIL_ALTER_STATUS_IMAGE_BODY", ""),
+                "project_name" => env("{$PREFIX}EMAIL_ALTER_STATUS_PROJECT", ""),
+                "subject" => env("{$PREFIX}EMAIL_ALTER_STATUS_SUBJECT", ""),
                 "send_email_status" => ["2","3","10"],
                 "message_appeal" => [
-                        'title' => i::__('Você pode entrar com recurso'),
-                        'message' => i::__('Conforme previsto pela Portaria FCMS nº 023/2021, Art. 3º, o interessado poderá oferecer recurso contendo suas razões, a ser encaminhando exclusivamente para o e-mail msculturacidada@gmail.com, no prazo de 05 (cinco) dias contados do envio de e-mail que informa o indeferimento.'),
+                        'title' => env("{$PREFIX}MESSAGE_APPEAL_TITLE", ""),
+                        'message' => env("{$PREFIX}MESSAGE_APPEAL_MESSAGE", ""),
                 ],
                 "message_status" => [
                     10 => [
-                        'title' => i::__('Sua solicitação foi aprovada'),
-                        'message' => i::__('Sua inscrição foi analisada e homologada e a solicitação do benefício validada pela FCMS. Aguardande o pagamento do benefício.'),
-                        'complement' => "",
-                        'has_appeal' => false,
+                        'title' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_TITLE", ""),
+                        'message' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE", ""),
+                        'complement' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_COMPLEMENT", ""),
+                        'has_appeal' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_HAS_APPEAL", false),
                     ],
                     3 => [
-                        'title' => i::__('Sua solicitação não foi homologada'),
-                        'message' => i::__('Sua inscrição foi analisada, mas não foi homologada por não atender aos requisitos de elegibilidade.'),
-                        'complement' => i::__('Conforme previsto pela Portaria FCMS nº 023/2021, Art. 3º, o interessado poderá oferecer recurso contendo suas razões, a ser encaminhando exclusivamente para o e-mail msculturacidada@gmail.com, no prazo de 05 (cinco) dias contados do envio de e-mail que informa o indeferimento.'),
-                        'has_appeal' => true,
+                        'title' => env("{$PREFIX}IVALID_STATUS_MESSAGE_TITLE", ""),
+                        'message' => env("{$PREFIX}IVALID_STATUS_MESSAGE_MESSAGE", ""),
+                        'complement' => env("{$PREFIX}IVALID_STATUS_MESSAGE_COMPLEMENT", ""),
+                        'has_appeal' => env("{$PREFIX}IVALID_STATUS_MESSAGE_HAS_APPEAL", true),
                     ],
                     2 => [
-                        'title' => i::__('Sua solicitação não foi aprovada'),
-                        'message' => i::__('Sua inscrição foi analisada e homologada, mas invalidada após consulta em outras bases de dados oficiais.'),
-                        'complement' => "Descrição da condição impeditiva verificada conforme retorno da consulta externa (Funtrab, RH, Conselho), conforme Art. 3º da Lei nº 5.688, de 2021.",
-                        'has_appeal' => true,
+                        'title' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_TITLE", ""),
+                        'message' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_MESSAGE", ""),
+                        'complement' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_COMPLEMENT", ""),
+                        'has_appeal' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_HAS_APPEAL", true),
                     ],
 
                 ]
@@ -758,13 +761,13 @@ class Plugin extends \MapasCulturais\Plugin
             "baseUrl" => $baseUrl,
             "siteName" => $site_name,
             "slug" => $plugin->config['slug'],
-            "projectName" => $plugin->config['email_confirm_registration']['project_name'],
+            "projectName" => $plugin->config['email_alter_status']['project_name'],
             "statusTitle" =>  $message_status['title'],
             "statusMessage" =>  $message_status['message'],
             "hasAppeal" => $message_status['has_appeal'],
             "messageAppealTitle" =>$message_appeal['title'],
             "messageAppealMessage" =>$message_appeal['message'],
-            "urlImageBody" => $app->view->asset($plugin->config['email_confirm_registration']['url_image_body'], false),
+            "urlImageBody" => $app->view->asset($plugin->config['email_alter_status']['url_image_body'], false),
             "registrationId" => $registration->id, 
             "userName" => $registration->owner->name,
             "statusNum" => $registration->status
@@ -774,7 +777,7 @@ class Plugin extends \MapasCulturais\Plugin
         $email_params = [
             'from' => $app->config['mailer.from'],
             'to' => $registration->owner->user->email,
-            'subject' => $plugin->config['email_confirm_registration']['subject'],
+            'subject' => $plugin->config['email_alter_status']['subject'],
             'body' => $content
         ];
 

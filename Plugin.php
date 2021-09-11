@@ -187,6 +187,36 @@ class Plugin extends \MapasCulturais\Plugin
                 'status_title' => env("$PREFIX}_STATUS_TITLE_EMAIL_CONFIRM_REGISTRATION", ''),
                 'url_image_body' => env("$PREFIX}_IMAGE_BODY_CONFIRM_REGISTRATION", ''),
                 'subject' => env("$PREFIX}_SUBJECT_EMAIL_CONFIRM_REGISTRATION", '')
+            ],
+
+            /**EMAIL DURANTE TROCA DE STATUS DA INSCRIÇÃO */
+            "email_alter_status" => [
+                "send_email_status" => ["2","3","10"],
+                "message_appeal" => [
+                        'title' => i::__('Você pode entrar com recurso'),
+                        'message' => i::__('Conforme previsto pela Portaria FCMS nº 023/2021, Art. 3º, o interessado poderá oferecer recurso contendo suas razões, a ser encaminhando exclusivamente para o e-mail msculturacidada@gmail.com, no prazo de 05 (cinco) dias contados do envio de e-mail que informa o indeferimento.'),
+                ],
+                "message_status" => [
+                    10 => [
+                        'title' => i::__('Sua solicitação foi aprovada'),
+                        'message' => i::__('Sua inscrição foi analisada e homologada e a solicitação do benefício validada pela FCMS. Aguardande o pagamento do benefício.'),
+                        'complement' => "",
+                        'has_appeal' => false,
+                    ],
+                    3 => [
+                        'title' => i::__('Sua solicitação não foi homologada'),
+                        'message' => i::__('Sua inscrição foi analisada, mas não foi homologada por não atender aos requisitos de elegibilidade.'),
+                        'complement' => i::__('Conforme previsto pela Portaria FCMS nº 023/2021, Art. 3º, o interessado poderá oferecer recurso contendo suas razões, a ser encaminhando exclusivamente para o e-mail msculturacidada@gmail.com, no prazo de 05 (cinco) dias contados do envio de e-mail que informa o indeferimento.'),
+                        'has_appeal' => true,
+                    ],
+                    2 => [
+                        'title' => i::__('Sua solicitação não foi aprovada'),
+                        'message' => i::__('Sua inscrição foi analisada e homologada, mas invalidada após consulta em outras bases de dados oficiais.'),
+                        'complement' => "Descrição da condição impeditiva verificada conforme retorno da consulta externa (Funtrab, RH, Conselho), conforme Art. 3º da Lei nº 5.688, de 2021.",
+                        'has_appeal' => true,
+                    ],
+
+                ]
             ]
         ];
 
@@ -342,7 +372,16 @@ class Plugin extends \MapasCulturais\Plugin
         $app->hook('POST(registration.send):before', function() use ($plugin){
             $registration = $this->requestedEntity;
             $plugin->sendEmailregistrationConfirm($registration, $plugin);
+
         }); 
+
+        $app->hook("registration.setStatusTo:after", function( )use ($plugin){
+            $opportunities_id = $plugin->config['opportunity_id'];
+            $registration = $this->requestedEntity;
+            if($registration->opportunity->id == $opportunities_id){
+                $plugin->sendEmalAlterStatus($registration, $plugin);
+            }
+        });
 
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
         $app->hook('template(site.index.home-search-form):begin', function () use ($config, $plugin) {
@@ -682,6 +721,51 @@ class Plugin extends \MapasCulturais\Plugin
             "userName" => $registration->owner->name,
         ];
 
+        $content = $mustache->render($template,$params);
+
+        $email_params = [
+            'from' => $app->config['mailer.from'],
+            'to' => $registration->owner->user->email,
+            'subject' => $plugin->config['email_confirm_registration']['subject'],
+            'body' => $content
+        ];
+
+        $app->log->debug("ENVIANDO EMAIL DE STATUS DA {$registration->number}");
+        $app->createAndSendMailMessage($email_params);
+    }
+
+     /**
+     * Envia email de atualização de status de uma inscrição
+     *
+     */
+    public function sendEmalAlterStatus(\MapasCulturais\Entities\Registration $registration, $plugin)
+    {
+        $app = App::i();
+
+        $mustache = new \Mustache_Engine();
+        $site_name = $app->view->dict('site: name', false);
+        $baseUrl = $app->getBaseUrl();
+        $filename = $app->view->resolveFilename("views/streamlinedopportunity", "email-regitration-alter-status.html");        
+        $template = file_get_contents($filename);
+        $message_status = $plugin->config['email_alter_status']['message_status'][$registration->status];
+        $message_appeal = $plugin->config['email_alter_status']['message_appeal'];
+
+
+        $params = [
+            "baseUrl" => $baseUrl,
+            "siteName" => $site_name,
+            "slug" => $plugin->config['slug'],
+            "projectName" => $plugin->config['email_confirm_registration']['project_name'],
+            "statusTitle" =>  $message_status['title'],
+            "statusMessage" =>  $message_status['message'],
+            "hasAppeal" => $message_status['has_appeal'],
+            "messageAppealTitle" =>$message_appeal['title'],
+            "messageAppealMessage" =>$message_appeal['message'],
+            "urlImageBody" => $app->view->asset($plugin->config['email_confirm_registration']['url_image_body'], false),
+            "registrationId" => $registration->id, 
+            "userName" => $registration->owner->name,
+            "statusNum" => $registration->status
+        ];
         $content = $mustache->render($template,$params);
 
         $email_params = [

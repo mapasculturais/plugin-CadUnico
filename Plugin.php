@@ -370,8 +370,11 @@ class Plugin extends \MapasCulturais\Plugin
 
         // Envia um e-mail quando o proponenhte se inscreve 
         $app->hook('POST(registration.send):before', function() use ($plugin){
+            $opportunities_id = $plugin->config['opportunity_id'];
             $registration = $this->requestedEntity;
-            $plugin->sendEmailregistrationConfirm($registration, $plugin);
+            if($registration->opportunity->id == $opportunities_id){
+                $plugin->sendEmailregistrationConfirm($registration, $plugin);
+            }
 
         }); 
 

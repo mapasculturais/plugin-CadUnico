@@ -283,7 +283,7 @@ class Plugin extends \MapasCulturais\Plugin
         /**Insere declarações iniciais na ficha de inscrição para quem tem controle da inscrição */
         $app->hook("template(registration.view.form):end", function() use ($plugin){
             $registration = $this->controller->requestedEntity;
-            if($plugin->config['initial_statement_enabled'] && $registration->canUser('@control')){
+            if($plugin->config['initial_statement_enabled'] && $registration->canUser('@control') && $plugin->isStreamLinedOpportunity($registration->opportunity)){
                   /** @var \MapasCulturais\Theme $this */
                 $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');
                 $this->part('streamlinedopportunity/initial-statements', ['terms' => $plugin->config['terms']]);

@@ -784,4 +784,18 @@ class Plugin extends \MapasCulturais\Plugin
         $app->log->debug("ENVIANDO EMAIL DE STATUS DA {$registration->number}");
         $app->createAndSendMailMessage($email_params);
     }
+    
+    /**
+     * Retorna se a oportunidade é gerenciada pelo StreamLinedOpportunity ou não
+     * @param  Opportunity $opportunity
+     * @return bool
+     */
+    public function isStreamLinedOpportunity(Opportunity $opportunity)
+    {
+        if($opportunity->id == $this->config['opportunity_id']){
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -305,7 +305,7 @@ class Plugin extends \MapasCulturais\Plugin
             }
             
             // só aplica o hook para usuários homologadores
-            if ($caller->user->{$plugin->prefix("validator_for")}) {
+            if ($caller->user->validator_for) {
                 return;
             }
 
@@ -314,7 +314,7 @@ class Plugin extends \MapasCulturais\Plugin
             $result = $caller->result;
                         
             foreach ($evaluations as $eval) {
-                if ($eval->user->{$plugin->prefix("validator_for")}) {
+                if ($eval->user->validator_for) {
                     continue;
                 }
 
@@ -340,7 +340,7 @@ class Plugin extends \MapasCulturais\Plugin
                 foreach($validations as $slug) {
                     $can = false;
                     foreach ($evaluations as $eval) {
-                        if ($eval->user->{$plugin->prefix("validator_for")} == $slug) {
+                        if ($eval->user->validator_for == $slug) {
                             $can = true;
                         }
                     }

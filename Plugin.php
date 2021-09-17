@@ -202,19 +202,35 @@ class Plugin extends \MapasCulturais\Plugin
                 "message_status" => [
                     10 => [
                         'title' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_TITLE", ""),
-                        'message' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE", ""),
+                        'message' => [
+                            'part1' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_1", ""),
+                            'part2' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_2", ""),
+                            'part3' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_3", ""),
+                            'part4' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_4", ""),
+
+                        ],
                         'complement' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_COMPLEMENT", ""),
                         'has_appeal' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_HAS_APPEAL", false),
                     ],
                     3 => [
                         'title' => env("{$PREFIX}IVALID_STATUS_MESSAGE_TITLE", ""),
-                        'message' => env("{$PREFIX}IVALID_STATUS_MESSAGE_MESSAGE", ""),
+                        'message' => [
+                            'part1' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_1", ""),
+                            'part2' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_2", ""),
+                            'part3' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_3", ""),
+                            'part4' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_4", ""),
+                        ],
                         'complement' => env("{$PREFIX}IVALID_STATUS_MESSAGE_COMPLEMENT", ""),
                         'has_appeal' => env("{$PREFIX}IVALID_STATUS_MESSAGE_HAS_APPEAL", true),
                     ],
                     2 => [
                         'title' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_TITLE", ""),
-                        'message' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_MESSAGE", ""),
+                        'message' => [
+                            'part1' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_1", ""),
+                            'part2' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_2", ""),
+                            'part3' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_3", ""),
+                            'part4' => env("{$PREFIX}SELECTED_STATUS_MESSAGE_MESSAGE_4", ""),
+                        ],
                         'complement' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_COMPLEMENT", ""),
                         'has_appeal' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_HAS_APPEAL", true),
                     ],
@@ -381,10 +397,10 @@ class Plugin extends \MapasCulturais\Plugin
 
         }); 
 
-        $app->hook("registration.setStatusTo:after", function( )use ($plugin){
+        $app->hook("registration.setStatusTo:after", function( )use ($plugin, $app){
             $opportunities_id = $plugin->config['opportunity_id'];
             $registration = $this->requestedEntity;
-            if($registration->opportunity->id == $opportunities_id){
+            if($registration->opportunity->id == $opportunities_id){              
                 $plugin->sendEmalAlterStatus($registration, $plugin);
             }
         });
@@ -755,22 +771,24 @@ class Plugin extends \MapasCulturais\Plugin
         $template = file_get_contents($filename);
         $message_status = $plugin->config['email_alter_status']['message_status'][$registration->status];
         $message_appeal = $plugin->config['email_alter_status']['message_appeal'];
-
-
+        
         $params = [
             "baseUrl" => $baseUrl,
             "siteName" => $site_name,
             "slug" => $plugin->config['slug'],
             "projectName" => $plugin->config['email_alter_status']['project_name'],
             "statusTitle" =>  $message_status['title'],
-            "statusMessage" =>  $message_status['message'],
+            "statusMessage1" =>  $message_status['message']['part1'],
+            "statusMessage2" =>  $message_status['message']['part2'],
+            "statusMessage3" =>  $message_status['message']['part3'],
+            "statusMessage4" =>  $message_status['message']['part4'],
             "hasAppeal" => $message_status['has_appeal'],
             "messageAppealTitle" =>$message_appeal['title'],
             "messageAppealMessage" =>$message_appeal['message'],
             "urlImageBody" => $app->view->asset($plugin->config['email_alter_status']['url_image_body'], false),
             "registrationId" => $registration->id, 
             "userName" => $registration->owner->name,
-            "statusNum" => $registration->status
+            "statusNum" => $registration->status,
         ];
         $content = $mustache->render($template,$params);
 

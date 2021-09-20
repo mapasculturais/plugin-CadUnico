@@ -397,12 +397,14 @@ class Plugin extends \MapasCulturais\Plugin
 
         }); 
 
-        $app->hook("registration.setStatusTo:after", function( )use ($plugin, $app){
-            $opportunities_id = $plugin->config['opportunity_id'];
-            $registration = $this->requestedEntity;
-            if($registration->opportunity->id == $opportunities_id){  
-                $evaluation = $app->repo("RegistrationEvaluation")->findBy(['registration' => $registration]);
-                $plugin->sendEmalAlterStatus($registration, $plugin, $evaluation);
+        // Dispara email quando se altera o status da inscrição
+        $app->hook("entity(Registration).status(<<*>>)", function( )use ($plugin, $app){
+            if($plugin->isStreamLinedOpportunity($this->opportunity)){  
+
+                $evaluation = $app->repo("RegistrationEvaluation")->findBy(['registration' => $this]);
+                
+                /** @var Mapasculturais\Entities\Registration $this  */
+                $plugin->sendEmalAlterStatus($this, $plugin, $evaluation);
             }
         });
 

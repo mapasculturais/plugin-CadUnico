@@ -194,7 +194,7 @@ class Plugin extends \MapasCulturais\Plugin
                 "url_image_body" => env("{$PREFIX}EMAIL_ALTER_STATUS_IMAGE_BODY", ""),
                 "project_name" => env("{$PREFIX}EMAIL_ALTER_STATUS_PROJECT", ""),
                 "subject" => env("{$PREFIX}EMAIL_ALTER_STATUS_SUBJECT", ""),
-                "send_email_status" => ["2","3","10"],
+                "send_email_status" => [],
                 "message_appeal" => [
                         'title' => env("{$PREFIX}MESSAGE_APPEAL_TITLE", ""),
                         'message' => env("{$PREFIX}MESSAGE_APPEAL_MESSAGE", ""),

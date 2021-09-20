@@ -400,8 +400,9 @@ class Plugin extends \MapasCulturais\Plugin
         $app->hook("registration.setStatusTo:after", function( )use ($plugin, $app){
             $opportunities_id = $plugin->config['opportunity_id'];
             $registration = $this->requestedEntity;
-            if($registration->opportunity->id == $opportunities_id){              
-                $plugin->sendEmalAlterStatus($registration, $plugin);
+            if($registration->opportunity->id == $opportunities_id){  
+                $evaluation = $app->repo("RegistrationEvaluation")->findBy(['registration' => $registration]);
+                $plugin->sendEmalAlterStatus($registration, $plugin, $evaluation);
             }
         });
 
@@ -760,7 +761,7 @@ class Plugin extends \MapasCulturais\Plugin
      * Envia email de atualização de status de uma inscrição
      *
      */
-    public function sendEmalAlterStatus(\MapasCulturais\Entities\Registration $registration, $plugin)
+    public function sendEmalAlterStatus(\MapasCulturais\Entities\Registration $registration, $plugin, $evaluation)
     {
         $app = App::i();
 
@@ -771,6 +772,7 @@ class Plugin extends \MapasCulturais\Plugin
         $template = file_get_contents($filename);
         $message_status = $plugin->config['email_alter_status']['message_status'][$registration->status];
         $message_appeal = $plugin->config['email_alter_status']['message_appeal'];
+        $send_email_status = $plugin->config['email_alter_status']['send_email_status'];
         
         $params = [
             "baseUrl" => $baseUrl,
@@ -782,6 +784,7 @@ class Plugin extends \MapasCulturais\Plugin
             "statusMessage2" =>  $message_status['message']['part2'],
             "statusMessage3" =>  $message_status['message']['part3'],
             "statusMessage4" =>  $message_status['message']['part4'],
+            'evaluationTxt' => (in_array($registration->status, $send_email_status)) ? $evaluation[0]->evaluationData->obs : null,
             "hasAppeal" => $message_status['has_appeal'],
             "messageAppealTitle" =>$message_appeal['title'],
             "messageAppealMessage" =>$message_appeal['message'],

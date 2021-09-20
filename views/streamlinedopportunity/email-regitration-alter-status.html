@@ -529,11 +529,13 @@
                                             <div class="status-card status-{{statusNum}}">
                                                 <h2 class="status-card--title">{{statusTitle}}</h2>
                                                 <smal>{{statusMessage1}}</smal>
-                                                <smal>{{statusMessage2}}</smal> <br><br>
+                                                <smal>{{statusMessage2}}</smal>
 
-                                                <smal>Você pode ver detalhes no link: <a
-                                                    href="{{baseUrl}}{{slug}}/status/{{registrationId}}"
-                                                    target="_blank">Status da inscrição</a>.</smal><br><br>
+                                                {{#evaluationTxt}}
+                                                <br><br>
+                                                <small>{{evaluationTxt}}</small>
+                                                <br><br>
+                                                {{/evaluationTxt}}
                                                     
                                                 <smal>{{statusMessage3}}</smal>
                                                 <smal>{{statusMessage4}}</smal>
@@ -545,7 +547,9 @@
                                             </div><!-- /.status-card -->
 
                                             <br><br>
-                                            
+                                            <p>Você pode ver detalhes no link: <a
+                                                href="{{baseUrl}}{{slug}}/status/{{registrationId}}"
+                                                target="_blank">Status da inscrição</a>.</p><br><br>
                                             <p>Até mais!</p>
                                         </td>
                                     </tr>

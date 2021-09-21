@@ -786,7 +786,7 @@ class Plugin extends \MapasCulturais\Plugin
             "statusMessage2" =>  $message_status['message']['part2'],
             "statusMessage3" =>  $message_status['message']['part3'],
             "statusMessage4" =>  $message_status['message']['part4'],
-            'evaluationTxt' => (in_array($registration->status, $send_email_status)) ? $evaluation[0]->evaluationData->obs : null,
+            'evaluationTxt' => (in_array($registration->status, $send_email_status) && isset($evaluation[0]->evaluationData->obs)) ? $evaluation[0]->evaluationData->obs : null,
             "hasAppeal" => $message_status['has_appeal'],
             "messageAppealTitle" =>$message_appeal['title'],
             "messageAppealMessage" =>$message_appeal['message'],

@@ -44,6 +44,7 @@ class Plugin extends \MapasCulturais\Plugin
 
             // Define o horario que deve ser liberado as inscrições
             'schedule_datetime' => null,
+            'schedule_closing' => null,
 
             // Opportunidade configurada no StreamLinedOpportunity
             'opportunity_id' => false,
@@ -442,6 +443,7 @@ class Plugin extends \MapasCulturais\Plugin
                         'text_link_documentation' => $text_home['text_link_documentation'],
                         'text_info_link_documentation' => $text_home['text_info_link_documentation'],
                         'isStartStreamLined' => $plugin->isStartStreamLined(),
+                        'isRegistrationOpen' => (new \DateTime('now') >= new \DateTime($config['schedule_datetime']) && new \DateTime('now') < new \DateTime($config['schedule_closing'])) ? true : false,
                     ]);
                 } else {
                     echo $text_home['text'];
@@ -706,13 +708,12 @@ class Plugin extends \MapasCulturais\Plugin
         $config = $this->config;
 
         
-        $open_registrations =  (new \DateTime('now') >= new \DateTime($config['schedule_datetime'])) ? true : false;
+        $open_registrations =  (new \DateTime('now') >= new \DateTime($config['schedule_datetime']) && new \DateTime('now') < new \DateTime($config['schedule_closing'])) ? true : false;
         
         if($opportunity = $app->repo("Opportunity")->find($config['opportunity_id'])){
             $metadata = $opportunity->getMetadata();        
-            $streamlined_start = $metadata[$this->prefix('streamlined_start')] ?? null;
-            
-            if($open_registrations || $streamlined_start){
+            $streamlined_start = $metadata[$this->prefix('streamlined_start')] ?? null;            
+            if($open_registrations && $streamlined_start){
                 return true;
             }
         }

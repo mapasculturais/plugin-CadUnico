@@ -750,6 +750,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
                 'registrations' => $registrations,
                 'summaryStatusName'=> $summaryStatusName, 
                 'niceName' => $owner_name,
+                'isRegistrationOpen' => ($this->plugin->isStartStreamLined() && $registrations_ids) ? true : false,
         ]);
     }
 

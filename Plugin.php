@@ -811,9 +811,31 @@ class Plugin extends \MapasCulturais\Plugin
             'subject' => $plugin->config['email_alter_status']['subject'],
             'body' => $content
         ];
-
+        
         $app->log->debug("ENVIANDO EMAIL DE STATUS DA {$registration->number}");
-        $app->createAndSendMailMessage($email_params);
+        if($app->createAndSendMailMessage($email_params)){
+            
+            $sent_emails = $registration->{$this->prefix("sent_emails")};
+            $sent_emails[] = [
+                'type' => "alter_status",
+                'timestamp' => date('Y-m-d H:i:s'),
+                'loggedin_user' => [
+                    'id' => $app->user->id,
+                    'email' => $app->user->email,
+                    'name' => $app->user->profile->name
+                ],
+                'email' => $email_params,
+                'registration_set_status' => $registration->status
+            ];
+
+            $app->disableAccessControl();
+            $registration->{$this->prefix("sent_emails")} = $sent_emails;
+            $registration->save(true);
+            $app->enableAccessControl();
+            
+        }
+
+       
     }
     
     /**

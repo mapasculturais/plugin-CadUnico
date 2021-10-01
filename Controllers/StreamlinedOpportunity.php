@@ -134,18 +134,20 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
      */
     function ALL_sendEmailsPayments(){
         ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '768M');
 
         $this->requireAuthentication();
-
-        if (empty($this->data['opportunity'])) {
-            $this->errorJson('O parâmetro opportunity é obrigatório');
-        }
-
+      
         $app = App::i();
 
         $opportunity = $this->getOpportunity();
+        
         if (!$opportunity) {
             $this->errorJson('Oportunidade não encontrada');
+        }
+
+        if (empty($this->data['lote'])) {
+            $this->errorJson('Informe o lote que deseja efetuar os disparos de e-mail Ex.: Lote 01');
         }
 
         $opportunity->checkPermission('@control');
@@ -172,22 +174,53 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
                         les.key = '{$this->prefix("last_email_status")}'
             WHERE
                 r.opportunity_id = {$opportunity->id} AND
-                r.status IN ({$status}) AND
-                (les.value IS NULL OR les.value <> r.status::VARCHAR)
+                r.status IN ({$status})               
             ORDER BY r.sent_timestamp ASC");
-
+            
+        $_SESSION['error'] = [];       
         foreach ($registrations as &$reg) {
             $reg = (object) $reg;
             $registration = $app->repo('Registration')->find($reg->id);
+            $lots = json_decode($registration->genericpaymentexport_reference_export);
+
+            if(!in_array(strtolower($this->data['lote']), array_change_key_case($lots, CASE_LOWER))){
+                $app->log->debug("INSCRIÇÃO {$registration->number} NÃO PERTENCE AO LOTE {$this->data['lote']}");
+                continue;
+            }
+
+            $lot_sends = $registration->{$this->prefix("last_email_lot")};
+            if($registration->{$this->prefix("last_email_lot")} && in_array(strtolower($this->data['lote']), $lot_sends)){
+                $app->log->debug("EMAIL DE PAGAMENTO DO LOTE {$this->data['lote']} JÁ ENVIADO PARA {$registration->number}");
+                continue;
+            }
 
             $payment = false;
-            $paymentMeta = $registration->metadata['secult_financeiro_raw'] ?? false;
-
-            if ($paymentMeta && strpos($paymentMeta, 'Caso tenha algum problema com seu pagamento, entre em contato com o suporte') && strpos($paymentMeta, '"AVALIACAO":"selecionada"')) {
-                $payment = true;
-            }
+            $paymentMeta = $registration->metadata['financial_validator_raw'] ?? false;
+          
+            if ($paymentMeta) {
+                $payments = json_decode($paymentMeta);
+                foreach($payments as $payment){
+                    if(in_array($payment->VALIDACAO, ['aprovado', 'aprovada', 'selecionado', 'selecionada'])){
+                        $payment = true;
+                    }                    
+                }
+                
+            }           
             
+            if(!$payment){
+                $app->log->debug("NÃO EXISTE PAGAMENTO ASSOCIADO PARA {$registration->number}");
+                continue;
+            }
+
             $this->sendEmail($registration, $payment);
+            
+        }
+
+        //Exibe na tela se exitiu algum erro de envio
+        if($_SESSION['error']){
+            var_dump($_SESSION['error']);
+        }else{
+            echo i::__('Todos os e-mails foram enviados', 'streamlined-opportunity');
         }
 
     }
@@ -202,87 +235,27 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $site_name = $app->view->dict('site: name', false);
         $baseUrl = $app->getBaseUrl();
 
+        $filename = $app->view->resolveFilename("views/streamlinedopportunity", "email-payments.html");       
+        $template = file_get_contents($filename);
+        $email_payment = $this->config['email_payment'][$registration->status];
+
         $messageBody = '';
-
-        // Envia e-mail para inscrições com pagamento realizado
-        if ($payment) {
-
-            $filename = $app->view->resolveFilename("views/streamlined-opportunity", "email-payments.html");
-            $template = file_get_contents($filename);
-
-            // Verifica se é uma inscrição desbancarizada
-            $accountCreationSecult = $registration->owner->metadata['account_creation'] ?? false;
-            $branch = $registration->owner->payment_bank_branch ?? false;
-
-            $secultRaw = json_decode($registration->metadata['secult_financeiro_raw'], true);
-
-            if ($accountCreationSecult && $branch) {
-
-                // Mensagem de Status para desbancarizados que possuem a conta criada pela SECULT.
-                $messageStatus = 'O pagamento foi realizado. Para ter acesso ao auxílio, dirija-se até a agência ';
-                $messageStatus .= $branch;
-                $messageStatus .= ' para validar a abertura de sua conta pela SECULT. Lembre-se de levar RG, CPF e comprovante de residência.';
-                $messageStatus .= '<br><br>';
-                $messageStatus .= $secultRaw['OBSERVACOES'];
-                $messageBody = $messageStatus;
-
-            } else {
-
-                $messageBody = 'O pagamento do seu benefício foi realizado e já está disponível para saque na conta indicada no momento de sua inscrição.';
-                $messageBody .= '<br><br>';
-                $messageBody .= $secultRaw['OBSERVACOES'];
-
-            }
-
-            $statusTitle = 'Seu pagamento foi realizado com sucesso!!!';
-
-            $params = [
-                "siteName" => $site_name,
-                "urlImageToUseInEmails" => $this->config['logo_center'],
-                "user" => $registration->owner->name,
-                "inscricaoId" => $registration->id, 
-                "inscricao" => $registration->number, 
-                "statusNum" => $registration->status,
-                "statusTitle" => $statusTitle,
-                "messageBody" => $messageBody,
-                "baseUrl" => $baseUrl
-            ];
-            $content = $mustache->render($template,$params);
-
-        } else {
-
-            $registrationStatusInfo = $this->getRegistrationStatusInfo($registration);
-            $justificativaAvaliacao = "";
-            foreach ($registrationStatusInfo['justificativaAvaliacao'] as $message) {
-                if (is_array($message) && !empty($this->config['display_default_result'])) {
-                $justificativaAvaliacao .= $message['message'] . "<hr>";
-                } else {
-                    $justificativaAvaliacao .= $message .'<hr>';
-                }
-            }
-
-            $filename = $app->view->resolveFilename("views/streamlined-opportunity", "email-status.html");
-            $template = file_get_contents($filename);
-
-            $statusTitle = $registrationStatusInfo['registrationStatusMessage']['title'];
-
-            $params = [
-                "siteName" => $site_name,
-                "urlImageToUseInEmails" => $this->config['logo_center'],
-                "user" => $registration->owner->name,
-                "inscricaoId" => $registration->id, 
-                "inscricao" => $registration->number, 
-                "statusNum" => $registration->status,
-                "statusTitle" => $statusTitle,
-                "justificativaAvaliacao" => $justificativaAvaliacao,
-                "msgRecurso" => $this->config['msg_appeal'],
-                "emailRecurso" => $this->config['email_recurso'],
-                "baseUrl" => $baseUrl
-            ];
-            $content = $mustache->render($template,$params);
-
-        }
-
+        
+        $params = [
+            "siteName" => $site_name,
+            "urlImageToUseInEmails" => $this->config['logo_center'],
+            "user" => $registration->owner->name,
+            "inscricaoId" => $registration->id, 
+            "inscricao" => $registration->number, 
+            "statusNum" => $registration->status,
+            "statusTitle" => $email_payment['title'],
+            "messageBody" => $messageBody,
+            "baseUrl" => $baseUrl,
+            "slug"=> $this->config['slug']
+        ];
+      
+        $content = $mustache->render($template,$params);
+        
         if (!empty($content)) {
 
             $email_params = [
@@ -292,27 +265,45 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
                 'body' => $content
             ];
 
-            $app->log->debug("ENVIANDO EMAIL DE STATUS DA {$registration->number} ({$statusTitle})");
-            $app->createAndSendMailMessage($email_params);
+            
+            if($app->createAndSendMailMessage($email_params)){
 
-            $sent_emails = $registration->{$this->prefix("sent_emails")};
-            $sent_emails[] = [
-                'timestamp' => date('Y-m-d H:i:s'),
-                'loggedin_user' => [
-                    'id' => $app->user->id,
-                    'email' => $app->user->email,
-                    'name' => $app->user->profile->name
-                ],
-                'email' => $email_params
-            ];
+                //Registra o disparo do e-mail
+                $app->log->debug("ENVIANDO EMAIL DE PAGAMENTO {$registration->number} ({$email_payment['title']})");
 
-            $app->disableAccessControl();
-            $registration->{$this->prefix("sent_emails")} = $sent_emails;
+                $sent_emails = $registration->{$this->prefix("sent_emails")};
+                $last_email_lot = $registration->{$this->prefix("last_email_lot")}; 
+                $last_email_lot[] = $this->data['lote'];
 
-            $registration->{$this->prefix("last_email_status")} = $registration->status;
+                $sent_emails[] = [
+                    'type' => "payment",
+                    'timestamp' => date('Y-m-d H:i:s'),
+                    'loggedin_user' => [
+                        'id' => $app->user->id,
+                        'email' => $app->user->email,
+                        'name' => $app->user->profile->name
+                    ],
+                    'email' => $email_params,
+                    'registration_set_status' => $registration->status
+                ];
 
-            $registration->save(true);
-            $app->enableAccessControl();
+                $app->disableAccessControl();
+                $registration->{$this->prefix("sent_emails")} = $sent_emails;
+
+                $registration->{$this->prefix("last_email_lot")} = $last_email_lot;
+
+                $registration->{$this->prefix("last_email_status")} = $registration->status;
+
+                $registration->save(true);
+                $app->enableAccessControl();
+            }else{
+                $_SESSION['error'][] = [
+                    $registration->number,
+                    i::__("Não foi enviado e-mail do lote {$this->data['lote']}", 'streamlined-opportunity')
+                ];
+
+                $app->log->debug("NÃO ENVIANDO EMAIL DE PAGAMENTO {$registration->number} ({$email_payment['title']})");
+            }            
 
         }
 

@@ -657,6 +657,13 @@ class Plugin extends \MapasCulturais\Plugin
             'default' => false
         ]);
 
+        $this->registerMetadata('MapasCulturais\Entities\Registration', $this->prefix("last_email_lot"), [
+            'label' => i::__('Lotes com e-mail enviado'),
+            'type' => 'json',
+            'private' => true,
+            'default' => '[]'
+        ]);
+
         /**
          * Registra campo adicional "Mensagem de Recurso" nas oportunidades
          * @return void

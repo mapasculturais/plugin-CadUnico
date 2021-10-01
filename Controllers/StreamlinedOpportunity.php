@@ -5,7 +5,6 @@ namespace StreamlinedOpportunity\Controllers;
 use MapasCulturais\i;
 use MapasCulturais\App;
 use MapasCulturais\Controller;
-use MapasCulturais\Entities\MetaList;
 use MapasCulturais\Entities\Registration;
 use StreamlinedOpportunity\Plugin;
 use MapasCulturais\Entities\Opportunity;

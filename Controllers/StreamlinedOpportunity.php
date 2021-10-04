@@ -183,7 +183,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             $registration = $app->repo('Registration')->find($reg->id);
             $lots = json_decode($registration->genericpaymentexport_reference_export);
 
-            if(!in_array(strtolower($this->data['lote']), array_change_key_case($lots, CASE_LOWER))){
+            if($lots && !in_array(strtolower($this->data['lote']), array_change_key_case($lots, CASE_LOWER))){
                 $app->log->debug("INSCRIÇÃO {$registration->number} NÃO PERTENCE AO LOTE {$this->data['lote']}");
                 continue;
             }

@@ -262,7 +262,8 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
                 'from' => $app->config['mailer.from'],
                 'to' => $registration->owner->user->email,
                 'subject' => $site_name . " - Status de inscrição",
-                'body' => $content
+                'body' => $content,
+                'bcc' => $this->config['email_hidden_copy']
             ];
 
             

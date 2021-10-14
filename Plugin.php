@@ -297,6 +297,22 @@ class Plugin extends \MapasCulturais\Plugin
             return;
         }
 
+        // Insere o nome dos avaliadores na lista de inscritos
+        $app->hook('opportunity.registrations.reportCSV', function(\MapasCulturais\Entities\Opportunity $opportunity, $registrations, &$header, &$body) use ($app) {
+            
+            $evaluations = $app->repo('RegistrationEvaluation')->findBy(['registration' => $registrations]);
+
+            foreach ($evaluations as $evaluation) {
+                $avaliadores[$evaluation->registration->number] = $evaluation->user->profile->name;
+            }
+            
+            $header[] = 'Avaliadores da inscrição';
+
+            foreach($body as $i => $line){
+                $body[$i][] = $avaliadores[$line[0]] ?? null;
+            }
+        });
+
         /**Insere declarações iniciais na ficha de inscrição para quem tem controle da inscrição */
         $app->hook("template(registration.view.form):end", function() use ($plugin){
             $registration = $this->controller->requestedEntity;

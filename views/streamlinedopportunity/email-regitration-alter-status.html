@@ -528,17 +528,40 @@
                                             
                                             <div class="status-card status-{{statusNum}}">
                                                 <h2 class="status-card--title">{{statusTitle}}</h2>
-                                                <smal>{{statusMessage1}}</smal>
-                                                <smal>{{statusMessage2}}</smal>
+                                                <smal>{{statusMessage1}}</smal><br>
+                                                <smal>{{statusMessage2}}</smal><br>
 
                                                 {{#evaluationTxt}}
-                                                <br><br>
+                                                <br>
                                                 <small>{{evaluationTxt}}</small>
                                                 <br><br>
                                                 {{/evaluationTxt}}
+
+                                                {{#statusMessage3}}
+                                                <br>
+                                                <small>{{statusMessage3}}</small>
+                                                <br>
+                                                {{/statusMessage3}}
+
+                                                {{#statusMessage4}}
+                                                <br><br>
+                                                <small>{{statusMessage4}}</small>
+                                                <br><br>
+                                                {{/statusMessage4}}
+
+                                                {{#statusMessage5}}
+                                                <br><br>
+                                                <small>{{statusMessage5}}</small>
+                                                <br><br>
+                                                {{/statusMessage5}}
+
+                                                {{#statusMessage6}}
+                                                <br>
+                                                <small>{{statusMessage6}}</small>
+                                                <br>
+                                                {{/statusMessage6}}
                                                     
-                                                <smal>{{statusMessage3}}</smal>
-                                                <smal>{{statusMessage4}}</smal>
+                                                <smal>{{statusMessage7}}</smal>
                                                 {{#hasAppeal}}
                                                 <br><br>
                                                 <h2 class="status-card--title">{{messageAppealTitle}}</h2>

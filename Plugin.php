@@ -153,7 +153,7 @@ class Plugin extends \MapasCulturais\Plugin
 
             // STATUS_NOTAPPROVED = 3
             'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua solicitação não foi homologada')),
-            'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Sua inscrição foi analisada, mas não foi homologada por não atender aos requisitos de elegibilidade. </br> </br> Para realizar a retificação das informações apontadas <b>abaixo</b>, você deve enviar exclusivamente para o email suporte.mapacultural.ms@gmail.com  com as correções solicitadas até o dia 24/09/2021, data do encerramento das inscrições.')), // STATUS_NOTAPPROVED = 3
+            'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Sua inscrição foi analisada, mas não foi homologada por não atender aos requisitos de elegibilidade. </br> </br>')), // STATUS_NOTAPPROVED = 3
 
             //STATUS_WAITLIST = 8
             'title_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_TITLE", i::__('Sua inscrição foi validada.')),

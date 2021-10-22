@@ -195,7 +195,7 @@ class Plugin extends \MapasCulturais\Plugin
                 "url_image_body" => env("{$PREFIX}EMAIL_ALTER_STATUS_IMAGE_BODY", ""),
                 "project_name" => env("{$PREFIX}EMAIL_ALTER_STATUS_PROJECT", ""),
                 "subject" => env("{$PREFIX}EMAIL_ALTER_STATUS_SUBJECT", ""),
-                "send_email_status" => [],
+                "send_email_status" => ['10','3','2'],
                 "message_appeal" => [
                         'title' => env("{$PREFIX}MESSAGE_APPEAL_TITLE", ""),
                         'message' => env("{$PREFIX}MESSAGE_APPEAL_MESSAGE", ""),
@@ -790,6 +790,10 @@ class Plugin extends \MapasCulturais\Plugin
     public function sendEmalAlterStatus(\MapasCulturais\Entities\Registration $registration, $plugin, $evaluation)
     {
         $app = App::i();
+        
+        if(!in_array($registration->status, $plugin->config['email_alter_status']['send_email_status'])){
+            return;
+        }
 
         $mustache = new \Mustache_Engine();
         $site_name = $app->view->dict('site: name', false);

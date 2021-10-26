@@ -515,6 +515,13 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $this->requireAuthentication();
         $registration = $this->requestedEntity;
 
+        $defaultText = false;
+        $evaluateDefault = "";
+        if(in_array($registration->id, $this->config['email_alter_status']['noSendEmail'])){
+            $defaultText = true;
+            $evaluateDefault = \MapasCulturais\i::__("INVÁLIDA,  mais de uma inscrição enviada pelo mesmo requerente; foi  considerada apenas a inscrição com data mais recente.", "streamlined-opportunity");
+        }
+
         if(!$registration) {
             $app->pass();
         }
@@ -630,6 +637,8 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             'justificativaAvaliacao' => array_filter($justificativaAvaliacao),
             'recursos' => $recursos,
             'avaliacoesRecusadas' => $avaliacoesRecusadas,
+            'defaultText' => $defaultText,
+            'evaluateDefault' => $evaluateDefault
         ]);
     }     
     

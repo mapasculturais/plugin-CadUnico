@@ -34,10 +34,16 @@ $_params = [
             <?php if (!empty($justificativaAvaliacao) && sizeof($justificativaAvaliacao) != 0) : ?>
                 <?php foreach ($justificativaAvaliacao as $message) : ?>
                     <?php if (is_array($message) && !empty($config['display_default_result'])) : ?>
+                        <?php if(!$defaultText){?>
                         <?= nl2br(str_replace(array('\r\n', '\r', '\n'), "<br />", $message['message'])); ?>
                         <hr>
+                        <?php }?>
                     <?php else : ?>
+                        <?php if(!$defaultText){?>
                         <p><?= nl2br(str_replace(array('\r\n', '\r', '\n'), "<br />", $message)); ?></p>
+                        <?php } else {?>
+                            <p><?= nl2br(str_replace(array('\r\n', '\r', '\n'), "<br />", $evaluateDefault)); ?></p>
+                        <?php }?>
                         <hr>
                     <?php endif; ?>
                 <?php endforeach; ?>

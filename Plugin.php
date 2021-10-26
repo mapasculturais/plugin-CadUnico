@@ -248,6 +248,7 @@ class Plugin extends \MapasCulturais\Plugin
                         'complement' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_COMPLEMENT", ""),
                         'has_appeal' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_HAS_APPEAL", true),
                     ],
+                    'noSendEmail' => [],
 
                 ]
             ]
@@ -805,6 +806,10 @@ class Plugin extends \MapasCulturais\Plugin
         $app = App::i();
         
         if(!in_array($registration->status, $plugin->config['email_alter_status']['send_email_status'])){
+            return;
+        }
+
+        if(in_array($registration->id, $plugin->config['email_alter_status']['noSendEmail'])){
             return;
         }
 

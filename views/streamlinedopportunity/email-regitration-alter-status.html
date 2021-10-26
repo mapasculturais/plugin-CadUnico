@@ -313,7 +313,7 @@
             background-color: #cc0033;
             box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
             padding: 20px 10px;
-            color: #fff;
+            color: #fff !important;
             display: block;
             font-size: 1rem;
             line-height: 1.4;
@@ -325,7 +325,7 @@
 
         .status-card.status-3 {
             border-radius: 10px;
-            background-color: #cc0033;
+            background-color: #c4365a;
             box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
             padding: 20px 10px;
             color: #fff;
@@ -524,48 +524,38 @@
                                         <td>
                                             <p>Olá, {{userName}}</p>
 
-                                            <p>O status da inscrição {{projectName}} foi atualizado!</p>
+                                            <p>O status da inscrição {{projectName}} - {{registrationNumber}} foi atualizado!</p>
                                             
                                             <div class="status-card status-{{statusNum}}">
                                                 <h2 class="status-card--title">{{statusTitle}}</h2>
-                                                <smal>{{statusMessage1}}</smal><br>
-                                                <smal>{{statusMessage2}}</smal><br>
+                                                <p>{{statusMessage1}}</p>
+                                                <p>{{statusMessage2}}</p>
 
                                                 {{#evaluationTxt}}
-                                                <br>
-                                                <small>{{evaluationTxt}}</small>
-                                                <br><br>
+                                                <p>{{evaluationTxt}}</p>
                                                 {{/evaluationTxt}}
 
                                                 {{#statusMessage3}}
-                                                <br>
-                                                <small>{{statusMessage3}}</small>
-                                                <br>
+                                                <p>{{statusMessage3}}</p>
                                                 {{/statusMessage3}}
 
                                                 {{#statusMessage4}}
-                                                <br><br>
-                                                <small>{{statusMessage4}}</small>
-                                                <br><br>
+                                                <p>{{statusMessage4}}</p>
                                                 {{/statusMessage4}}
 
                                                 {{#statusMessage5}}
-                                                <br><br>
-                                                <small>{{statusMessage5}}</small>
-                                                <br><br>
+                                                <p>{{statusMessage5}}</p>
                                                 {{/statusMessage5}}
 
                                                 {{#statusMessage6}}
-                                                <br>
-                                                <small>{{statusMessage6}}</small>
-                                                <br>
+                                                <p>{{statusMessage6}}</p>
                                                 {{/statusMessage6}}
                                                     
-                                                <smal>{{statusMessage7}}</smal>
+                                                <p>{{statusMessage7}}</p>
                                                 {{#hasAppeal}}
-                                                <br><br>
+                                                <br>
                                                 <h2 class="status-card--title">{{messageAppealTitle}}</h2>
-                                                <smal>{{messageAppealMessage}}</smal>
+                                                <p>{{messageAppealMessage}}</p>
                                                 {{/hasAppeal}}
                                             </div><!-- /.status-card -->
 

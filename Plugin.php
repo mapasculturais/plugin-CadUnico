@@ -836,6 +836,7 @@ class Plugin extends \MapasCulturais\Plugin
             "messageAppealMessage" =>$message_appeal['message'],
             "urlImageBody" => $app->view->asset($plugin->config['email_alter_status']['url_image_body'], false),
             "registrationId" => $registration->id, 
+            "registrationNumber" => $registration->number, 
             "userName" => $registration->owner->name,
             "statusNum" => $registration->status,
         ];

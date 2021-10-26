@@ -149,11 +149,15 @@ class Plugin extends \MapasCulturais\Plugin
 
             // STATUS_INVALID = 2
             'title_status_invalid' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua solicitação não foi aprovada')),
-            'msg_status_invalid' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Sua inscrição foi analisada e homologada, mas invalidada após consulta em outras bases de dados oficiais.')),
+            'msg_status_invalid' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Sua inscrição foi analisada e homologada mas invalidada após consulta em outras bases de dados oficiais. </br>
+            <h5 style="color:#fff">Você pode entrar com recurso</h5> Conforme previsto pela Portaria FCMS nº 023/2021, Art. 3º, o interessado poderá oferecer recurso contendo suas razões, a ser encaminhando exclusivamente para o e-mail msculturacidada@gmail.com, no prazo de 05 (cinco) dias contados do envio de e-mail que informa o indeferimento. <br> 
+            Caso queira solicitar recurso envie um e-mail para msculturacidada@gmail.com, <strong>contendo:</strong> <br><br>  <div><ul style="list-style-type: none;"><li><strong>A.</strong> O pedido do recurso, com identificação do item recorrido;</li><li><strong>B.</strong> Documentos comprobatórios, quando cabíveis;</li><li><strong>C.</strong> Razões que fundamentem o recurso.</li><li><strong>D.</strong> Identificação completa do recorrente;</li><li><strong>E.</strong> Identificação do número da inscrição;</li></ul></div>')),
 
             // STATUS_NOTAPPROVED = 3
             'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua solicitação não foi homologada')),
-            'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Sua inscrição foi analisada, mas não foi homologada por não atender aos requisitos de elegibilidade. </br> </br>')), // STATUS_NOTAPPROVED = 3
+            'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Sua inscrição foi analisada, mas não foi homologada por não atender aos requisitos de elegibilidade. </br>
+            <h5 style="color:#fff">Você pode entrar com recurso</h5> Conforme previsto pela Portaria FCMS nº 023/2021, Art. 3º, o interessado poderá oferecer recurso contendo suas razões, a ser encaminhando exclusivamente para o e-mail msculturacidada@gmail.com, no prazo de 05 (cinco) dias contados do envio de e-mail que informa o indeferimento. <br> 
+            Caso queira solicitar recurso envie um e-mail para msculturacidada@gmail.com, <strong>contendo:</strong> <br><br>  <div><ul style="list-style-type: none;"><li><strong>A.</strong> O pedido do recurso, com identificação do item recorrido;</li><li><strong>B.</strong> Documentos comprobatórios, quando cabíveis;</li><li><strong>C.</strong> Razões que fundamentem o recurso.</li><li><strong>D.</strong> Identificação completa do recorrente;</li><li><strong>E.</strong> Identificação do número da inscrição;</li></ul></div>')), // STATUS_NOTAPPROVED = 3
 
             //STATUS_WAITLIST = 8
             'title_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_TITLE", i::__('Sua inscrição foi validada.')),

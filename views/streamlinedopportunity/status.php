@@ -31,19 +31,15 @@ $_params = [
         <div class="status-card status-<?= $registration->status ?>">
             <h2 class="status-card--title"><?= $registrationStatusMessage['title'] ?? ''; ?></h2>
 
-            <?php if (!empty($justificativaAvaliacao) && sizeof($justificativaAvaliacao) != 0) : ?>
+            <?php if(!$defaultText){?>
+
+                <?php if (!empty($justificativaAvaliacao) && sizeof($justificativaAvaliacao) != 0) : ?>
                 <?php foreach ($justificativaAvaliacao as $message) : ?>
                     <?php if (is_array($message) && !empty($config['display_default_result'])) : ?>
-                        <?php if(!$defaultText){?>
                         <?= nl2br(str_replace(array('\r\n', '\r', '\n'), "<br />", $message['message'])); ?>
                         <hr>
-                        <?php }?>
                     <?php else : ?>
-                        <?php if(!$defaultText){?>
                         <p><?= nl2br(str_replace(array('\r\n', '\r', '\n'), "<br />", $message)); ?></p>
-                        <?php } else {?>
-                            <p><?= nl2br(str_replace(array('\r\n', '\r', '\n'), "<br />", $evaluateDefault)); ?></p>
-                        <?php }?>
                         <hr>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -53,6 +49,13 @@ $_params = [
                 <?php if($config['text_link_button_status'] && $config['text_button_status'] && $registration->status == 1){ ?>
                     <?=$config['text_button_status']?> <a href="<?php echo $app->createUrl($slug, 'cadastro'); ?>"><?=$config['text_link_button_status']?> </a>
                 <?php } ?>
+
+            <?php } else { ?>
+
+                <p><?= nl2br(str_replace(array('\r\n', '\r', '\n'), "<br />", $evaluateDefault)); ?></p>
+                
+            <?php } ?>
+           
             <?php
             
 

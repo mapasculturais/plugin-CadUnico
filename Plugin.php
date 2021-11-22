@@ -149,15 +149,11 @@ class Plugin extends \MapasCulturais\Plugin
 
             // STATUS_INVALID = 2
             'title_status_invalid' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua solicitação não foi aprovada')),
-            'msg_status_invalid' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Sua inscrição foi analisada e homologada mas invalidada após consulta em outras bases de dados oficiais. </br>
-            <h5 style="color:#fff">Você pode entrar com recurso</h5> Conforme previsto pela Portaria FCMS nº 023/2021, Art. 3º, o interessado poderá oferecer recurso contendo suas razões, a ser encaminhando exclusivamente para o e-mail <strong>msculturacidada@gmail.com</strong>, no prazo de 05 (cinco) dias contados do envio de e-mail que informa o indeferimento. <br> 
-            Caso queira solicitar recurso envie um e-mail para <strong>msculturacidada@gmail.com</strong> <strong>contendo:</strong> <br><br>  <div><ul style="list-style-type: none;"><li><strong>A.</strong> Nome completo do recorrente;</li><li><strong>B.</strong> Número da inscrição;</li><li><strong>C.</strong> O motivo de apresentação do recurso, com identificação do item recorrido;</li><li><strong>D.</strong> Razões que fundamentem o recurso; </li><li><strong>E.</strong> Documentos comprobatórios, quando cabíveis.</li></ul></div>')),
+            'msg_status_invalid' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Sua inscrição foi analisada e homologada, mas invalidada após consulta em outras bases de dados oficiais.')),
 
             // STATUS_NOTAPPROVED = 3
-            'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua solicitação não foi homologada')),
-            'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Sua inscrição foi analisada, mas não foi homologada por não atender aos requisitos de elegibilidade. </br>
-            <h5 style="color:#fff">Você pode entrar com recurso</h5> Conforme previsto pela Portaria FCMS nº 023/2021, Art. 3º, o interessado poderá oferecer recurso contendo suas razões, a ser encaminhando exclusivamente para o e-mail <strong>msculturacidada@gmail.com</strong>, no prazo de 05 (cinco) dias contados do envio de e-mail que informa o indeferimento. <br> 
-            Caso queira solicitar recurso envie um e-mail para <strong>msculturacidada@gmail.com</strong>, <strong>contendo:</strong> <br><br>  <div><ul style="list-style-type: none;"><li><strong>A.</strong> Nome completo do recorrente;</li><li><strong>B.</strong> Número da inscrição;</li><li><strong>C.</strong> O motivo de apresentação do recurso, com identificação do item recorrido;</li><li><strong>D.</strong> Razões que fundamentem o recurso; </li><li><strong>E.</strong> Documentos comprobatórios, quando cabíveis.</li></ul></div>')), // STATUS_NOTAPPROVED = 3
+            'title_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua solicitação não foi aprovada')),
+            'msg_status_notapproved' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Sua inscrição não foi aprovada após análise do recurso apresentado, por não atender aos requisitos de elegibilidade do regulamento, conforme motivo (s) abaixo descrito (s).')), // STATUS_NOTAPPROVED = 3
 
             //STATUS_WAITLIST = 8
             'title_status_waitlist' => env("{$PREFIX}_STATUS_WAITLIST_TITLE", i::__('Sua inscrição foi validada.')),
@@ -165,7 +161,7 @@ class Plugin extends \MapasCulturais\Plugin
 
             // STATUS_APPROVED = 10
             'title_status_approved' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua solicitação foi aprovada.')),
-            'msg_status_approved' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('Sua inscrição foi analisada e homologada e a solicitação do benefício validada pela FCMS. Aguardando o pagamento do benefício.')),
+            'msg_status_approved' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('Sua inscrição foi homologada e a solicitação do benefício validada pela FCMS. Aguarde o pagamento do benefício.')),
 
             'logo_institution' => env("$PREFIX}_LOGO_INSTUCTION", ''),
             'logo_footer' => env("$PREFIX}_LOGO_FOOTER", ''),

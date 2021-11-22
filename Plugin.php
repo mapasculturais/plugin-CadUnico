@@ -307,6 +307,18 @@ class Plugin extends \MapasCulturais\Plugin
             return;
         }
 
+        // Dispara email na troca de status da inscrição ao processar a planliha de recurso
+        $app->hook('process.appealvalidator', function($registration) use ($plugin, $app){
+
+            if($plugin->isStreamLinedOpportunity($registration->opportunity)){
+                
+                $evaluation = $app->repo("RegistrationEvaluation")->findBy(['registration' => $registration]);
+
+                $plugin->sendEmalAlterStatus($registration, $plugin, $evaluation);
+            }
+        });
+
+
         // Insere o nome dos avaliadores na lista de inscritos
         $app->hook('opportunity.registrations.reportCSV', function(\MapasCulturais\Entities\Opportunity $opportunity, $registrations, &$header, &$body) use ($app) {
             

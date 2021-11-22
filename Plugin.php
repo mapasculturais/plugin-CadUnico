@@ -859,8 +859,7 @@ class Plugin extends \MapasCulturais\Plugin
             'from' => $app->config['mailer.from'],
             'to' => $registration->owner->user->email,
             'subject' => $plugin->config['email_alter_status']['subject'],
-            'body' => $content,
-            'bcc' => $plugin->config['email_hidden_copy']
+            'body' => $content
         ];
         
         $app->log->debug("ENVIANDO EMAIL DE STATUS DA {$registration->number}");

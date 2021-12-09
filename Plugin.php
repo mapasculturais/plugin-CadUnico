@@ -41,6 +41,7 @@ class Plugin extends \MapasCulturais\Plugin
         $config += [
             // true habilita o plugin false desabilita
             'enabled_plugin' => env("{$PREFIX}_ENABLED", false), 
+            'redirect_login_enabled' => env("{$PREFIX}_REDIRECT_LOGIN_ENABLED", true),
 
             // Define o horario que deve ser liberado as inscrições
             'schedule_datetime' => null,
@@ -532,7 +533,7 @@ class Plugin extends \MapasCulturais\Plugin
         
         //Se ao criar a conta, o usuário acessou pelo plugin streanlined, leva ele para o cadastro
         $app->hook('auth.successful:redirectUrl', function (&$redirectUrl) use ($plugin, $app) {
-            if ($_SESSION['mapasculturais.auth.FromStreamlined'] ?? null == $plugin->getSlug()) {            
+            if ($plugin->config['redirect_login_enabled'] && $_SESSION['mapasculturais.auth.FromStreamlined'] ?? null == $plugin->getSlug()) {            
                 $redirectUrl = $app->createUrl($plugin->getSlug(), 'cadastro');
             }
         },1000);
@@ -543,7 +544,7 @@ class Plugin extends \MapasCulturais\Plugin
 
             $opportunity = $app->repo('Opportunity')->find($opportunities_id) ?? null;
             
-            if ($opportunity && $opportunity->canUser('@control')) {
+            if ($opportunity && $opportunity->canUser('@control') && $plugin->config['redirect_login_enabled']) {
                 $_SESSION['mapasculturais.auth.redirect_path'] = $app->createUrl('panel', 'index');
             }
         });

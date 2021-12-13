@@ -521,9 +521,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             $defaultText = true;
             if($registration->id == "905257174"){
                 $evaluateDefault = \MapasCulturais\i::__("- Declaração de Ciência Conjunta - Anexo I, incompleta, sem a última página que deve conter a assinatura de próprio punho pelo requerente.
-
-                - Cópia digital da carteira de trabalho profissional não contém a página de registro da última rescisão e a folha seguinte em branco, de forma a demonstrar ausência de registro de emprego formal.");
-
+                                                          - Cópia digital da carteira de trabalho profissional não contém a página de registro da última rescisão e a folha seguinte em branco, de forma a demonstrar ausência de registro de emprego formal.");
             }else{
                 $evaluateDefault = \MapasCulturais\i::__("INVÁLIDA,  mais de uma inscrição enviada pelo mesmo requerente; foi  considerada apenas a inscrição com data mais recente.", "streamlined-opportunity");
             }

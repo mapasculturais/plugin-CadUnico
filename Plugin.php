@@ -197,6 +197,7 @@ class Plugin extends \MapasCulturais\Plugin
                 "project_name" => env("{$PREFIX}EMAIL_ALTER_STATUS_PROJECT", ""),
                 "subject" => env("{$PREFIX}EMAIL_ALTER_STATUS_SUBJECT", ""),
                 "send_email_status" => ['10','3','2'],
+                "messageDefaultNoSendEmail" => "",
                 "message_appeal" => [
                         'title' => env("{$PREFIX}MESSAGE_APPEAL_TITLE", ""),
                         'message' => env("{$PREFIX}MESSAGE_APPEAL_MESSAGE", ""),
@@ -245,7 +246,9 @@ class Plugin extends \MapasCulturais\Plugin
                         'complement' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_COMPLEMENT", ""),
                         'has_appeal' => env("{$PREFIX}NO_SELECTED_STATUS_MESSAGE_HAS_APPEAL", true),
                     ],
-                    'noSendEmail' => [],
+                    'noSendEmail' => [
+                        "specialCase" => []
+                    ],
 
                 ]
             ]

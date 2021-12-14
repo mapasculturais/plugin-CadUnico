@@ -519,13 +519,13 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $evaluateDefault = "";
         if(in_array($registration->id, $this->config['email_alter_status']['noSendEmail'])){
             $defaultText = true;
-            if($registration->id == "905257174"){
-                $evaluateDefault = \MapasCulturais\i::__("- Declaração de Ciência Conjunta - Anexo I, incompleta, sem a última página que deve conter a assinatura de próprio punho pelo requerente.
-                                                          - Cópia digital da carteira de trabalho profissional não contém a página de registro da última rescisão e a folha seguinte em branco, de forma a demonstrar ausência de registro de emprego formal.");
+            if(in_array($registration->id, array_keys($this->config['email_alter_status']['specialMessage']))){
+                $evaluateDefault = $this->config['email_alter_status']['specialMessage'][$registration->id];
             }else{
-                $evaluateDefault = \MapasCulturais\i::__("INVÁLIDA,  mais de uma inscrição enviada pelo mesmo requerente; foi  considerada apenas a inscrição com data mais recente.", "streamlined-opportunity");
+                $evaluateDefault = $this->config['email_alter_status']['messageDefaultNoSendEmail'];
             }
         }
+
 
         if(!$registration) {
             $app->pass();

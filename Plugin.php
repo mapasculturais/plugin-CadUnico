@@ -41,7 +41,7 @@ class Plugin extends \MapasCulturais\Plugin
         $config += [
             // true habilita o plugin false desabilita
             'enabled_plugin' => env("{$PREFIX}_ENABLED", false), 
-            'redirect_login_enabled' => env("{$PREFIX}_REDIRECT_LOGIN_ENABLED", true),
+            'redirect_login_enabled' => env("{$PREFIX}_REDIRECT_LOGIN_ENABLED", false),
 
             // Define o horario que deve ser liberado as inscrições
             'schedule_datetime' => null,
@@ -528,8 +528,8 @@ class Plugin extends \MapasCulturais\Plugin
         });
 
         //Seta sessão que identifica que ao criar uma nova conta, o usuário veio do plugin steamLined
-        $app->hook('auth.createUser:before', function () use ($plugin, &$isStreamlined) {            
-            if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) >= 0) {
+        $app->hook('auth.createUser:before', function () use ($plugin, &$isStreamlined) {    
+            if ($plugin->config['redirect_login_enabled'] && isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug())) {
                 $_SESSION['mapasculturais.auth.FromStreamlined'] = $plugin->getSlug();
             }
         });
@@ -547,7 +547,7 @@ class Plugin extends \MapasCulturais\Plugin
 
             $opportunity = $app->repo('Opportunity')->find($opportunities_id) ?? null;
             
-            if ($opportunity && $opportunity->canUser('@control') && $plugin->config['redirect_login_enabled']) {
+            if ($opportunity && $opportunity->canUser('@control')) {
                 $_SESSION['mapasculturais.auth.redirect_path'] = $app->createUrl('panel', 'index');
             }
         });
@@ -566,7 +566,7 @@ class Plugin extends \MapasCulturais\Plugin
         //Altera o redirectUrl caso encontre um slug  configurado na sessão mapasculturais.auth.redirect_path
         $app->hook('auth.createUser:redirectUrl', function (&$redirectUrl) use ($plugin) {
            
-            if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug()) >= 0) {
+            if (isset($_SESSION['mapasculturais.auth.redirect_path']) && strpos($_SESSION['mapasculturais.auth.redirect_path'], $plugin->getSlug())) {
                 $redirectUrl =  $plugin->getSlug();
             }
         });

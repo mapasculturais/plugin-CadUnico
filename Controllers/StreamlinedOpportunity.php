@@ -2,17 +2,18 @@
 
 namespace StreamlinedOpportunity\Controllers;
 
+use MapasCulturais\ApiQuery;
 use MapasCulturais\i;
 use MapasCulturais\App;
 use MapasCulturais\Controller;
 use MapasCulturais\Entities\Registration;
 use StreamlinedOpportunity\Plugin;
-use MapasCulturais\Entities\Opportunity;
 
 /**
  * StreamlinedOpportunity Controller
  *
- * @property-read \MapasCulturais\Entities\Registration $requestedEntity The Requested Entity
+ * @property-read Registration $requestedEntity The Requested Entity
+ * @property-read array $statusNames nomes dos status
  * @property-read mixed $config configuração do plugin
  */
 class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
@@ -39,6 +40,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
      * @return StreamlinedOpportunity 
      */
     static public function i(string $controller_id): Controller {
+        
         $instance = parent::i($controller_id);
         $instance->init($controller_id);
 
@@ -49,7 +51,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         if(!$this->_initiated) {
             $app = App::i();
             $this->plugin = Plugin::getInstanceBySlug($controller_id);
-            $this->layout = 'streamlined-opportunity';
+            $this->layout = $this->plugin->config['layout'];
 
             $slug = $this->plugin->getSlug();
 
@@ -64,10 +66,15 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
 
                 $this->registerRegistrationMetadata($opportunity);
             });
-
             $this->_initiated = true;
         }
 
+    }
+
+    function render($template, $data = [])
+    {
+        $this->plugin->registerAssets();
+        parent::render($template, $data);
     }
 
     function getTemplatePrefix() {
@@ -86,26 +93,6 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
      */
     function prefix($value){
         return $this->plugin->prefix($value);
-    }
- 
-    /**
-     * Retorna a oportunidade
-     *
-     * @return \MapasCulturais\Entities\Opportunity;
-     */
-    function getOpportunity(): Opportunity
-    {
-        $app = App::i();
-
-        $opportunity_id = $this->config['opportunity_id'];
-        $opportunity = $app->repo('Opportunity')->find($opportunity_id);
-
-        if(!$opportunity){
-            // @todo tratar esse erro
-            throw new \Exception();
-        }
-
-        return $opportunity;
     }
 
     /**
@@ -140,7 +127,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
       
         $app = App::i();
 
-        $opportunity = $this->getOpportunity();
+        $opportunity = $this->plugin->opportunity;
         
         if (!$opportunity) {
             $this->errorJson('Oportunidade não encontrada');
@@ -359,31 +346,32 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
      * @return array
      */
     function getStatusMessages(){
+        $plugin = $this->plugin;
         $summaryStatusMessages = [
             //STATUS_SENT = 1 - Em análise
             '1' => [
-                'title'   => $this->config['title_status_sent'],
-                'message'  => $this->config['msg_status_sent']
+                'title'   => $plugin->text('status.sent.title'),
+                'message'  => $plugin->text('status.sent.message')
             ],
             //STATUS_INVALID = 2 - Inválida
             '2' => [
-                'title'    => $this->config['title_status_invalid'],
-                'message'  => $this->config['msg_status_invalid']
+                'title'    => $plugin->text('status.invalid.title'),
+                'message'  => $plugin->text('status.invalid.message')
             ],
             //STATUS_NOTAPPROVED = 3 - Reprovado
             '3' => [
-                'title'    => $this->config['title_status_notapproved'],
-                'message'  => $this->config['msg_status_notapproved']
+                'title'    => $plugin->text('status.notapproved.title'),
+                'message'  => $plugin->text('status.notapproved.message')
             ],
             //STATUS_APPROVED = 10 - Aprovado
             '10' => [
-                'title'   => $this->config['title_status_approved'],
-                'message' => $this->config['msg_status_approved']
+                'title'   => $plugin->text('status.approved.title'),
+                'message' => $plugin->text('status.approved.message')
             ],
             //STATUS_WAITLIST = 8 - Recursos Exauridos
             '8' => [
-                'title'   => $this->config['title_status_waitlist'],
-                'message' => $this->config['msg_status_waitlist']
+                'title'   => $plugin->text('status.waitlist.title'),
+                'message' => $plugin->text('status.waitlist.message')
             ]
         ];
         return $summaryStatusMessages;
@@ -485,7 +473,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         }
         $agent->checkPermission('@control');
 
-        $opportunity = $this->getOpportunity();
+        $opportunity = $this->plugin->opportunity;
 
         $registrations = $app->repo('Registration')->findBy(['owner' => $agent->id, 'opportunity' => $opportunity->id]);
 
@@ -494,7 +482,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         }else{
             $registration = new \MapasCulturais\Entities\Registration;
             $registration->owner = $agent;
-            $registration->opportunity = $this->getOpportunity();    
+            $registration->opportunity = $opportunity;    
             $registration->save(true);
             $registration_id =  $registration->id;
         }
@@ -643,29 +631,59 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             'defaultText' => $defaultText,
             'evaluateDefault' => $evaluateDefault
         ]);
-    }     
+    }
     
-    /**
-     * Seta um metadado indicando que se iniciou o streamLined da opportunidade
-     */
-    public function GET_startstreamlined ()
-    {
+    protected function setFlag($flag, $value) {
         $this->requireAuthentication();
 
         $app = App::i();
 
-        if(!$app->user->is('admin')) {
-            $this->errorJson('Permissao negada', 403);
+        $opportunity = $this->plugin->opportunity;
+
+        if(!$opportunity) {
+            $app->pass();
+            die;
         }
+
+        $opportunity->checkPermission('modify');
+
+        $enabled = $this->prefix($flag);
+
+        $opportunity->$enabled = $value ? '1' : '0';
         
-        $request = $this->data;
-
-        $opportunity = $this->getOpportunity();
-
-        $opportunity->{$this->prefix("streamlined_start")} = ($request['start'] == "true") ? true : false;
-        
-        $opportunity->save();
-
+        $opportunity->save(true);
+    }
+    
+    /**
+     * Habilita o plugin para a oportunidade
+     */
+    public function GET_enable ()
+    {
+        $this->setFlag('enabled', true);
+    }
+    
+    /**
+     * Desabilita o plugin para a oportunidade
+     */
+    public function GET_disable ()
+    {
+        $this->setFlag('enabled', false);
+    }
+    
+    /**
+     * Abilita o destaque na home
+     */
+    public function GET_enableFeatured ()
+    {
+        $this->setFlag('featured', true);
+    }
+    
+    /**
+     * Desabilita o destaque na home
+     */
+    public function GET_disableFeatured ()
+    {
+        $this->setFlag('featured', false);
     }
 
 
@@ -729,31 +747,26 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         
         $app = App::i();
 
-        $controller = $app->controller('registration');
-
         $summaryStatusName = $this->getStatusNames();
-
-        $owner_name = $app->user->profile->name;
 
         $repo = $app->repo('Registration');
         
-        $opportunity = $this->getOpportunity();
+        $opportunity = $this->plugin->opportunity;
        
-        $registrations = $controller->apiQuery([
+        $rs = new ApiQuery(Registration::class, [
             '@select' => 'id', 
             'opportunity' => "EQ({$opportunity->id})", 
             'status' => 'GTE(0)'
         ]);
         
-        $registrations_ids = array_map(function($r) { return $r['id']; }, $registrations);
+        $registrations_ids = $rs->findIds();
         $registrations = $repo->findBy(['id' => $registrations_ids ]);
 
         $this->render('cadastro', [
-                'limit' => $this->config['limit'],
+                'plugin' => $this->plugin,
+                'opportunity' => $opportunity,
                 'registrations' => $registrations,
-                'summaryStatusName'=> $summaryStatusName, 
-                'niceName' => $owner_name,
-                'isRegistrationOpen' => ($this->plugin->isStartStreamLined() && $registrations_ids) ? true : false,
+                'summaryStatusName'=> $summaryStatusName
         ]);
     }
 
@@ -782,7 +795,11 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             $app->pass();
         }
         
-        $this->render('termos-e-condicoes', ['registration_id' => $registration->id]);
+        $this->render('termos-e-condicoes', [
+            'plugin' => $this->plugin,
+            'opportunity' => $this->plugin->opportunity,
+            'registration_id' => $registration->id
+        ]);
     }
 
     /**

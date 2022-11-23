@@ -1,8 +1,9 @@
 <?php
+/** 
+ * @var StreamlinedOpportunity\Plugin $plugin 
+ * @var MapasCulturais\Themes\BaseV1\Theme $this
+ */
 
-use MapasCulturais\i;
-
-$app = \MapasCulturais\App::i();
 $plugin = $this->controller->plugin;
 $config = $plugin->config;
 $slug = $this->controller->plugin->slug;
@@ -36,15 +37,20 @@ $_params = [
 <div id="editable-entity" class="clearfix sombra">
 </div>
 <article class="main-content registration" ng-controller="OpportunityController">
-    <h1> <?= i::__($config['form_screen']['title'], 'streamlined-opportunity') ?></h1>
+    <h1> <?= $plugin->text('form.title') ?></h1>
+    <?php if($text = $plugin->text('form.description')): ?>
+        <div class="description"><?= $text ?></div>
+    <?php endif; ?>
+
     <?php $this->applyTemplateHook('form', 'begin'); ?>
 
     <?php $this->part('singles/registration-edit--header', $_params) ?>
 
-    <?php $this->part('singles/registration-edit--fields', $_params) ?>
+    <div ng-controller="RegistrationFieldsController">
+        <?php $this->part('singles/registration-edit--fields', $_params) ?>
 
-    <?php $this->part('streamlinedopportunity/registration-edit--validate-button', $_params) ?>
-
+        <?php $this->part('streamlinedopportunity/registration-edit--validate-button', $_params) ?>
+    </div>
     <?php $this->applyTemplateHook('form', 'end'); ?>
 
 </article>

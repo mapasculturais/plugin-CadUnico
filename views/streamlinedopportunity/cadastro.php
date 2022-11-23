@@ -1,59 +1,53 @@
 <?php
+/** 
+ * @var StreamlinedOpportunity\Plugin $plugin 
+ * @var MapasCulturais\Entities\Opportunity $opportunity
+ * @var MapasCulturais\Themes\BaseV1\Theme $this
+ */
 
 use MapasCulturais\i;
 use MapasCulturais\Entities\Registration;
 
-$app = \MapasCulturais\App::i();
-$plugin = $this->controller->plugin;
-$config = $plugin->config;
 $slug = $plugin->slug;
 
-
-$this->jsObject['opportunityId'] = $config['opportunity_id'];
-
+$this->jsObject['opportunityId'] = $opportunity->id;
+$profile = $app->user->profile;
 ?>
 <section class="lab-main-content cadastro">
     <header>
         <div class="intro-message">
-            <div class="name"> <?= i::__('Olá', 'streamlined-opportunity') ?> <?= $niceName ? ", " . $niceName : "" ?>!
-                <br>
-                <?= i::__('Clique', 'streamlined-opportunity') ?> <a href="<?= $registrationUrl = $app->baseUrl; ?>"><?= i::__('aqui', 'streamlined-opportunity') ?> </a> <?= i::__('para retornar à página inicial', 'streamlined-opportunity') ?>
+            <div class="name"> 
+                <?= i::__('Olá', 'streamlined-opportunity') ?> <?= $profile->name ? ", " . $profile->name : "" ?>! <br>
+                <?= sprintf(i::__('Clique <a href="%s">aqui</a> para retornar à página inicial', 'streamlined-opportunity'), $app->baseUrl) ?>
             </div>
         </div>
     </header>
 
     <div class="js-lab-item lab-item cadastro-options">
-        <?php  if (count($registrations) < $limit) { ?>
+        <?php  if (count($registrations) < $plugin->limit) { ?>
             <div class="long-description">
-                <?= i::__($config['registration_screen']['long_description'], 'streamlined-opportunity') ?>
+                <?= $plugin->text('dashboard.description') ?: $opportunity->shortDescription ?>
             </div>
 
             <h2 class="featured-title">
-                <?= i::__($config['registration_screen']['title']) ?>
-            </h2>
+                <?= $plugin->text('dashboard.title') ?>
+            </h2>   
         <?php } else {?>
             <h2 class="featured-title">
-                <?= i::__($config['registration_screen']['title_application_summary']) ?>
+                <?= $plugin->text('dashboard.applicationSummaryTitle') ?>
             </h2>        
         <?php } ?>
 
         <div class="lab-form-filter opcoes-inciso">
           
-            <?php
-            
-            $title = i::__($config['registration_screen']['description']);
-            
-            $agent_id = $app->user->profile->id;
-            
-            if (count($registrations) < $limit && $isRegistrationOpen)  {
-            ?>
-                <button onclick="location.href='<?= $this->controller->createUrl('novaInscricao', ['agent' => $agent_id]) ?>'" clickable id="option3" class="informative-box lab-option">
+            <?php if (count($registrations) < $plugin->limit && $plugin->isRegistrationOpen()): ?>
+                <button onclick="location.href='<?= $this->controller->createUrl('novaInscricao', ['agent' => $profile->id]) ?>'" clickable id="option3" class="informative-box lab-option">
                     <div class="informative-box--icon">
                         <i class="fas fa-user"></i>
                     </div>
 
                     <div class="informative-box--title">
-                        <h2><?= $title ?></h2>
+                        <h2><?= $plugin->text('dashboard.button') ?: $opportunity->name ?></h2>
                         <i class="fas fa-minus"></i>
                     </div>
 
@@ -62,19 +56,26 @@ $this->jsObject['opportunityId'] = $config['opportunity_id'];
                        
                     </div>
                 </button>
-            <?php
-            } 
+            <?php endif; ?>
+            <?php 
             foreach ($registrations as $registration) {
                 $registrationUrl = $this->controller->createUrl('formulario', [$registration->id]);
                 switch ($registration->status) {
                         //caso seja nao enviada (Rascunho)
                     case Registration::STATUS_DRAFT:
-                        $this->part('streamlinedopportunity/cadastro/application-draft',  ['registration' => $registration, 'registrationUrl' => $registrationUrl, 'niceName' => $niceName, 'registrationStatusName' => 'Cadastro iniciado']);
+                        $this->part('streamlinedopportunity/cadastro/application-draft',  [
+                            'registration' => $registration, 
+                            'registrationUrl' => $registrationUrl, 
+                            'registrationStatusName' => i::__('Cadastro iniciado', 'streamlined-opportunity')
+                        ]);
                         break;
                         //caso  tenha sido enviada
                     default:
                         $registrationStatusName = $summaryStatusName[$registration->status];
-                        $this->part('streamlinedopportunity/cadastro/application-status',  ['registration' => $registration, 'registrationStatusName' => $registrationStatusName]);
+                        $this->part('streamlinedopportunity/cadastro/application-status',  [
+                            'registration' => $registration, 
+                            'registrationStatusName' => $registrationStatusName
+                        ]);
                         break;
                 }
             }

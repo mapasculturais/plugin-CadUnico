@@ -24,13 +24,13 @@ $slug = $this->controller->plugin->slug;
     </div>
 </div>
 
-<div show="{{entityValidated}}" ng-show="entityValidated" id="modalAlert" class="modal">
+<div  id="modalAlert" class="modal" >
     <!-- Modal content -->
     <div class="modal-content">
-        <h2 class="modal-content--title"><?= i::__('Preenchimento Finalizado', 'streamlined-opportunity') ?></h2>
-        <p class="text"><?= i::__('Agradecemos sua participação!', 'streamlined-opportunity') ?></p>
-        <p class="text"><?= i::__('Antes de enviar a inscrição, releia atentamente os dados preenchidos e certifique-se que estão todos corretos. Você pode editar o formulário caso encontre alguma informação incorreta.', 'streamlined-opportunity') ?></p>
-        <a href="<?= $this->controller->createUrl('confirmacao', [$entity->id]) ?>" ng-click="" class="btn btn-primary js-confirmar"><?php \MapasCulturais\i::_e("Revisar formulário"); ?></a>
+        <h2 class="modal-content--title"><?= $plugin->text('modal.success.title') ?></h2>
+        <p class="text"><?= $plugin->text('modal.success.subtitle') ?></p>
+        <p class="text"><?= $plugin->text('modal.success.text') ?></p>
+        <a href="<?= $this->controller->createUrl('confirmacao', [$entity->id]) ?>" ng-click="" class="btn btn-primary js-confirmar"><?= $plugin->text('modal.success.btn.text') ?></a>
     </div>
 </div>
 

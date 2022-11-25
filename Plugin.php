@@ -168,6 +168,12 @@ class Plugin extends \MapasCulturais\Plugin
                 'terms.title' => env("{$PREFIX}_TERMS_TITLE", i::__('Termos e Condições', 'streamlined-opportunity')),
                 'terms.help' => env("{$PREFIX}_TERMS_HELP", i::__('Você precisa aceitar todos os termos para prosseguir com a inscrição', 'streamlined-opportunity')),
 
+                /* FORMULÁRIO DA INSCRIÇÃO (Validação de campo MODAL) */
+                'modal.success.title' => env("{$PREFIX}_MODAL_ERROR_TITLE", i::__('Preenchimento Finalizado', 'streamlined-opportunity')),
+                'modal.success.subtitle' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Agradecemos sua participação!', 'streamlined-opportunity')),
+                'modal.success.text' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Antes de enviar a inscrição, releia atentamente os dados preenchidos e certifique-se que estão todos corretos. Você pode editar o formulário caso encontre alguma informação incorreta.', 'streamlined-opportunity')),
+                'modal.success.btn.text' => env("{$PREFIX}_MODAL_ERROR_BTN_TEXT", i::__('Revisar formulário', 'streamlined-opportunity')),
+                
                 // STATUS_SENT = 1
                 'status.sent.title' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição está em análise', 'streamlined-opportunity')),
                 'status.sent.message' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Consulte novamente em outro momento.', 'streamlined-opportunity')),

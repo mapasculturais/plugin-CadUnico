@@ -34,7 +34,7 @@ $this->jsObject["registrationId"] = $registration_id;
         <button class="btn btn-large btn-lab js-btn"> <?= i::__('Continuar', 'streamlined-opportunity') ?></button>
     </nav>
 
-    <div id="modalAlert" class="modal">
+    <div id="modalAlert" class="modal" style="display: none;">
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>

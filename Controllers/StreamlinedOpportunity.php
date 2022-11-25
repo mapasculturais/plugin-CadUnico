@@ -520,6 +520,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         if($registration->status != Registration::STATUS_DRAFT){
             $app->redirect($this->createUrl('status', [$registration->id]));
         }
+
         $registration->checkPermission('modify');
         $now = new \DateTime('now');
         $notInTime = ($registration->opportunity->registrationFrom > $now || $registration->opportunity->registrationTo < $now );
@@ -535,7 +536,8 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         
         $app->view->includeEditableEntityAssets();
 
-        $this->render('registration-edit', ['entity' => $registration]);
+        $plugin = $this->plugin;
+        $this->render('registration-edit', ['entity' => $registration, 'plugin' => $plugin]);
     }
 
     /**
@@ -676,7 +678,9 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
     {
         $app = App::i();
         $this->requireAuthentication();
-        //verificar se registration status
+
+        $plugin = $this->plugin;
+        
         $registration = $this->getRequestedEntity();
         if($registration->status != Registration::STATUS_DRAFT){
             $app->redirect($this->createUrl('status', [$registration->id]));
@@ -686,7 +690,8 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         }
         $registration->checkPermission('control');
         $this->data['entity'] = $registration;
-        $this->render('registration-confirmacao', $this->data);
+
+        $this->render('registration-confirmacao', $this->data, ['plugin' => $plugin]);
     }
     
     function GET_email_recusadas() {

@@ -358,18 +358,6 @@ class Plugin extends \MapasCulturais\Plugin
 
         $opportunity = $this->opportunity;
 
-        // Dispara email na troca de status da inscrição ao processar a planliha de recurso
-        $app->hook('process.appealvalidator', function($registration) use ($plugin, $app){
-
-            if($plugin->isStreamLinedOpportunity($registration->opportunity)){
-                
-                $evaluation = $app->repo("RegistrationEvaluation")->findBy(['registration' => $registration]);
-
-                $plugin->sendEmalAlterStatus($registration, $plugin, $evaluation);
-            }
-        });
-
-
         // Insere o nome dos avaliadores na lista de inscritos
         $app->hook('opportunity.registrations.reportCSV', function(\MapasCulturais\Entities\Opportunity $opportunity, $registrations, &$header, &$body) use ($app) {
             
@@ -473,28 +461,6 @@ class Plugin extends \MapasCulturais\Plugin
                 } else {
                     $result = $this->consolidatedResult;
                 }
-            }
-        });
-
-
-        // Envia um e-mail quando o proponenhte se inscreve 
-        $app->hook('POST(registration.send):before', function() use ($plugin){
-            $opportunities_id = $plugin->config['opportunity_id'];
-            $registration = $this->requestedEntity;
-            if($registration->opportunity->id == $opportunities_id){
-                $plugin->sendEmailregistrationConfirm($registration, $plugin);
-            }
-
-        }); 
-
-        // Dispara email quando se altera o status da inscrição
-        $app->hook("entity(Registration).status(<<*>>)", function( )use ($plugin, $app){
-            if($plugin->isStreamLinedOpportunity($this->opportunity)){  
-
-                $evaluation = $app->repo("RegistrationEvaluation")->findBy(['registration' => $this]);
-                
-                /** @var Mapasculturais\Entities\Registration $this  */
-                $plugin->sendEmalAlterStatus($this, $plugin, $evaluation);
             }
         });
 
@@ -680,19 +646,7 @@ class Plugin extends \MapasCulturais\Plugin
             'type' => 'string',
             'private' => true,
         ]);
-
-        $this->registerMetadata('MapasCulturais\Entities\Registration', $this->prefix("sent_emails"), [
-            'label' => i::__('E-mails enviados'),
-            'type' => 'json',
-            'private' => true,
-            'default_value' => '[]'
-        ]);
-
-        $this->registerMetadata('MapasCulturais\Entities\Registration', $this->prefix("last_email_status"), [
-            'label' => i::__('Status do último e-mail enviado'),
-            'type' => 'integer',
-            'private' => true
-        ]);
+        
 
         $this->registerMetadata('MapasCulturais\Entities\Opportunity',  $this->prefix("enabled"), [
             'label' => i::__('Aberto processo de inscrição'),
@@ -706,13 +660,6 @@ class Plugin extends \MapasCulturais\Plugin
             'type' => 'boolean',
             'private' => false,
             'default_value' => true
-        ]);
-
-        $this->registerMetadata('MapasCulturais\Entities\Registration', $this->prefix("last_email_lot"), [
-            'label' => i::__('Lotes com e-mail enviado'),
-            'type' => 'json',
-            'private' => true,
-            'default_value' => '[]'
         ]);
 
         /**
@@ -841,126 +788,6 @@ class Plugin extends \MapasCulturais\Plugin
         return $this->config['texts'][$key];
     }
        
-    /**
-     * Envia email de confirmação de cadastro
-     *
-     */
-    public function sendEmailregistrationConfirm(\MapasCulturais\Entities\Registration $registration, $plugin)
-    {
-        $app = App::i();
-
-        $mustache = new \Mustache_Engine();
-        $site_name = $app->view->dict('site: name', false);
-        $baseUrl = $app->getBaseUrl();
-        $filename = $app->view->resolveFilename("views/streamlinedopportunity", "email-regitration-confirmation.html");        
-        $template = file_get_contents($filename);
-
-        $params = [
-            "baseUrl" => $baseUrl,
-            "siteName" => $site_name,
-            "slug" => $plugin->config['slug'],
-            "projectName" => $plugin->config['email_confirm_registration']['project_name'],
-            "statusTitle" =>  $plugin->config['email_confirm_registration']['status_title'],
-            "urlImageBody" => $app->view->asset($plugin->config['email_confirm_registration']['url_image_body'], false),
-            "registrationId" => $registration->id, 
-            "userName" => $registration->owner->name,
-        ];
-
-        $content = $mustache->render($template,$params);
-
-        $email_params = [
-            'from' => $app->config['mailer.from'],
-            'to' => $registration->owner->user->email,
-            'subject' => $plugin->config['email_confirm_registration']['subject'],
-            'body' => $content
-        ];
-
-        $app->log->debug("ENVIANDO EMAIL DE STATUS DA {$registration->number}");
-        $app->createAndSendMailMessage($email_params);
-    }
-
-     /**
-     * Envia email de atualização de status de uma inscrição
-     *
-     */
-    public function sendEmalAlterStatus(\MapasCulturais\Entities\Registration $registration, $plugin, $evaluation)
-    {
-        $app = App::i();
-        
-        if(!in_array($registration->status, $plugin->config['email_alter_status']['send_email_status'])){
-            return;
-        }
-
-        if(in_array($registration->id, $plugin->config['email_alter_status']['noSendEmail'])){
-            return;
-        }
-
-        $mustache = new \Mustache_Engine();
-        $site_name = $app->view->dict('site: name', false);
-        $baseUrl = $app->getBaseUrl();
-        $filename = $app->view->resolveFilename("views/streamlinedopportunity", "email-regitration-alter-status.html");        
-        $template = file_get_contents($filename);
-        $message_status = $plugin->config['email_alter_status']['message_status'][$registration->status];
-        $message_appeal = $plugin->config['email_alter_status']['message_appeal'];
-        $send_email_status = $plugin->config['email_alter_status']['send_email_status'];
-        
-        $params = [
-            "baseUrl" => $baseUrl,
-            "siteName" => $site_name,
-            "slug" => $plugin->config['slug'],
-            "projectName" => $plugin->config['email_alter_status']['project_name'],
-            "statusTitle" =>  $message_status['title'],
-            "statusMessage1" =>  $message_status['message']['part1'],
-            "statusMessage2" =>  $message_status['message']['part2'],
-            "statusMessage3" =>  $message_status['message']['part3'],
-            "statusMessage4" =>  $message_status['message']['part4'],
-            "statusMessage5" =>  $message_status['message']['part5'],
-            "statusMessage6" =>  $message_status['message']['part6'],
-            "statusMessage7" =>  $message_status['message']['part7'],
-            'evaluationTxt' => (in_array($registration->status, $send_email_status) && isset($evaluation[0]->evaluationData->obs)) ? $evaluation[0]->evaluationData->obs : null,
-            "hasAppeal" => $message_status['has_appeal'],
-            "messageAppealTitle" =>$message_appeal['title'],
-            "messageAppealMessage" =>$message_appeal['message'],
-            "urlImageBody" => $app->view->asset($plugin->config['email_alter_status']['url_image_body'], false),
-            "registrationId" => $registration->id, 
-            "registrationNumber" => $registration->number, 
-            "userName" => $registration->owner->name,
-            "statusNum" => $registration->status,
-        ];
-        $content = $mustache->render($template,$params);
-
-        $email_params = [
-            'from' => $app->config['mailer.from'],
-            'to' => $registration->owner->user->email,
-            'subject' => $plugin->config['email_alter_status']['subject'],
-            'body' => $content
-        ];
-        
-        $app->log->debug("ENVIANDO EMAIL DE STATUS DA {$registration->number}");
-        if($app->createAndSendMailMessage($email_params)){
-            
-            $sent_emails = $registration->{$this->prefix("sent_emails")};
-            $sent_emails[] = [
-                'type' => "alter_status",
-                'timestamp' => date('Y-m-d H:i:s'),
-                'loggedin_user' => [
-                    'id' => $app->user->id,
-                    'email' => $app->user->email,
-                    'name' => $app->user->profile->name
-                ],
-                'email' => $email_params,
-                'registration_set_status' => $registration->status
-            ];
-
-            $app->disableAccessControl();
-            $registration->{$this->prefix("sent_emails")} = $sent_emails;
-            $registration->save(true);
-            $app->enableAccessControl();
-            
-        }
-
-       
-    }
     
     /**
      * Retorna se a oportunidade é gerenciada pelo StreamLinedOpportunity ou não

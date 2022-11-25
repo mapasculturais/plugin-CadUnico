@@ -3,13 +3,8 @@
 namespace StreamlinedOpportunity;
 
 use DateTime;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMInvalidArgumentException;
-use Doctrine\ORM\TransactionRequiredException;
-use Doctrine\ORM\ORMException;
 use Exception;
 use MapasCulturais\App;
-use MapasCulturais\Controller;
 use MapasCulturais\i;
 use MapasCulturais\Entities\Registration;
 use MapasCulturais\Entities\Opportunity;

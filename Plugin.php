@@ -173,6 +173,12 @@ class Plugin extends \MapasCulturais\Plugin
                 'modal.success.subtitle' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Agradecemos sua participação!', 'streamlined-opportunity')),
                 'modal.success.text' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Antes de enviar a inscrição, releia atentamente os dados preenchidos e certifique-se que estão todos corretos. Você pode editar o formulário caso encontre alguma informação incorreta.', 'streamlined-opportunity')),
                 'modal.success.btn.text' => env("{$PREFIX}_MODAL_ERROR_BTN_TEXT", i::__('Revisar formulário', 'streamlined-opportunity')),
+
+                /* FORMULÁRIO DA INSCRIÇÃO (Error campos NOTIFICAÇÕES) */
+                'modal.error.title' => env("{$PREFIX}NOTIFICATION_ERROR_TITLE", i::__('O cadastro não foi enviado!', 'streamlined-opportunity')),
+                'modal.error.subtitle' => env("{$PREFIX}NOTIFICATION_ERROR_SUBTITLE", i::__('Corrija os campos listados abaixo e valide seu formulário utilizando o botão Validar.', 'streamlined-opportunity')),
+                'modal.error.text-send' => env("{$PREFIX}NOTIFICATION_ERROR_TITLE", i::__('O cadastro ainda não foi enviado! Use o botão Validar para finalizar seu cadastro.', 'streamlined-opportunity') ),
+
                 
                 // STATUS_SENT = 1
                 'status.sent.title' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição está em análise', 'streamlined-opportunity')),

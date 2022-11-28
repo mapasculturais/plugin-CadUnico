@@ -11,11 +11,11 @@ $slug = $this->controller->plugin->slug;
 <div class="registration-fieldset">
     <a ng-init="validateRegistration()" ng-click="validateRegistration()" class="btn btn-secondary btn-validate">Validar</a>
     <div class="errors-header" ng-if="numFieldErrors() > 0">
-        <p class="errors-header-title"><?= i::__('O cadastro não foi enviado!', 'streamlined-opportunity') ?></p>
-        <p><?= i::__('Corrija os campos listados abaixo e valide seu formulário utilizando o botão Validar.', 'streamlined-opportunity') ?></p>
+        <p class="errors-header-title"><?= $plugin->text('modal.error.title') ?></p>
+        <p><?= $plugin->text('modal.error.subtitle') ?></p>
     </div>
     <div class="errors-header" ng-if="numFieldErrors() == 0">
-        <p class="errors-header-title"><?= i::__('O cadastro ainda não foi enviado! Use o botão Validar para finalizar seu cadastro.', 'streamlined-opportunity') ?></p>
+        <p class="errors-header-title"><?= $plugin->text('modal.error.text-send') ?></p>
     </div>
     <div class="errors" ng-repeat="field in data.fields" ng-if="entityErrors[field.fieldName]">
         <a ng-click="scrollTo('wrapper-' + field.fieldName, 130)">

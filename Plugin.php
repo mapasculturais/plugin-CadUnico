@@ -324,7 +324,9 @@ class Plugin extends \MapasCulturais\Plugin
             if($plugin->config['initial_statement_enabled'] && $registration->canUser('@control') && $plugin->isStreamLinedOpportunity($registration->opportunity)){
                   /** @var \MapasCulturais\Theme $this */
                 $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');
-                $this->part('streamlinedopportunity/initial-statements', ['terms' => $plugin->config['terms']]);
+                if($terms = $plugin->config['terms']){
+                    $this->part('streamlinedopportunity/initial-statements', ['terms' => $terms]);
+                }
             }
         });
         

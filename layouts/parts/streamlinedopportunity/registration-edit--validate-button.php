@@ -2,9 +2,6 @@
 use MapasCulturais\i;
 
 $app = \MapasCulturais\App::i();
-$plugin = $this->controller->plugin;
-$config = $plugin->config;
-$slug = $this->controller->plugin->slug;
 
 ?>
 <div ng-controller="RegistrationFieldsController">

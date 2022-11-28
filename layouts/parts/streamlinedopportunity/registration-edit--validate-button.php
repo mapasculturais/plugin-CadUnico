@@ -24,7 +24,7 @@ $slug = $this->controller->plugin->slug;
     </div>
 </div>
 
-<div  id="modalAlert" class="modal" >
+<div  id="modalAlert" class="modal" style="display: none;">
     <!-- Modal content -->
     <div class="modal-content">
         <h2 class="modal-content--title"><?= $plugin->text('modal.success.title') ?></h2>

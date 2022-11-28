@@ -33,7 +33,7 @@ $this->includeEditableEntityAssets();
 $_params = [
     'entity' => $entity,
     'action' => $action,
-    'opportunity' => $entity->opportunity
+    'opportunity' => $entity->opportunity,
 ];
 $opportunityId = $entity->opportunity->id;
 
@@ -58,22 +58,22 @@ $opportunityId = $entity->opportunity->id;
         <?php
         } else { ?>
             <p class="registration-help">
-                <?= i::__('Certifique-se que você preencheu as informações corretamente antes de enviar sua inscrição.', 'streamlined-opportunity') ?>
-                <strong><?= i::__('Depois de enviada, não será mais possível editá-la.', 'streamlined-opportunity') ?></strong>
+                <?= $plugin->text('confirmation.reg.text') ?>
+                <strong><?= $plugin->text('confirmation.reg.alert') ?></strong>
             </p>
-            <a class="btn btn-confirmar" ng-click="sendRegistration(false)" rel='noopener noreferrer'><?= i::__('Confirmar envio', 'streamlined-opportunity') ?></a>
+            <a class="btn btn-confirmar" ng-click="sendRegistration(false)" rel='noopener noreferrer'><?= $plugin->text('confirmation.reg.btn-send') ?></a>
         <?php
         } ?>
 
-        <a href="<?= $this->controller->createUrl('formulario', [$entity->id]) ?>" class="btn secondary"><?= i::__('Editar formulário', 'streamlined-opportunity') ?></a>
+        <a href="<?= $this->controller->createUrl('formulario', [$entity->id]) ?>" class="btn secondary"><?= $plugin->text('confirmation.reg.btn-edit') ?></a>
 
     </article>
     <div ng-show="data.sent" style="display:none" id="modalAlert" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
-            <h2><?= i::__('Cadastro enviado com sucesso!', 'streamlined-opportunity') ?></h2>
-            <p class="text"><?= i::__('Sua inscrição será analisada pelo comitê de curadoria e o resultado será informado por email. <br/>Você também pode acompanhar o andamento da análise através desse site.', 'streamlined-opportunity') ?></p>
-            <a href="<?= $this->controller->createUrl('status', [$entity->id]) ?>" class="btn js-confirmar"><?= i::__('Acompanhar solicitação', 'streamlined-opportunity') ?></a>
+            <h2><?= $plugin->text('confirmation.reg.modal-title') ?></h2>
+            <p class="text"><?= $plugin->text('confirmation.reg.modal-text') ?></p>
+            <a href="<?= $this->controller->createUrl('status', [$entity->id]) ?>" class="btn js-confirmar"><?= $plugin->text('confirmation.reg.modal-btn-confirm') ?></a>
         </div>
     </div>
 

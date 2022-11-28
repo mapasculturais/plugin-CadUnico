@@ -175,10 +175,18 @@ class Plugin extends \MapasCulturais\Plugin
                 'modal.success.btn.text' => env("{$PREFIX}_MODAL_ERROR_BTN_TEXT", i::__('Revisar formulário', 'streamlined-opportunity')),
 
                 /* FORMULÁRIO DA INSCRIÇÃO (Error campos NOTIFICAÇÕES) */
-                'modal.error.title' => env("{$PREFIX}NOTIFICATION_ERROR_TITLE", i::__('O cadastro não foi enviado!', 'streamlined-opportunity')),
-                'modal.error.subtitle' => env("{$PREFIX}NOTIFICATION_ERROR_SUBTITLE", i::__('Corrija os campos listados abaixo e valide seu formulário utilizando o botão Validar.', 'streamlined-opportunity')),
-                'modal.error.text-send' => env("{$PREFIX}NOTIFICATION_ERROR_TITLE", i::__('O cadastro ainda não foi enviado! Use o botão Validar para finalizar seu cadastro.', 'streamlined-opportunity') ),
+                'modal.error.title' => env("{$PREFIX}_NOTIFICATION_ERROR_TITLE", i::__('O cadastro não foi enviado!', 'streamlined-opportunity')),
+                'modal.error.subtitle' => env("{$PREFIX}_NOTIFICATION_ERROR_SUBTITLE", i::__('Corrija os campos listados abaixo e valide seu formulário utilizando o botão Validar.', 'streamlined-opportunity')),
+                'modal.error.text-send' => env("{$PREFIX}_NOTIFICATION_ERROR_TITLE", i::__('O cadastro ainda não foi enviado! Use o botão Validar para finalizar seu cadastro.', 'streamlined-opportunity')),
 
+                /* TELA CONFIRMAÇÃO DE INSCRIÇÂO */
+                'confirmation.reg.text' => env("{$PREFIX}_CONFIRMATION_REG_TEXT", i::__('Certifique-se que você preencheu as informações corretamente antes de enviar sua inscrição.', 'streamlined-opportunity')),
+                'confirmation.reg.alert' => env("{$PREFIX}_CONFIRMATION_REG_ALERT", i::__('Depois de enviada, não será mais possível editá-la.', 'streamlined-opportunity')),
+                'confirmation.reg.btn-send' => env("{$PREFIX}_CONFIRMATION_REG_BTN_SEND", i::__('Confirmar envio', 'streamlined-opportunity')),
+                'confirmation.reg.btn-edit' => env("{$PREFIX}_CONFIRMATION_REG_BTN_EDIT", i::__('Editar formulário', 'streamlined-opportunity')),
+                'confirmation.reg.modal-title' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_TITLE", i::__('Cadastro enviado com sucesso!', 'streamlined-opportunity')),
+                'confirmation.reg.modal-text' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_TEXT", i::__('Sua inscrição será analisada pelo comitê de curadoria e o resultado será informado por email. <br/>Você também pode acompanhar o andamento da análise através desse site.', 'streamlined-opportunity')),
+                'confirmation.reg.modal-btn-confirm' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_BTN_CONFIRM", i::__('Acompanhar solicitação', 'streamlined-opportunity')),
                 
                 // STATUS_SENT = 1
                 'status.sent.title' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição está em análise', 'streamlined-opportunity')),

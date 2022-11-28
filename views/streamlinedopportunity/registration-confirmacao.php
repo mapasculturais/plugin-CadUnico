@@ -38,7 +38,7 @@ $_params = [
 $opportunityId = $entity->opportunity->id;
 
 ?>
-<article class="main-content registration" ng-controller="OpportunityController">
+<article class="main-content registration" ng-controller="RegistrationFieldsController">
 
     <article>
         <?php $this->applyTemplateHook('form', 'begin'); ?>

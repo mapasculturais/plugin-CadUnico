@@ -7,7 +7,7 @@ use MapasCulturais\i;
     <h4><?=i::__('Declarações iniciais aceitas pelo proponente', 'streamlined-opportunity')?></h4>
     <div class="registration-list">
         <ul class="initial-statements">
-            <?php foreach($terms['items'] as $value){?>
+            <?php foreach($terms as $value){?>
                 <?php $result = explode("</strong>", $value);?>
                 <li>
                     <small>

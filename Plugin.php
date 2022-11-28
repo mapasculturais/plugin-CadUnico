@@ -168,16 +168,15 @@ class Plugin extends \MapasCulturais\Plugin
                 'terms.title' => env("{$PREFIX}_TERMS_TITLE", i::__('Termos e Condições', 'streamlined-opportunity')),
                 'terms.help' => env("{$PREFIX}_TERMS_HELP", i::__('Você precisa aceitar todos os termos para prosseguir com a inscrição', 'streamlined-opportunity')),
 
-                /* FORMULÁRIO DA INSCRIÇÃO (Validação de campo MODAL) */
-                'modal.success.title' => env("{$PREFIX}_MODAL_ERROR_TITLE", i::__('Preenchimento Finalizado', 'streamlined-opportunity')),
-                'modal.success.subtitle' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Agradecemos sua participação!', 'streamlined-opportunity')),
-                'modal.success.text' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Antes de enviar a inscrição, releia atentamente os dados preenchidos e certifique-se que estão todos corretos. Você pode editar o formulário caso encontre alguma informação incorreta.', 'streamlined-opportunity')),
-                'modal.success.btn.text' => env("{$PREFIX}_MODAL_ERROR_BTN_TEXT", i::__('Revisar formulário', 'streamlined-opportunity')),
+                /* FORMULÁRIO DA INSCRIÇÃO (Validação de campo caso sucesso) */
 
-                /* FORMULÁRIO DA INSCRIÇÃO (Error campos NOTIFICAÇÕES) */
-                'modal.error.title' => env("{$PREFIX}_NOTIFICATION_ERROR_TITLE", i::__('O cadastro não foi enviado!', 'streamlined-opportunity')),
-                'modal.error.subtitle' => env("{$PREFIX}_NOTIFICATION_ERROR_SUBTITLE", i::__('Corrija os campos listados abaixo e valide seu formulário utilizando o botão Validar.', 'streamlined-opportunity')),
-                'modal.error.text-send' => env("{$PREFIX}_NOTIFICATION_ERROR_TITLE", i::__('O cadastro ainda não foi enviado! Use o botão Validar para finalizar seu cadastro.', 'streamlined-opportunity')),
+                'validate.success.title' => env("{$PREFIX}_MODAL_ERROR_TITLE", i::__('Preenchimento Finalizado', 'streamlined-opportunity')),
+                'validate.success.text' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Para prosseguir, clique no botão revisar formulário. Lembre-se, antes de enviar a inscrição, releia atentamente os dados preenchidos e certifique-se que estão todos corretos. Você pode editar o formulário caso encontre alguma informação incorreta.', 'streamlined-opportunity')),
+                'validate.btn.text' => env("{$PREFIX}_MODAL_ERROR_BTN_TEXT", i::__('Revisar formulário', 'streamlined-opportunity')),
+
+                /* FORMULÁRIO DA INSCRIÇÃO (Validação de campo caso error) */
+                'validate.error.title' => env("{$PREFIX}_NOTIFICATION_ERROR_TITLE", i::__('O cadastro não foi enviado!', 'streamlined-opportunity')),
+                'validate.error.subtitle' => env("{$PREFIX}_NOTIFICATION_ERROR_SUBTITLE", i::__('Corrija os campos listados abaixo e valide seu formulário utilizando o botão Validar.', 'streamlined-opportunity')),
 
                 /* TELA CONFIRMAÇÃO DE INSCRIÇÂO */
                 'confirmation.reg.text' => env("{$PREFIX}_CONFIRMATION_REG_TEXT", i::__('Certifique-se que você preencheu as informações corretamente antes de enviar sua inscrição.', 'streamlined-opportunity')),

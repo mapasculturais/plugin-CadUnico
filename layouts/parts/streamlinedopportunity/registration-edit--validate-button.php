@@ -1,41 +1,25 @@
 <?php
-use MapasCulturais\i;
-
 $app = \MapasCulturais\App::i();
 
 ?>
 <div ng-controller="RegistrationFieldsController">
-<div class="registration-fieldset">
-    <a ng-init="validateRegistration()" ng-click="validateRegistration()" class="btn btn-secondary btn-validate">Validar</a>
-    <div class="errors-header" ng-if="numFieldErrors() > 0">
-        <p class="errors-header-title"><?= $plugin->text('modal.error.title') ?></p>
-        <p><?= $plugin->text('modal.error.subtitle') ?></p>
-    </div>
-    <div class="errors-header" ng-if="numFieldErrors() == 0">
-        <p class="errors-header-title"><?= $plugin->text('modal.error.text-send') ?></p>
-    </div>
-    <div class="errors" ng-repeat="field in data.fields" ng-if="entityErrors[field.fieldName]">
-        <a ng-click="scrollTo('wrapper-' + field.fieldName, 130)">
-            {{field.title.replace(':', '')}}: <span class="errors-field" ng-repeat="error in entityErrors[field.fieldName]">{{error}} </span>
-        </a>
-    </div>
-</div>
+    <div class="registration-fieldset" ng-init="validateRegistration()">
+        <a ng-click="saveRegistration(); validateRegistration();" class="btn btn-secondary btn-validate">Validar</a>
+        <a ng-if="numFieldErrors() == 0" href="<?= $this->controller->createUrl('confirmacao', [$entity->id]) ?>" ng-click="" class="btn btn-primary js-confirmar"><?= $plugin->text('validate.btn.text') ?></a>
+        <div class="errors-header" ng-if="numFieldErrors() > 0">
+            <p class="errors-header-title"><?= $plugin->text('validate.error.title') ?></p>
+            <p><?= $plugin->text('validate.error.subtitle') ?></p>
+            <div class="errors" ng-repeat="field in data.fields" ng-if="entityErrors[field.fieldName]">
+                <a ng-click="scrollTo('wrapper-' + field.fieldName, 130)">
+                    {{field.title.replace(':', '')}}: <span class="errors-field" ng-repeat="error in entityErrors[field.fieldName]">{{error}} </span>
+                </a>
+            </div>
+        </div>
 
-<div  id="modalAlert" class="modal" style="display: none;">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <h2 class="modal-content--title"><?= $plugin->text('modal.success.title') ?></h2>
-        <p class="text"><?= $plugin->text('modal.success.subtitle') ?></p>
-        <p class="text"><?= $plugin->text('modal.success.text') ?></p>
-        <a href="<?= $this->controller->createUrl('confirmacao', [$entity->id]) ?>" ng-click="" class="btn btn-primary js-confirmar"><?= $plugin->text('modal.success.btn.text') ?></a>
-    </div>
-</div>
+        <div class="errors-header" ng-if="numFieldErrors() == 0" style="color: blue;">
+            <p class="errors-header-title"><?= $plugin->text('validate.success.title') ?></p>
+            <p><?= $plugin->text('validate.success.text') ?></p>
+        </div>
 
-<script>
-    $(window).ready(function () {
-        $('.btn-validate').click(function () {
-            $('#modalAlert').css('display', 'flex')
-        });
-    });
-</script>
+    </div>
 </div>

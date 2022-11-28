@@ -413,7 +413,7 @@ class Plugin extends \MapasCulturais\Plugin
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
         if ($this->config['featured']) {
             $app->hook($this->config['featured.hook'], function() use($plugin, $opportunity) {
-                if(!$opportunity->{$plugin->prefix('featured')}) {
+                if(!$opportunity || !$opportunity->{$plugin->prefix('featured')}) {
                     return;
                 }
                 $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');

@@ -221,10 +221,6 @@ class Plugin extends \MapasCulturais\Plugin
             // só consolida a a homologaćão se todos as validaćões já tiverem sido feitas
             'consolidation_requires_validations' => (array) json_decode(env('HOMOLOG_REQ_VALIDACOES', '[]')),
 
-            // STATUS_SENT = 1
-            'text_button_status' => null,
-            'text_link_button_status' => null,
-
             'logo_institution' => env("$PREFIX}_LOGO_INSTUCTION", ''),
             'logo_footer' => env("$PREFIX}_LOGO_FOOTER", ''),
             'logo_center' => env("$PREFIX}_LOGO_CENTER", ''),

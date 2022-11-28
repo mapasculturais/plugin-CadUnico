@@ -320,18 +320,6 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $this->requireAuthentication();
         $registration = $this->requestedEntity;
 
-        $defaultText = false;
-        $evaluateDefault = "";
-        if(in_array($registration->id, $this->config['email_alter_status']['noSendEmail'])){
-            $defaultText = true;
-            if(in_array($registration->id, array_keys($this->config['email_alter_status']['specialMessage']))){
-                $evaluateDefault = $this->config['email_alter_status']['specialMessage'][$registration->id];
-            }else{
-                $evaluateDefault = $this->config['email_alter_status']['messageDefaultNoSendEmail'];
-            }
-        }
-
-
         if(!$registration) {
             $app->pass();
         }
@@ -445,8 +433,6 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
             'justificativaAvaliacao' => array_filter($justificativaAvaliacao),
             'recursos' => $recursos,
             'avaliacoesRecusadas' => $avaliacoesRecusadas,
-            'defaultText' => $defaultText,
-            'evaluateDefault' => $evaluateDefault
         ]);
     }
     

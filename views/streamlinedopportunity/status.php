@@ -66,7 +66,7 @@ $_params = [
                 if ($statusRecurso) {
             ?>
                     <hr>
-                    <h2 class="status-card--title"><?= i::__('Você pode entrar com recurso', 'streamlined-opportunity') ?></h2>
+                    <h2 class="status-card--title"><?= $plugin->text("status.sent.text");?></h2>
                     <p class="status-card--content"><?= $statusRecurso; ?></p>
             <?php
                 }
@@ -95,14 +95,14 @@ $_params = [
         <?php $this->applyTemplateHook('reason-failure', 'begin', [$_params]); ?>
         <?php $this->applyTemplateHook('reason-failure', 'end'); ?>
 
-        <h1><?= i::__('', 'streamlined-opportunity') ?></h1>
+        <h1><?= $plugin->text("status.sent.opportunity")?></h1>
 
         <?php $this->part('streamlinedopportunity/registration-single--header', $_params) ?>
 
         <?php $this->part('singles/registration-single--fields', $_params) ?>
 
         <div class="wrap-button">
-            <a href="<?php echo $app->createUrl($slug, 'cadastro'); ?>" class="btn secondary"><?= i::__('Voltar para inscrição', 'streamlined-opportunity') ?></a>
+            <a href="<?php echo $app->createUrl($slug, 'cadastro'); ?>" class="btn secondary"><?= $plugin->text("status.sent.buttonBack") ?></a>
         </div><!-- /.wrap-button -->
 
     </article>

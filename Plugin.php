@@ -153,6 +153,9 @@ class Plugin extends \MapasCulturais\Plugin
                 'dashboard.description' => '', // se não definida, usará a descrição curta da oportunidade
                 'dashboard.button' => '', // se não definida, usará o nome da oportunidade
                 'dashboard.applicationSummaryTitle' => i::__('Resumo da inscrição', 'streamlined-opportunity'),
+                'dashboard.welcome' => i::__('Olá', 'streamlined-opportunity'),
+                'dashboard.btn-back' => i::__('Clique <a href="%s">aqui</a> para retornar à página inicial', 'streamlined-opportunity'),
+                'dashboard.more-information' => i::__('Mais informações', 'streamlined-opportunity'),
 
                 /* TEXTOS DA TELA DO FORMULÁRIO */
                 'form.title' => 'Formulário de inscrição no Cadastro Único da Cultura',
@@ -167,6 +170,9 @@ class Plugin extends \MapasCulturais\Plugin
                 'terms.intro' => env("{$PREFIX}_TERMS_INTRO", ''),
                 'terms.title' => env("{$PREFIX}_TERMS_TITLE", i::__('Termos e Condições', 'streamlined-opportunity')),
                 'terms.help' => env("{$PREFIX}_TERMS_HELP", i::__('Você precisa aceitar todos os termos para prosseguir com a inscrição', 'streamlined-opportunity')),
+                'terms.btn-continue' => env("{$PREFIX}_TERMS_BTN_CONTINUE",i::__('Continuar', 'streamlined-opportunity')),
+                'terms.modal.title' => env("{$PREFIX}_TERMS_MODAL_TITLE",i::__('Atenção!', 'streamlined-opportunity')),
+                'terms.modal.notification' => env("{$PREFIX}_TERMS_MODAL_NOTIFICATION",i::__('OK', 'streamlined-opportunity')),
 
                 /* FORMULÁRIO DA INSCRIÇÃO (Validação de campo caso sucesso) */
 
@@ -190,6 +196,11 @@ class Plugin extends \MapasCulturais\Plugin
                 // STATUS_SENT = 1
                 'status.sent.title' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição está em análise', 'streamlined-opportunity')),
                 'status.sent.message' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Consulte novamente em outro momento.', 'streamlined-opportunity')),
+                'status.sent.text' => env("{$PREFIX}_STATUS_SENT_TEXT",i::__('Você pode entrar com recurso', 'streamlined-opportunity')),
+                'status.sent.opportunity' => env("{$PREFIX}_STATUS_SENT_OPPORTUNITY",i::__('', 'streamlined-opportunity')),
+                'status.sent.buttonBack' => env("{$PREFIX}_STATUS_SENT_BUTTON_BACK",i::__('Voltar para inscrição', 'streamlined-opportunity')),
+                'status.sent.inscricao' => env("{$PREFIX}_STATUS_SENT_INSCRICAO",i::__('Número da Inscrição', 'streamlined-opportunity')),
+                'status.sent.projoct.name' => env("{$PREFIX}_STATUS_SENT_PROJECT_NAME",i::__('Nome do Projeto', 'streamlined-opportunity')),
                 
                 // STATUS_INVALID = 2
                 'status.invalid.title' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua inscrição não foi aprovada', 'streamlined-opportunity')),

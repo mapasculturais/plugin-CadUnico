@@ -31,18 +31,18 @@ $this->jsObject["registrationId"] = $registration_id;
     </div>
 
     <nav class="termos--nav-terms">
-        <button class="btn btn-large btn-lab js-btn"> <?= i::__('Continuar', 'streamlined-opportunity') ?></button>
+        <button class="btn btn-large btn-lab js-btn"> <?= $plugin->text('terms.btn-continue'); ?></button>
     </nav>
 
     <div id="modalAlert" class="modal" style="display: none;">
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2 class="modal-content--title title-modal"><?= i::__('Atenção!', 'streamlined-opportunity') ?></h2>
+            <h2 class="modal-content--title title-modal"><?= $plugin->text('terms.modal.title'); ?></h2>
             <p>
                 <?= $plugin->text('terms.help') ?>
             </p>
-            <button id="btn-close" class="btn"> <?= i::__('OK', 'streamlined-opportunity') ?></button>
+            <button id="btn-close" class="btn"> <?= $plugin->text('terms.modal.notification') ?></button>
         </div>
     </div>
 

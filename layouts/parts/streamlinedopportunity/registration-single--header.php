@@ -1,19 +1,10 @@
 <?php
 use MapasCulturais\i;
-
+$plugin = $this->controller->plugin;
 ?>
-<?php $sentDate = $entity->sentTimestamp; ?>
-<?php if ($sentDate) : ?>
-    <!-- <div class="alert success">
-    <?php i::__('Inscrição enviada no dia', 'streamlined-opportunity'); ?>    
-    <?php echo $sentDate->format(i::__('d/m/Y à\s H:i:s', 'streamlined-opportunity')); ?>
-</div> -->
-<?php endif; ?>
-
-<h3 class="registration-header"><?= i::__('Confirmação da Inscrição', 'streamlined-opportunity') ?></h3>
 
 <div class="registration-fieldset clearfix">
-    <h4><?= i::__('Número da Inscrição', 'streamlined-opportunity') ?></h4>
+    <h4><?= $plugin->text('status.sent.inscricao');?></h4>
     <div class="registration-id alignleft">
         <?php echo $entity->number ?>
     </div>
@@ -29,8 +20,8 @@ use MapasCulturais\i;
 
 
 <?php if ($entity->projectName) : ?>
-    <div class="registration-fieldset">
-        <div class="label"><?= i::__('Nome do Projeto', 'streamlined-opportunity') ?></div>
-        <h5> <?php echo $entity->projectName; ?> </h5>
-    </div>
+<div class="registration-fieldset">
+    <div class="label"><?= $plugin->text("status.sent.projoct.name"); ?></div>
+    <h5> <?php echo $entity->projectName; ?> </h5>
+</div>
 <?php endif; ?>

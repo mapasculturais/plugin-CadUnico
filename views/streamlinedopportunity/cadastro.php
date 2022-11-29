@@ -17,8 +17,8 @@ $profile = $app->user->profile;
     <header>
         <div class="intro-message">
             <div class="name"> 
-                <?= i::__('Olá', 'streamlined-opportunity') ?> <?= $profile->name ? ", " . $profile->name : "" ?>! <br>
-                <?= sprintf(i::__('Clique <a href="%s">aqui</a> para retornar à página inicial', 'streamlined-opportunity'), $app->baseUrl) ?>
+                <?= $plugin->text('dashboard.welcome');?> <?= $profile->name ? ", " . $profile->name : "" ?>! <br>
+                <?= sprintf( $plugin->text('dashboard.btn-back'), $app->baseUrl) ?>
             </div>
         </div>
     </header>
@@ -52,7 +52,7 @@ $profile = $app->user->profile;
                     </div>
 
                     <div class="informative-box--content active" data-content="">
-                        <span class="more"> <?= i::__('Mais informações', 'streamlined-opportunity') ?> </span>
+                        <span class="more"> <?= $plugin->text('dashboard.more-information'); ?> </span>
                        
                     </div>
                 </button>

@@ -3,7 +3,6 @@
 use MapasCulturais\i;
 
 $app = \MapasCulturais\App::i();
-$plugin = $this->controller->plugin;
 $config = $plugin->config;
 $slug = $this->controller->plugin->slug;
 
@@ -19,6 +18,7 @@ $this->includeAngularEntityAssets($registration);
 $this->includeEditableEntityAssets();
 
 $_params = [
+    'plugin' => $plugin,
     'entity'      => $registration,
     'opportunity' => $registration->opportunity,
     'slug' => $slug

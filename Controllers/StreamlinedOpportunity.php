@@ -428,6 +428,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $avaliacoesRecusadas = $this->processaDeParaAvaliacoesRecusadas($registration);
 
         $this->render('status', [
+            'plugin' => $this->plugin,
             'registration' => $registration, 
             'registrationStatusMessage' => $registrationStatusMessage, 
             'justificativaAvaliacao' => array_filter($justificativaAvaliacao),

@@ -88,6 +88,8 @@ class Plugin extends \MapasCulturais\Plugin
 
             'initial_statement_enabled' => false,
 
+            'reconsolidate_enabled' => false,
+
             /* CONFIGURAÇÕES DE INTERFACE */
             // layout a ser utilizado como "moldura" das páginas
             'layout' => "streamlined-opportunity",
@@ -353,80 +355,83 @@ class Plugin extends \MapasCulturais\Plugin
          * 
          * @TODO: implementar para método de avaliaçào documental
          */
-        $app->hook('entity(Registration).consolidateResult', function(&$result, $caller) use($plugin, $app) {
+        if($this->_config['reconsolidate_enabled']){
+            $app->hook('entity(Registration).consolidateResult', function(&$result, $caller) use($plugin, $app) {
 
             
-            $opportunities_id = $plugin->config['opportunity_id'];
-            
-            if ($this->opportunity->id != $opportunities_id) {
-                return;
-            }
-            
-            // só aplica o hook para usuários homologadores
-            if ($caller->user->validator_for) {
-                return;
-            }
-
-            $evaluations = $app->repo('RegistrationEvaluation')->findBy(['registration' => $this, 'status' => 1]);
-
-            $result = $caller->result;
-                        
-            foreach ($evaluations as $eval) {
-                if ($eval->user->validator_for) {
-                    continue;
-                }
-
-                if(intval($eval->result) < intval($result)) {
-                    $result = "$eval->result";
-                }
-            }
-            
-            
-            // se a consolidação não é para selecionada (statu = 10) pode continuar
-            if ($result != '10') {
-                return;
-            } 
-
-            $can_consolidate = true;
-
-            /**
-             * Se a consolidação requer validações, verifica se existe alguma
-             * avaliação dos usuários validadores
-             */
-            if ($validations = $plugin->config['consolidation_requires_validations']) {
+                $opportunities_id = $plugin->config['opportunity_id'];
                 
-                foreach($validations as $slug) {
-                    $can = false;
-                    foreach ($evaluations as $eval) {
-                        if ($eval->user->validator_for == $slug) {
-                            $can = true;
+                if ($this->opportunity->id != $opportunities_id) {
+                    return;
+                }
+                
+                // só aplica o hook para usuários homologadores
+                if ($caller->user->validator_for) {
+                    return;
+                }
+    
+                $evaluations = $app->repo('RegistrationEvaluation')->findBy(['registration' => $this, 'status' => 1]);
+    
+                $result = $caller->result;
+                            
+                foreach ($evaluations as $eval) {
+                    if ($eval->user->validator_for) {
+                        continue;
+                    }
+    
+                    if(intval($eval->result) < intval($result)) {
+                        $result = "$eval->result";
+                    }
+                }
+                
+                
+                // se a consolidação não é para selecionada (statu = 10) pode continuar
+                if ($result != '10') {
+                    return;
+                } 
+    
+                $can_consolidate = true;
+    
+                /**
+                 * Se a consolidação requer validações, verifica se existe alguma
+                 * avaliação dos usuários validadores
+                 */
+                if ($validations = $plugin->config['consolidation_requires_validations']) {
+                    
+                    foreach($validations as $slug) {
+                        $can = false;
+                        foreach ($evaluations as $eval) {
+                            if ($eval->user->validator_for == $slug) {
+                                $can = true;
+                            }
+                        }
+                        
+                        if (!$can) {
+                            $can_consolidate = false;
                         }
                     }
-                    
-                    if (!$can) {
-                        $can_consolidate = false;
+                }
+                
+                $has_validations = false;
+                foreach ($evaluations as $eval) {
+                    if ($eval->user->aldirblanc_validador) {
+                        $has_validations = true;
                     }
                 }
-            }
-            
-            $has_validations = false;
-            foreach ($evaluations as $eval) {
-                if ($eval->user->aldirblanc_validador) {
-                    $has_validations = true;
+    
+                // se não pode consolidar, coloca a string 'homologado'
+                if (!$can_consolidate) {
+                    if (!$this->consolidatedResult || count($evaluations) <= 1 || !$has_validations) {
+                        $result = 'homologado';
+                    } else if (strpos($this->consolidatedResult, 'homologado') === false) {
+                        $result = "homologado, {$this->consolidatedResult}";
+                    } else {
+                        $result = $this->consolidatedResult;
+                    }
                 }
-            }
-
-            // se não pode consolidar, coloca a string 'homologado'
-            if (!$can_consolidate) {
-                if (!$this->consolidatedResult || count($evaluations) <= 1 || !$has_validations) {
-                    $result = 'homologado';
-                } else if (strpos($this->consolidatedResult, 'homologado') === false) {
-                    $result = "homologado, {$this->consolidatedResult}";
-                } else {
-                    $result = $this->consolidatedResult;
-                }
-            }
-        });
+            });
+        }
+      
 
         //Insere um conteúdo na home logo acima do formulário de pesquisa via template part ou texto setado nas configurações
         if ($this->config['featured']) {
@@ -458,20 +463,22 @@ class Plugin extends \MapasCulturais\Plugin
 
         // reordena avaliações antes da reconsolidação, colocando as que tem id = registration_id no começo,
         // pois indica que foram importadas
-        $app->hook('controller(opportunity).reconsolidateResult', function (Opportunity $opportunity, &$evaluations) {
+        if($this->_config['reconsolidate_enabled']){
+            $app->hook('controller(opportunity).reconsolidateResult', function (Opportunity $opportunity, &$evaluations) {
 
-            usort($evaluations, function ($a, $b) {
-                if (preg_replace('#[^\d]+#', '', $a['number']) == $a['id']) {
-                    return -1;
-                } else if (preg_replace('#[^\d]+#', '', $b['number']) == $b['id']) {
-                    return 1;
-                } else {
-                    $_a = (int) $a['id'];
-                    $_b = (int) $b['id'];
-                    return $_a <=> $_b;
-                }
+                usort($evaluations, function ($a, $b) {
+                    if (preg_replace('#[^\d]+#', '', $a['number']) == $a['id']) {
+                        return -1;
+                    } else if (preg_replace('#[^\d]+#', '', $b['number']) == $b['id']) {
+                        return 1;
+                    } else {
+                        $_a = (int) $a['id'];
+                        $_b = (int) $b['id'];
+                        return $_a <=> $_b;
+                    }
+                });
             });
-        });
+        }
 
         //Seta sessão que identifica que ao criar uma nova conta, o usuário veio do plugin steamLined
         $app->hook('auth.createUser:before', function () use ($plugin, &$isStreamlined) {    

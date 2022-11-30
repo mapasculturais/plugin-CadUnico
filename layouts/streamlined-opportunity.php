@@ -1,7 +1,7 @@
 <?php
-$plugin = $this->controller->plugin;
-
-$this->part("streamlinedopportunity/header", ["plugin" => $plugin]);
+$this->part("streamlinedopportunity/header");
 echo $TEMPLATE_CONTENT;
-$this->part("streamlinedopportunity/footer", ["plugin" => $plugin]);
+if($app->auth->isUserAuthenticated()):
+$this->part("streamlinedopportunity/footer");
+endif
 ?>

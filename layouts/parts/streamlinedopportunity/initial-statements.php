@@ -4,7 +4,7 @@ use MapasCulturais\i;
 ?>
 
 <div class="registration-fieldset">
-    <h4><?=i::__('Declarações iniciais aceitas pelo proponente', 'streamlined-opportunity')?></h4>
+    <h4><?= $plugin->text("declaration.adminstrative");?></h4>
     <div class="registration-list">
         <ul class="initial-statements">
             <?php foreach($terms as $value){?>

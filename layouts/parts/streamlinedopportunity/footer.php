@@ -13,9 +13,9 @@ $logotipo = isset($config["logo_footer"]) ? $this->asset($config["logo_footer"],
 </section>
 
 <?php if ($linkSuporte) {
-?>
+    ?>
     <div class="support">
-        <?= i::__(' Precisa de ajuda?', 'streamlined-opportunity') ?> <a target="_blank" class="link" href="<?= $linkSuporte; ?> "> <?= i::__('Clique aqui', 'streamlined-opportunity') ?></a>
+        <?= $plugin->text('footerNeedHelp'); ?> <a target="_blank" class="link" href="<?= $linkSuporte; ?> "> <?= $plugin->text('footer.ClickHere');?></a>
     </div>
 <?php
 } ?>
@@ -33,22 +33,22 @@ $logotipo = isset($config["logo_footer"]) ? $this->asset($config["logo_footer"],
     <?php if ($termosECondicoes) {
     ?>
         <a target="_blank" class="terms-conditions" href="<?= $termosECondicoes; ?> ">
-            <?= i::__('Politica de Privacidade e termos de condições de uso', 'streamlined-opportunity') ?>
+            <?= $plugin->text('footerPrivacyPolicy'); ?>
         </a>
     <?php
     } ?>
 
     <div class="credits">
         <a href="https://github.com/mapasculturais/mapasculturais" target="_blank">
-            <?= i::__('Software livre Mapas Culturais', 'streamlined-opportunity') ?>
+            <?= $plugin->text('footer.freeSoftware'); ?>
         </a>
         <span> por </span>
 
         <a href="https://hacklab.com.br/" class="hacklab" target="_blank" style="white-space: nowrap;">
-            <?= i::__('hacklab', 'streamlined-opportunity') ?> <span>/</span>
+            <?= $plugin->text('footer.Hacklab');?> <span>/</span>
         </a>
 
-        <span> <?= i::__('e comunidade', 'streamlined-opportunity') ?> </span>
+        <span> <?= $plugin->text('footer.Community') ?> </span>
     </div>
 </footer>
 

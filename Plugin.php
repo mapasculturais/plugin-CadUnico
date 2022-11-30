@@ -161,10 +161,22 @@ class Plugin extends \MapasCulturais\Plugin
                 'form.title' => 'Formulário de inscrição no Cadastro Único da Cultura',
                 'form.description' => '',
 
+                /*TEXTO DA TELA FOOTER */
+                'footerPrivacyPolicy' => i::__('Politica de Privacidade e termos de condições de uso', 'streamlined-opportunity'),
+                'footerNeedHelp' => i::__(' Precisa de ajuda?', 'streamlined-opportunity'),
+                'footer.ClickHere' => i::__('Clique aqui', 'streamlined-opportunity'),
+                'footer.freeSoftware' => i::__('Software livre Mapas Culturais', 'streamlined-opportunity'),
+                'footer.Hacklab' => i::__('hacklab', 'streamlined-opportunity'),
+                'footer.Community' => i::__('e comunidade', 'streamlined-opportunity'),
+
+
+
                 /* TEXTOS DO DESTAQUE DA HOME */
                 'home.featuredTitle' => '',
                 'home.featuredText' => '',
                 'home.featuredButton' => i::__('Clique aqui para se inscrever', 'streamlined-opportunity'),
+                'home,featuredSubscription' => i::__('as inscrições abrirão em breve'),
+                'home,featiredRegistrationClosed' =>  i::__('inscrições encerradas'),
 
                 /* TERMOS E CONDIÇÕES */
                 'terms.intro' => env("{$PREFIX}_TERMS_INTRO", ''),
@@ -192,6 +204,9 @@ class Plugin extends \MapasCulturais\Plugin
                 'confirmation.reg.modal-title' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_TITLE", i::__('Cadastro enviado com sucesso!', 'streamlined-opportunity')),
                 'confirmation.reg.modal-text' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_TEXT", i::__('Sua inscrição será analisada pelo comitê de curadoria e o resultado será informado por email. <br/>Você também pode acompanhar o andamento da análise através desse site.', 'streamlined-opportunity')),
                 'confirmation.reg.modal-btn-confirm' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_BTN_CONFIRM", i::__('Acompanhar solicitação', 'streamlined-opportunity')),
+
+                /* TELA DE INSCRIÇÃO MODO ADMIN */
+                'declaration.adminstrative' => i::__('Declarações iniciais aceitas pelo proponente', 'streamlined-opportunity'),
                 
                 // STATUS_SENT = 1
                 'status.sent.title' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição está em análise', 'streamlined-opportunity')),
@@ -331,7 +346,7 @@ class Plugin extends \MapasCulturais\Plugin
                   /** @var \MapasCulturais\Theme $this */
                 $this->enqueueStyle('app', 'streamlined-opportunity', 'css/streamlinedopportunity.css');
                 if($terms = $plugin->config['terms']){
-                    $this->part('streamlinedopportunity/initial-statements', ['terms' => $terms]);
+                    $this->part('streamlinedopportunity/initial-statements', ['terms' => $terms,'plugin' => $plugin]);
                 }
             }
         });

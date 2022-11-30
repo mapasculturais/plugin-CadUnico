@@ -154,29 +154,27 @@ class Plugin extends \MapasCulturais\Plugin
                 'dashboard.button' => '', // se não definida, usará o nome da oportunidade
                 'dashboard.applicationSummaryTitle' => i::__('Resumo da inscrição', 'streamlined-opportunity'),
                 'dashboard.welcome' => i::__('Olá', 'streamlined-opportunity'),
-                'dashboard.btn-back' => i::__('Clique <a href="%s">aqui</a> para retornar à página inicial', 'streamlined-opportunity'),
-                'dashboard.more-information' => i::__('Mais informações', 'streamlined-opportunity'),
+                'dashboard.buttonBack' => i::__('Clique <a href="%s">aqui</a> para retornar à página inicial', 'streamlined-opportunity'),
+                'dashboard.moreInformation' => i::__('Mais informações', 'streamlined-opportunity'),
 
                 /* TEXTOS DA TELA DO FORMULÁRIO */
                 'form.title' => 'Formulário de inscrição no Cadastro Único da Cultura',
                 'form.description' => '',
 
                 /*TEXTO DA TELA FOOTER */
-                'footerPrivacyPolicy' => i::__('Politica de Privacidade e termos de condições de uso', 'streamlined-opportunity'),
-                'footerNeedHelp' => i::__(' Precisa de ajuda?', 'streamlined-opportunity'),
-                'footer.ClickHere' => i::__('Clique aqui', 'streamlined-opportunity'),
+                'footer.privacyPolicy' => i::__('Politica de Privacidade e termos de condições de uso', 'streamlined-opportunity'),
+                'footer.needHelp' => i::__(' Precisa de ajuda?', 'streamlined-opportunity'),
+                'footer.clickHere' => i::__('Clique aqui', 'streamlined-opportunity'),
                 'footer.freeSoftware' => i::__('Software livre Mapas Culturais', 'streamlined-opportunity'),
-                'footer.Hacklab' => i::__('hacklab', 'streamlined-opportunity'),
-                'footer.Community' => i::__('e comunidade', 'streamlined-opportunity'),
-
-
+                'footer.company' => i::__('hacklab', 'streamlined-opportunity'),
+                'footer.community' => i::__('e comunidade', 'streamlined-opportunity'),
 
                 /* TEXTOS DO DESTAQUE DA HOME */
                 'home.featuredTitle' => '',
                 'home.featuredText' => '',
                 'home.featuredButton' => i::__('Clique aqui para se inscrever', 'streamlined-opportunity'),
-                'home,featuredSubscription' => i::__('as inscrições abrirão em breve'),
-                'home,featiredRegistrationClosed' =>  i::__('inscrições encerradas'),
+                'home.featuredSubscription' => i::__('as inscrições abrirão em breve'),
+                'home.featiredRegistrationClosed' =>  i::__('inscrições encerradas'),
 
                 /* TERMOS E CONDIÇÕES */
                 'terms.intro' => env("{$PREFIX}_TERMS_INTRO", ''),
@@ -187,7 +185,6 @@ class Plugin extends \MapasCulturais\Plugin
                 'terms.modal.notification' => env("{$PREFIX}_TERMS_MODAL_NOTIFICATION",i::__('OK', 'streamlined-opportunity')),
 
                 /* FORMULÁRIO DA INSCRIÇÃO (Validação de campo caso sucesso) */
-
                 'validate.success.title' => env("{$PREFIX}_MODAL_ERROR_TITLE", i::__('Preenchimento Finalizado', 'streamlined-opportunity')),
                 'validate.success.text' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Para prosseguir, clique no botão revisar formulário. Lembre-se, antes de enviar a inscrição, releia atentamente os dados preenchidos e certifique-se que estão todos corretos. Você pode editar o formulário caso encontre alguma informação incorreta.', 'streamlined-opportunity')),
                 'validate.btn.text' => env("{$PREFIX}_MODAL_ERROR_BTN_TEXT", i::__('Revisar formulário', 'streamlined-opportunity')),
@@ -197,25 +194,25 @@ class Plugin extends \MapasCulturais\Plugin
                 'validate.error.subtitle' => env("{$PREFIX}_NOTIFICATION_ERROR_SUBTITLE", i::__('Corrija os campos listados abaixo e valide seu formulário utilizando o botão Validar.', 'streamlined-opportunity')),
 
                 /* TELA CONFIRMAÇÃO DE INSCRIÇÂO */
-                'confirmation.reg.text' => env("{$PREFIX}_CONFIRMATION_REG_TEXT", i::__('Certifique-se que você preencheu as informações corretamente antes de enviar sua inscrição.', 'streamlined-opportunity')),
-                'confirmation.reg.alert' => env("{$PREFIX}_CONFIRMATION_REG_ALERT", i::__('Depois de enviada, não será mais possível editá-la.', 'streamlined-opportunity')),
-                'confirmation.reg.btn-send' => env("{$PREFIX}_CONFIRMATION_REG_BTN_SEND", i::__('Confirmar envio', 'streamlined-opportunity')),
-                'confirmation.reg.btn-edit' => env("{$PREFIX}_CONFIRMATION_REG_BTN_EDIT", i::__('Editar formulário', 'streamlined-opportunity')),
-                'confirmation.reg.modal-title' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_TITLE", i::__('Cadastro enviado com sucesso!', 'streamlined-opportunity')),
-                'confirmation.reg.modal-text' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_TEXT", i::__('Sua inscrição será analisada pelo comitê de curadoria e o resultado será informado por email. <br/>Você também pode acompanhar o andamento da análise através desse site.', 'streamlined-opportunity')),
-                'confirmation.reg.modal-btn-confirm' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_BTN_CONFIRM", i::__('Acompanhar solicitação', 'streamlined-opportunity')),
+                'confirmation.text' => env("{$PREFIX}_CONFIRMATION_REG_TEXT", i::__('Certifique-se que você preencheu as informações corretamente antes de enviar sua inscrição.', 'streamlined-opportunity')),
+                'confirmation.alert' => env("{$PREFIX}_CONFIRMATION_REG_ALERT", i::__('Depois de enviada, não será mais possível editá-la.', 'streamlined-opportunity')),
+                'confirmation.buttonSend' => env("{$PREFIX}_CONFIRMATION_REG_BTN_SEND", i::__('Confirmar envio', 'streamlined-opportunity')),
+                'confirmation.buttonEdit' => env("{$PREFIX}_CONFIRMATION_REG_BTN_EDIT", i::__('Editar formulário', 'streamlined-opportunity')),
+                'confirmation.modalTitle' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_TITLE", i::__('Cadastro enviado com sucesso!', 'streamlined-opportunity')),
+                'confirmation.modalText' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_TEXT", i::__('Sua inscrição será analisada pelo comitê de curadoria e o resultado será informado por email. <br/>Você também pode acompanhar o andamento da análise através desse site.', 'streamlined-opportunity')),
+                'confirmation.modalConfirm' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_BTN_CONFIRM", i::__('Acompanhar solicitação', 'streamlined-opportunity')),
 
                 /* TELA DE INSCRIÇÃO MODO ADMIN */
                 'declaration.adminstrative' => i::__('Declarações iniciais aceitas pelo proponente', 'streamlined-opportunity'),
                 
                 // STATUS_SENT = 1
-                'status.sent.title' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição está em análise', 'streamlined-opportunity')),
-                'status.sent.message' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Consulte novamente em outro momento.', 'streamlined-opportunity')),
-                'status.sent.text' => env("{$PREFIX}_STATUS_SENT_TEXT",i::__('Você pode entrar com recurso', 'streamlined-opportunity')),
-                'status.sent.opportunity' => env("{$PREFIX}_STATUS_SENT_OPPORTUNITY",i::__('', 'streamlined-opportunity')),
-                'status.sent.buttonBack' => env("{$PREFIX}_STATUS_SENT_BUTTON_BACK",i::__('Voltar para inscrição', 'streamlined-opportunity')),
-                'status.sent.inscricao' => env("{$PREFIX}_STATUS_SENT_INSCRICAO",i::__('Número da Inscrição', 'streamlined-opportunity')),
-                'status.sent.projoct.name' => env("{$PREFIX}_STATUS_SENT_PROJECT_NAME",i::__('Nome do Projeto', 'streamlined-opportunity')),
+                'status.title' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição está em análise', 'streamlined-opportunity')),
+                'status.message' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Consulte novamente em outro momento.', 'streamlined-opportunity')),
+                'status.text' => env("{$PREFIX}_STATUS_SENT_TEXT",i::__('Você pode entrar com recurso', 'streamlined-opportunity')),
+                'status.opportunity' => env("{$PREFIX}_STATUS_SENT_OPPORTUNITY",i::__('', 'streamlined-opportunity')),
+                'status.buttonBack' => env("{$PREFIX}_STATUS_SENT_BUTTON_BACK",i::__('Voltar para inscrição', 'streamlined-opportunity')),
+                'status.registration' => env("{$PREFIX}_STATUS_SENT_INSCRICAO",i::__('Número da Inscrição', 'streamlined-opportunity')),
+                'status.projoctName' => env("{$PREFIX}_STATUS_SENT_PROJECT_NAME",i::__('Nome do Projeto', 'streamlined-opportunity')),
                 
                 // STATUS_INVALID = 2
                 'status.invalid.title' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua inscrição não foi aprovada', 'streamlined-opportunity')),

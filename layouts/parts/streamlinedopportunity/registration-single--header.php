@@ -4,7 +4,7 @@ $plugin = $this->controller->plugin;
 ?>
 
 <div class="registration-fieldset clearfix">
-    <h4><?= $plugin->text('status.sent.inscricao');?></h4>
+    <h4><?= $plugin->text('status.registration');?></h4>
     <div class="registration-id alignleft">
         <?php echo $entity->number ?>
     </div>
@@ -21,7 +21,7 @@ $plugin = $this->controller->plugin;
 
 <?php if ($entity->projectName) : ?>
 <div class="registration-fieldset">
-    <div class="label"><?= $plugin->text("status.sent.projoct.name"); ?></div>
+    <div class="label"><?= $plugin->text("status.projoctName"); ?></div>
     <h5> <?php echo $entity->projectName; ?> </h5>
 </div>
 <?php endif; ?>

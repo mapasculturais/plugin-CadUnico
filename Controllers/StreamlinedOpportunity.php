@@ -167,8 +167,8 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $summaryStatusMessages = [
             //STATUS_SENT = 1 - Em análise
             '1' => [
-                'title'   => $plugin->text('status.sent.title'),
-                'message'  => $plugin->text('status.sent.message')
+                'title'   => $plugin->text('status.title'),
+                'message'  => $plugin->text('status.message')
             ],
             //STATUS_INVALID = 2 - Inválida
             '2' => [

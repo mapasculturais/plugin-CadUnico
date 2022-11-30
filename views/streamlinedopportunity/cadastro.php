@@ -18,7 +18,7 @@ $profile = $app->user->profile;
         <div class="intro-message">
             <div class="name"> 
                 <?= $plugin->text('dashboard.welcome');?> <?= $profile->name ? ", " . $profile->name : "" ?>! <br>
-                <?= sprintf( $plugin->text('dashboard.btn-back'), $app->baseUrl) ?>
+                <?= sprintf( $plugin->text('dashboard.buttonBack'), $app->baseUrl) ?>
             </div>
         </div>
     </header>
@@ -52,7 +52,7 @@ $profile = $app->user->profile;
                     </div>
 
                     <div class="informative-box--content active" data-content="">
-                        <span class="more"> <?= $plugin->text('dashboard.more-information'); ?> </span>
+                        <span class="more"> <?= $plugin->text('dashboard.moreInformation'); ?> </span>
                        
                     </div>
                 </button>

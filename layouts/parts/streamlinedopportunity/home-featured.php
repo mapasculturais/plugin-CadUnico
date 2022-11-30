@@ -23,11 +23,11 @@ $today = new DateTime();
     
     <?php if($today < $plugin->fromDate): ?>
     <div class="streamlinedopportunity-button">
-        <?= $plugin->text("home,featuredSubscription") ?>
+        <?= $plugin->text("home.featuredSubscription") ?>
     </div>
     <?php elseif($today > $plugin->toDate): ?>
     <div class="streamlinedopportunity-button">
-        <?= $plugin->text('home,featiredRegistrationClosed');?>
+        <?= $plugin->text('home.featiredRegistrationClosed');?>
     </div>
     <?php elseif($plugin->isRegistrationOpen()): ?>
         <div class="streamlinedopportunity-button">

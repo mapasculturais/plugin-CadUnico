@@ -15,7 +15,7 @@ $logotipo = isset($config["logo_footer"]) ? $this->asset($config["logo_footer"],
 <?php if ($linkSuporte) {
     ?>
     <div class="support">
-        <?= $plugin->text('footerNeedHelp'); ?> <a target="_blank" class="link" href="<?= $linkSuporte; ?> "> <?= $plugin->text('footer.ClickHere');?></a>
+        <?= $plugin->text('footer.needHelp'); ?> <a target="_blank" class="link" href="<?= $linkSuporte; ?> "> <?= $plugin->text('footer.clickHere');?></a>
     </div>
 <?php
 } ?>
@@ -33,7 +33,7 @@ $logotipo = isset($config["logo_footer"]) ? $this->asset($config["logo_footer"],
     <?php if ($termosECondicoes) {
     ?>
         <a target="_blank" class="terms-conditions" href="<?= $termosECondicoes; ?> ">
-            <?= $plugin->text('footerPrivacyPolicy'); ?>
+            <?= $plugin->text('footer.privacyPolicy'); ?>
         </a>
     <?php
     } ?>
@@ -45,10 +45,10 @@ $logotipo = isset($config["logo_footer"]) ? $this->asset($config["logo_footer"],
         <span> por </span>
 
         <a href="https://hacklab.com.br/" class="hacklab" target="_blank" style="white-space: nowrap;">
-            <?= $plugin->text('footer.Hacklab');?> <span>/</span>
+            <?= $plugin->text('footer.company');?> <span>/</span>
         </a>
 
-        <span> <?= $plugin->text('footer.Community') ?> </span>
+        <span> <?= $plugin->text('footer.community') ?> </span>
     </div>
 </footer>
 

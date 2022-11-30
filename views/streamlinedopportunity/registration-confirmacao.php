@@ -58,22 +58,22 @@ $opportunityId = $entity->opportunity->id;
         <?php
         } else { ?>
             <p class="registration-help">
-                <?= $plugin->text('confirmation.reg.text') ?>
-                <strong><?= $plugin->text('confirmation.reg.alert') ?></strong>
+                <?= $plugin->text('confirmation.text') ?>
+                <strong><?= $plugin->text('confirmation.alert') ?></strong>
             </p>
-            <a class="btn btn-confirmar" ng-click="sendRegistration(false)" rel='noopener noreferrer'><?= $plugin->text('confirmation.reg.btn-send') ?></a>
+            <a class="btn btn-confirmar" ng-click="sendRegistration(false)" rel='noopener noreferrer'><?= $plugin->text('confirmation.buttonSend') ?></a>
         <?php
         } ?>
 
-        <a href="<?= $this->controller->createUrl('formulario', [$entity->id]) ?>" class="btn secondary"><?= $plugin->text('confirmation.reg.btn-edit') ?></a>
+        <a href="<?= $this->controller->createUrl('formulario', [$entity->id]) ?>" class="btn secondary"><?= $plugin->text('confirmation.buttonEdit') ?></a>
 
     </article>
     <div ng-show="data.sent" style="display:none" id="modalAlert" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
-            <h2><?= $plugin->text('confirmation.reg.modal-title') ?></h2>
-            <p class="text"><?= $plugin->text('confirmation.reg.modal-text') ?></p>
-            <a href="<?= $this->controller->createUrl('status', [$entity->id]) ?>" class="btn js-confirmar"><?= $plugin->text('confirmation.reg.modal-btn-confirm') ?></a>
+            <h2><?= $plugin->text('confirmation.modalTitle') ?></h2>
+            <p class="text"><?= $plugin->text('confirmation.modalText') ?></p>
+            <a href="<?= $this->controller->createUrl('status', [$entity->id]) ?>" class="btn js-confirmar"><?= $plugin->text('confirmation.modalConfirm') ?></a>
         </div>
     </div>
 

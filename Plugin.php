@@ -189,32 +189,34 @@ class Plugin extends \MapasCulturais\Plugin
                 /* FORMULÁRIO DA INSCRIÇÃO (Validação de campo caso sucesso) */
                 'validate.success.title' => env("{$PREFIX}_MODAL_ERROR_TITLE", i::__('Preenchimento Finalizado', 'streamlined-opportunity')),
                 'validate.success.text' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Para prosseguir, clique no botão revisar formulário. Lembre-se, antes de enviar a inscrição, releia atentamente os dados preenchidos e certifique-se que estão todos corretos. Você pode editar o formulário caso encontre alguma informação incorreta.', 'streamlined-opportunity')),
-                'validate.btn.text' => env("{$PREFIX}_MODAL_ERROR_BTN_TEXT", i::__('Revisar formulário', 'streamlined-opportunity')),
+                'validate.ButtonSave' => env("{$PREFIX}_MODAL_ERROR_BUTTON_SAVE", i::__('Salvar', 'streamlined-opportunity')),
+                'validate.ButtonReview' => env("{$PREFIX}_MODAL_ERROR_BUTTON_REVIEW", i::__('Revisar formulário', 'streamlined-opportunity')),
+
 
                 /* FORMULÁRIO DA INSCRIÇÃO (Validação de campo caso error) */
                 'validate.error.title' => env("{$PREFIX}_NOTIFICATION_ERROR_TITLE", i::__('O cadastro não foi enviado!', 'streamlined-opportunity')),
                 'validate.error.subtitle' => env("{$PREFIX}_NOTIFICATION_ERROR_SUBTITLE", i::__('Corrija os campos listados abaixo e valide seu formulário utilizando o botão Validar.', 'streamlined-opportunity')),
 
                 /* TELA CONFIRMAÇÃO DE INSCRIÇÂO */
-                'confirmation.text' => env("{$PREFIX}_CONFIRMATION_REG_TEXT", i::__('Certifique-se que você preencheu as informações corretamente antes de enviar sua inscrição.', 'streamlined-opportunity')),
-                'confirmation.alert' => env("{$PREFIX}_CONFIRMATION_REG_ALERT", i::__('Depois de enviada, não será mais possível editá-la.', 'streamlined-opportunity')),
-                'confirmation.buttonSend' => env("{$PREFIX}_CONFIRMATION_REG_BTN_SEND", i::__('Confirmar envio', 'streamlined-opportunity')),
-                'confirmation.buttonEdit' => env("{$PREFIX}_CONFIRMATION_REG_BTN_EDIT", i::__('Editar formulário', 'streamlined-opportunity')),
-                'confirmation.modalTitle' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_TITLE", i::__('Cadastro enviado com sucesso!', 'streamlined-opportunity')),
-                'confirmation.modalText' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_TEXT", i::__('Sua inscrição será analisada pelo comitê de curadoria e o resultado será informado por email. <br/>Você também pode acompanhar o andamento da análise através desse site.', 'streamlined-opportunity')),
-                'confirmation.modalConfirm' => env("{$PREFIX}_CONFIRMATION_REG_MODAL_BTN_CONFIRM", i::__('Acompanhar solicitação', 'streamlined-opportunity')),
+                'confirmation.text' => env("{$PREFIX}_CONFIRMATION_TEXT", i::__('Certifique-se que você preencheu as informações corretamente antes de enviar sua inscrição.', 'streamlined-opportunity')),
+                'confirmation.alert' => env("{$PREFIX}_CONFIRMATION_ALERT", i::__('Depois de enviada, não será mais possível editá-la.', 'streamlined-opportunity')),
+                'confirmation.buttonSend' => env("{$PREFIX}_CONFIRMATION_BUTTON_SEND", i::__('Confirmar envio', 'streamlined-opportunity')),
+                'confirmation.buttonEdit' => env("{$PREFIX}_CONFIRMATION_BUTTON_EDIT", i::__('Editar formulário', 'streamlined-opportunity')),
+                'confirmation.modalTitle' => env("{$PREFIX}_CONFIRMATION_MODAL_TITLE", i::__('Cadastro enviado com sucesso!', 'streamlined-opportunity')),
+                'confirmation.modalText' => env("{$PREFIX}_CONFIRMATION_MODAL_TEXT", i::__('Sua inscrição será analisada pelo comitê de curadoria e o resultado será informado por email. <br/>Você também pode acompanhar o andamento da análise através desse site.', 'streamlined-opportunity')),
+                'confirmation.modalConfirm' => env("{$PREFIX}_CONFIRMATION_MODAL_CONFIRM", i::__('Acompanhar solicitação', 'streamlined-opportunity')),
 
                 /* TELA DE INSCRIÇÃO MODO ADMIN */
                 'declaration.adminstrative' => i::__('Declarações iniciais aceitas pelo proponente', 'streamlined-opportunity'),
                 
                 // STATUS_SENT = 1
-                'status.title' => env("{$PREFIX}_STATUS_SENT_TITLE", i::__('Sua inscrição está em análise', 'streamlined-opportunity')),
-                'status.message' => env("{$PREFIX}_STATUS_SENT_MESSAGE", i::__('Consulte novamente em outro momento.', 'streamlined-opportunity')),
-                'status.text' => env("{$PREFIX}_STATUS_SENT_TEXT",i::__('Você pode entrar com recurso', 'streamlined-opportunity')),
-                'status.opportunity' => env("{$PREFIX}_STATUS_SENT_OPPORTUNITY",i::__('', 'streamlined-opportunity')),
-                'status.buttonBack' => env("{$PREFIX}_STATUS_SENT_BUTTON_BACK",i::__('Voltar para inscrição', 'streamlined-opportunity')),
-                'status.registration' => env("{$PREFIX}_STATUS_SENT_INSCRICAO",i::__('Número da Inscrição', 'streamlined-opportunity')),
-                'status.projoctName' => env("{$PREFIX}_STATUS_SENT_PROJECT_NAME",i::__('Nome do Projeto', 'streamlined-opportunity')),
+                'status.title' => env("{$PREFIX}_STATUS_TITLE", i::__('Sua inscrição está em análise', 'streamlined-opportunity')),
+                'status.message' => env("{$PREFIX}_STATUS_MESSAGE", i::__('Consulte novamente em outro momento.', 'streamlined-opportunity')),
+                'status.text' => env("{$PREFIX}_STATUS_TEXT",i::__('Você pode entrar com recurso', 'streamlined-opportunity')),
+                'status.opportunity' => env("{$PREFIX}_STATUS_OPPORTUNITY",i::__('', 'streamlined-opportunity')),
+                'status.buttonBack' => env("{$PREFIX}_STATUS_BUTTON_BACK",i::__('Voltar para inscrição', 'streamlined-opportunity')),
+                'status.registration' => env("{$PREFIX}_STATUS_REGISTRATION",i::__('Número da Inscrição', 'streamlined-opportunity')),
+                'status.projoctName' => env("{$PREFIX}_STATUS_PROJECT_NAME",i::__('Nome do Projeto', 'streamlined-opportunity')),
                 
                 // STATUS_INVALID = 2
                 'status.invalid.title' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua inscrição não foi aprovada', 'streamlined-opportunity')),

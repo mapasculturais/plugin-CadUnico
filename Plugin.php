@@ -148,6 +148,10 @@ class Plugin extends \MapasCulturais\Plugin
 
             /* TEXTOS E DEMAIS COMPONENTES DE INTERFACE */
             'texts' => [
+                /* TEXTOS TELA DE AUTENTICAÇÃO */
+                'auth.notification.title' => i::__('Atenção', 'cad-unico'),
+                'auth.notification.text' => i::__('Para prosseguir é necessario se autenticar pelo GovBR. Acesse usando o botão <strong>Entrar com GovBr</strong>', 'cad-unico'),
+
                 /* TEXTOS DO DASHBOARD */
                 'dashboard.title' => i::__('Para se inscrever clique no botão abaixo', 'cad-unico'),
                 'dashboard.description' => '', // se não definida, usará a descrição curta da oportunidade
@@ -270,7 +274,7 @@ class Plugin extends \MapasCulturais\Plugin
     static function getInstanceBySlug(string $slug)
     {
         if (!isset(self::$instancesBySlug[$slug])) {
-            throw new Exception(i::__("Instância do plugin StremlinedOpportunity não encontrada: ") . $slug);
+            throw new Exception(i::__("Instância do plugin CadUnico não encontrada: ") . $slug);
         }
 
         return self::$instancesBySlug[$slug];
@@ -319,6 +323,15 @@ class Plugin extends \MapasCulturais\Plugin
         }
 
         $opportunity = $this->opportunity;
+
+        /** Insere u aviso na tela de login, para que notifique o usuário que ele deve se autenticar pelo Gov.BR para conseguir se inscrever no edital controlado pelo CadUnico */
+        $app->hook("template(auth.index.form-login-button):after", function() use($plugin){
+            $redirect_url = $_SESSION['mapasculturais.auth.redirect_path'] ?? '';
+            if (strpos($redirect_url, "/{$plugin->getSlug()}") === 0) {
+                $this->part("cadunico/govbr-auth-notification", ['plugin' => $plugin]);
+            }
+        });
+
 
         /**Insere declarações iniciais na ficha de inscrição para quem tem controle da inscrição */
         $app->hook("template(registration.view.form):end", function () use ($plugin) {

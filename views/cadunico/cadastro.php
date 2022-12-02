@@ -1,6 +1,6 @@
 <?php
 /** 
- * @var StreamlinedOpportunity\Plugin $plugin 
+ * @var CadUnico\Plugin $plugin 
  * @var MapasCulturais\Entities\Opportunity $opportunity
  * @var MapasCulturais\Themes\BaseV1\Theme $this
  */
@@ -12,6 +12,7 @@ $slug = $plugin->slug;
 
 $this->jsObject['opportunityId'] = $opportunity->id;
 $profile = $app->user->profile;
+
 ?>
 <section class="lab-main-content cadastro">
     <header>
@@ -63,16 +64,16 @@ $profile = $app->user->profile;
                 switch ($registration->status) {
                         //caso seja nao enviada (Rascunho)
                     case Registration::STATUS_DRAFT:
-                        $this->part('streamlinedopportunity/cadastro/application-draft',  [
+                        $this->part('cadunico/cadastro/application-draft',  [
                             'registration' => $registration, 
                             'registrationUrl' => $registrationUrl, 
-                            'registrationStatusName' => i::__('Cadastro iniciado', 'streamlined-opportunity')
+                            'registrationStatusName' => i::__('Cadastro iniciado', 'cad-unico')
                         ]);
                         break;
                         //caso  tenha sido enviada
                     default:
                         $registrationStatusName = $summaryStatusName[$registration->status];
-                        $this->part('streamlinedopportunity/cadastro/application-status',  [
+                        $this->part('cadunico/cadastro/application-status',  [
                             'registration' => $registration, 
                             'registrationStatusName' => $registrationStatusName
                         ]);

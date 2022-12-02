@@ -1,6 +1,6 @@
 <?php
 /** 
- * @var StreamlinedOpportunity\Plugin $plugin 
+ * @var CadUnico\Plugin $plugin 
  * @var MapasCulturais\Entities\Opportunity $opportunity
  * @var MapasCulturais\Themes\BaseV1\Theme $this
  */

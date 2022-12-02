@@ -8,7 +8,7 @@ $config = $plugin->config;
 $controller = $app->controller($config["slug"]);
 $linkSuporte = isset($config["link_support"]) ? $config["link_support"] : '';
 $termosECondicoes = isset($config["privacy_terms_conditions"]) ? $config["privacy_terms_conditions"] : $app->createUrl("auth", "", array("termos-e-condicoes"));
-$logotipo = isset($config["logo_footer"]) ? $this->asset($config["logo_footer"], false) : $this->asset("streamlinedopportunity/img/picture.png", false); ?>
+$logotipo = isset($config["logo_footer"]) ? $this->asset($config["logo_footer"], false) : $this->asset("cadunico/img/picture.png", false); ?>
 
 </section>
 

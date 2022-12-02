@@ -8,6 +8,6 @@
 
 <div class="lab-option lab-status-waiting">
     <a href="<?= $this->controller->createUrl( 'status', [$registration->id]) ?>">
-        <?php $this->part('streamlinedopportunity/cadastro/application-summary', ['registration' => $registration,'registrationStatusName' => $registrationStatusName]) ?>
+        <?php $this->part('cadunico/cadastro/application-summary', ['registration' => $registration,'registrationStatusName' => $registrationStatusName]) ?>
     </a>
 </div>

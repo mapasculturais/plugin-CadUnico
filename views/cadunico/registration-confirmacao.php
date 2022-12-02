@@ -43,7 +43,7 @@ $opportunityId = $entity->opportunity->id;
     <article>
         <?php $this->applyTemplateHook('form', 'begin'); ?>
 
-        <?php $this->part('streamlinedopportunity/registration-single--header', $_params) ?>
+        <?php $this->part('cadunico/registration-single--header', $_params) ?>
 
         <?php $this->part('singles/registration-single--fields', $_params) ?>
 

@@ -11,6 +11,6 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('js/app.js', '../assets/streamlinedopportunity/')
-   .sass('sass/app.scss', '../assets/streamlinedopportunity/')
-   .setPublicPath('../assets/streamlinedopportunity/');
+mix.js('js/app.js', '../assets/cadunico/')
+   .sass('sass/app.scss', '../assets/cadunico/')
+   .setPublicPath('../assets/cadunico/');

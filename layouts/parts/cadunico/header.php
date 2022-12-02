@@ -36,8 +36,8 @@ if ($title = $this->getTitle()) {
     <?php $this->bodyBegin(); ?>
     <header id="main-header" class="clearfix" ng-class="{'sombra':data.global.viewMode !== 'list'}">
         <?php if($app->auth->isUserAuthenticated()): ?>
-            <?php $this->part("streamlinedopportunity/header-logos", ["plugin" => $plugin]) ?>
-            <?php $this->part("streamlinedopportunity/header-logout") ?>
+            <?php $this->part("cadunico/header-logos", ["plugin" => $plugin]) ?>
+            <?php $this->part("cadunico/header-logout") ?>
         <?php endif; ?>
     </header>
     <section id="main-section" class="clearfix">

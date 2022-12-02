@@ -1,28 +1,28 @@
 <?php
 
-namespace StreamlinedOpportunity\Controllers;
+namespace CadUnico\Controllers;
 
 use MapasCulturais\ApiQuery;
 use MapasCulturais\i;
 use MapasCulturais\App;
 use MapasCulturais\Controller;
 use MapasCulturais\Entities\Registration;
-use StreamlinedOpportunity\Plugin;
+use CadUnico\Plugin;
 
 /**
- * StreamlinedOpportunity Controller
+ * CadUnico Controller
  *
  * @property-read Registration $requestedEntity The Requested Entity
  * @property-read array $statusNames nomes dos status
  * @property-read mixed $config configuração do plugin
  */
-class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
+class CadUnico extends \MapasCulturais\Controllers\Registration
 {  
 
     /**
      * Instância do plugin
      *
-     * @var \StreamlinedOpportunity\Plugin
+     * @var \CadUnico\Plugin
      */
     protected $plugin;
 
@@ -37,7 +37,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
     /**
      * Retorna uma instância do controller
      * @param string $controller_id 
-     * @return StreamlinedOpportunity 
+     * @return CadUnico 
      */
     static public function i(string $controller_id): Controller {
         
@@ -78,7 +78,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
     }
 
     function getTemplatePrefix() {
-        return 'streamlinedopportunity';
+        return 'cadunico';
     }
 
     function getConfig() {
@@ -102,12 +102,12 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
      */
     function getStatusNames(){
         $summaryStatusName = [
-            Registration::STATUS_DRAFT => i::__('Rascunho', 'streamlined-opportunity'),
-            Registration::STATUS_SENT => i::__('Em análise', 'streamlined-opportunity'),
-            Registration::STATUS_APPROVED => i::__('Aprovado', 'streamlined-opportunity'),
-            Registration::STATUS_NOTAPPROVED => i::__('Reprovado', 'streamlined-opportunity'),
-            Registration::STATUS_WAITLIST => i::__('Recursos Exauridos', 'streamlined-opportunity'),
-            Registration::STATUS_INVALID => i::__('Inválida', 'streamlined-opportunity'),
+            Registration::STATUS_DRAFT => i::__('Rascunho', 'cad-unico'),
+            Registration::STATUS_SENT => i::__('Em análise', 'cad-unico'),
+            Registration::STATUS_APPROVED => i::__('Aprovado', 'cad-unico'),
+            Registration::STATUS_NOTAPPROVED => i::__('Reprovado', 'cad-unico'),
+            Registration::STATUS_WAITLIST => i::__('Recursos Exauridos', 'cad-unico'),
+            Registration::STATUS_INVALID => i::__('Inválida', 'cad-unico'),
         ];
         return $summaryStatusName;
     }
@@ -268,7 +268,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         $this->requireAuthentication();
         if (!isset($this->data['agent'])) {
             // @todo tratar esse erro
-            throw new \Exception(i::__('O parâmetro `agent` é obrigatório', 'streamlined-opportunity'));
+            throw new \Exception(i::__('O parâmetro `agent` é obrigatório', 'cad-unico'));
         }
 
         $app = App::i();
@@ -286,7 +286,7 @@ class StreamlinedOpportunity extends \MapasCulturais\Controllers\Registration
         }
         if(!$agent || $agent->type->id != 1){
             // @todo tratar esse erro
-            throw new \Exception(i::__('O tipo do agente deve ser individual', 'streamlined-opportunity'));
+            throw new \Exception(i::__('O tipo do agente deve ser individual', 'cad-unico'));
         }
         $agent->checkPermission('@control');
 

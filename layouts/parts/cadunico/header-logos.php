@@ -7,8 +7,8 @@ $app = \MapasCulturais\App::i();
 $config = $plugin->config;
 $controller = $app->controller($config["slug"]);
 
-$logo_institution = isset($config["logo_institution"]) ? $this->asset($config["logo_institution"], false) : $this->asset("streamlinedopportunity/img/picture.png", false);
-$logo_center = isset($config["logo_center"]) ? $this->asset($config["logo_center"], false) : $this->asset("streamlinedopportunity/img/picture.png", false);
+$logo_institution = isset($config["logo_institution"]) ? $this->asset($config["logo_institution"], false) : $this->asset("cadunico/img/picture.png", false);
+$logo_center = isset($config["logo_center"]) ? $this->asset($config["logo_center"], false) : $this->asset("cadunico/img/picture.png", false);
 ?>
 
 <?php if ($logo_institution) {

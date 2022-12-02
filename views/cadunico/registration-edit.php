@@ -1,6 +1,6 @@
 <?php
 /** 
- * @var StreamlinedOpportunity\Plugin $plugin 
+ * @var CadUnico\Plugin $plugin 
  * @var MapasCulturais\Themes\BaseV1\Theme $this
  */
 
@@ -50,7 +50,7 @@ $_params = [
     <div ng-controller="RegistrationFieldsController">
         <?php $this->part('singles/registration-edit--fields', $_params) ?>
 
-        <?php $this->part('streamlinedopportunity/registration-edit--validate-button', $_params) ?>
+        <?php $this->part('cadunico/registration-edit--validate-button', $_params) ?>
     </div>
     <?php $this->applyTemplateHook('form', 'end'); ?>
 

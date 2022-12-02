@@ -1,9 +1,6 @@
 <?php
 
-use MapasCulturais\i;
-
 $app = \MapasCulturais\App::i();
-$plugin = $plugin ?? $this->controller->plugin;
 $config = $plugin->config;
 $controller = $app->controller($config["slug"]);
 $linkSuporte = isset($config["link_support"]) ? $config["link_support"] : '';

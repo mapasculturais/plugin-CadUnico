@@ -1,7 +1,9 @@
 <?php
-$this->part("cadunico/header");
+
+use CadUnico\Plugin;
+
+$plugin = Plugin::getInstanceBySlug('cadunico');
+$this->part("cadunico/header", ['plugin' => $plugin]);
 echo $TEMPLATE_CONTENT;
-if($app->auth->isUserAuthenticated()):
-$this->part("cadunico/footer");
-endif
+$this->part("cadunico/footer", ['plugin' => $plugin]);
 ?>

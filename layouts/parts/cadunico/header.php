@@ -1,5 +1,4 @@
 <?php
-$plugin = $plugin ?? $this->controller->plugin;
 $site_name = $this->dict("site: name", false);
 if ($title = $this->getTitle()) {
     $title = "{$site_name} - {$title}";
@@ -35,8 +34,8 @@ if ($title = $this->getTitle()) {
 <body <?php $this->bodyProperties() ?>>
     <?php $this->bodyBegin(); ?>
     <header id="main-header" class="clearfix" ng-class="{'sombra':data.global.viewMode !== 'list'}">
+        <?php $this->part("cadunico/header-logos", ["plugin" => $plugin]) ?>
         <?php if($app->auth->isUserAuthenticated()): ?>
-            <?php $this->part("cadunico/header-logos", ["plugin" => $plugin]) ?>
             <?php $this->part("cadunico/header-logout") ?>
         <?php endif; ?>
     </header>

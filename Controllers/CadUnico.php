@@ -567,12 +567,14 @@ class CadUnico extends \MapasCulturais\Controllers\Registration
         
         $registrations_ids = $rs->findIds();
         $registrations = $repo->findBy(['id' => $registrations_ids ]);
+        $has_seal_govbr = $this->config['has_seal_govbr'];
 
         $this->render('cadastro', [
                 'plugin' => $this->plugin,
                 'opportunity' => $opportunity,
                 'registrations' => $registrations,
-                'summaryStatusName'=> $summaryStatusName
+                'summaryStatusName'=> $summaryStatusName,
+                'has_seal_govbr' => $has_seal_govbr()
         ]);
     }
 

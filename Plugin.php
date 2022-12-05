@@ -44,6 +44,7 @@ class Plugin extends \MapasCulturais\Plugin
 
     public function __construct(array $config = [])
     {
+
         $required_configs = [
             'slug' => i::__('A chave de configuração "slug" é obrigatória'),
             'opportunity_id' => i::__('A chave de configuração "opportunity_id" é obrigatória'),
@@ -154,6 +155,7 @@ class Plugin extends \MapasCulturais\Plugin
 
                 /* TEXTOS DO DASHBOARD */
                 'dashboard.title' => i::__('Para se inscrever clique no botão abaixo', 'cad-unico'),
+                'dashboard.titleGovbr' => i::__('Para prosseguir você precisa se autenticar com GovBr', 'cad-unico'),
                 'dashboard.description' => '', // se não definida, usará a descrição curta da oportunidade
                 'dashboard.button' => '', // se não definida, usará o nome da oportunidade
                 'dashboard.applicationSummaryTitle' => i::__('Resumo da inscrição', 'cad-unico'),
@@ -260,6 +262,7 @@ class Plugin extends \MapasCulturais\Plugin
             'msg_appeal' => env("{$PREFIX}_MESSAGE_APPEAL", ''),
             'opportunities_disable_sending' => (array) json_decode(env("{$PREFIX}_OPPORTUNITIES_DISABLE_SENDING", '[]')),
             'message_disable_sending' => (array) json_decode(env("{$PREFIX}_MESSAGE_DISABLE_SENDING", '[]')),
+            'has_seal_govbr' => function(){}
         ];
 
         parent::__construct($config);

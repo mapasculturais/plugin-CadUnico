@@ -13,6 +13,8 @@ $slug = $plugin->slug;
 $this->jsObject['opportunityId'] = $opportunity->id;
 $profile = $app->user->profile;
 
+$url_button = $has_seal_govbr ? $this->controller->createUrl('novaInscricao', ['agent' => $profile->id]) : $app->createUrl('autenticacao/govbr');
+
 ?>
 <section class="lab-main-content cadastro">
     <header>
@@ -31,7 +33,11 @@ $profile = $app->user->profile;
             </div>
 
             <h2 class="featured-title">
-                <?= $plugin->text('dashboard.title') ?>
+                <?php if($has_seal_govbr):?>
+                    <?= $plugin->text('dashboard.title') ?>
+                <?php else:?>
+                    <?= $plugin->text('dashboard.titleGovbr') ?>
+                <?php endif?>
             </h2>   
         <?php } else {?>
             <h2 class="featured-title">
@@ -42,20 +48,12 @@ $profile = $app->user->profile;
         <div class="lab-form-filter opcoes-inciso">
           
             <?php if (count($registrations) < $plugin->limit && $plugin->isRegistrationOpen()): ?>
-                <button onclick="location.href='<?= $this->controller->createUrl('novaInscricao', ['agent' => $profile->id]) ?>'" clickable id="option3" class="informative-box lab-option">
-                    <div class="informative-box--icon">
-                        <i class="fas fa-user"></i>
-                    </div>
-
-                    <div class="informative-box--title">
-                        <h2><?= $plugin->text('dashboard.button') ?: $opportunity->name ?></h2>
-                        <i class="fas fa-minus"></i>
-                    </div>
-
-                    <div class="informative-box--content active" data-content="">
-                        <span class="more"> <?= $plugin->text('dashboard.moreInformation'); ?> </span>
-                       
-                    </div>
+                <button onclick="location.href='<?= $url_button ?>'" clickable id="option3" class="informative-box lab-option">
+                    <?php if($has_seal_govbr):?>
+                        <?php $this->part("cadunico/button-registration", ['plugin' => $plugin, 'opportunity' => $opportunity])?>
+                    <?php else:?>
+                        <?php $this->part("cadunico/govbr-sing-in", ['plugin' => $plugin, 'opportunity' => $opportunity])?>
+                    <?php endif?>
                 </button>
             <?php endif; ?>
             <?php 

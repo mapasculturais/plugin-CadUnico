@@ -553,6 +553,8 @@ class CadUnico extends \MapasCulturais\Controllers\Registration
         
         $app = App::i();
 
+        $plugin = $this->plugin;
+
         $summaryStatusName = $this->getStatusNames();
 
         $repo = $app->repo('Registration');

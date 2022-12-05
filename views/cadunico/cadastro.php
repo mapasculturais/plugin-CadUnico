@@ -52,9 +52,8 @@ $profile = $app->user->profile;
                     <?php if($plugin->hasSealGovbr()):?>
                         <?php $this->part("cadunico/button-registration", ['plugin' => $plugin, 'opportunity' => $opportunity])?>
                     <?php else:?>
-                        <?php $this->part("cadunico/govbr-sing-in", ['plugin' => $plugin, 'opportunity' => $opportunity])?>
+                        <?php $this->part("cadunico/govbr-sing-in", ['plugin' => $plugin])?>
                     <?php endif?>
-                </button>
             <?php endif; ?>
             <?php 
             foreach ($registrations as $registration) {

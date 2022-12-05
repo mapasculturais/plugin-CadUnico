@@ -16,8 +16,6 @@ $slug = $plugin->slug;
 $this->jsObject['opportunityId'] = $opportunity->id;
 $profile = $app->user->profile;
 
-$url_button = $has_seal_govbr ? $this->controller->createUrl('novaInscricao', ['agent' => $profile->id]) : $app->createUrl('autenticacao/govbr');
-
 ?>
 <section class="lab-main-content cadastro">
     <header>

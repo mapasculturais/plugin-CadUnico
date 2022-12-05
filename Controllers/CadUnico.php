@@ -575,11 +575,10 @@ class CadUnico extends \MapasCulturais\Controllers\Registration
         }
 
         $this->render('cadastro', [
-                'plugin' => $this->plugin,
-                'opportunity' => $opportunity,
-                'registrations' => $registrations,
-                'summaryStatusName'=> $summaryStatusName,
-                'has_seal_govbr' => $has_seal_govbr()
+            'plugin' => $plugin,
+            'opportunity' => $opportunity,
+            'registrations' => $registrations,
+            'summaryStatusName'=> $summaryStatusName,
         ]);
     }
 

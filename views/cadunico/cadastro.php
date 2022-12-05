@@ -1,8 +1,11 @@
 <?php
 /** 
+ * @var MapasCulturais\App $app
+ * @var MapasCulturais\Themes\BaseV1\Theme $this
+ * 
+ * Variáveis requeridas:
  * @var CadUnico\Plugin $plugin 
  * @var MapasCulturais\Entities\Opportunity $opportunity
- * @var MapasCulturais\Themes\BaseV1\Theme $this
  */
 
 use MapasCulturais\i;

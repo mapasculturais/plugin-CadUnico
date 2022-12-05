@@ -1,4 +1,13 @@
 <?php 
+/** 
+ * @var MapasCulturais\App $app
+ * @var MapasCulturais\Themes\BaseV1\Theme $this
+ * 
+ * Variáveis requeridas:
+ * @var CadUnico\Plugin $plugin 
+ */
+
+
 $url = $app->createUrl("autenticacao", "govbr");
 ?>
 <div class="informative-box--icon">

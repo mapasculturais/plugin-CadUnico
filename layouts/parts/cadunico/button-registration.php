@@ -1,3 +1,18 @@
+
+<?php
+/** 
+ * @var MapasCulturais\App $app
+ * @var MapasCulturais\Themes\BaseV1\Theme $this
+ * 
+ * Variáveis requeridas:
+ * @var CadUnico\Plugin $plugin 
+ * @var MapasCulturais\Entities\Opportunity $opportunity
+ */
+
+$url = $this->controller->createUrl('novaInscricao', ['agent' => $app->user->profile->id])
+?>
+
+<button onclick="location.href='<?= $url ?>'" clickable id="option3" class="informative-box lab-option">
 <div class="informative-box--icon">
     <i class="fas fa-user"></i>
 </div>

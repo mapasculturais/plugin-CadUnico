@@ -339,6 +339,17 @@ class Plugin extends \MapasCulturais\Plugin
             }
         });
 
+        
+         /** Aplica selo definido na oportunidade assim que o agente é aprovado na inscrição */
+         $app->hook("entity(Registration).status(approved)", function() use ($plugin, $app){
+            if($plugin->hasSealGovbr() && $plugin->isCadUnicoOpportunity($this->opportunity)){
+                $app->disableAccessControl();
+                $this->setAgentsSealRelation();
+                $app->enableAccessControl();
+            }
+        });
+
+
         /** Insere u aviso na tela de login, para que notifique o usuário que ele deve se autenticar pelo Gov.BR para conseguir se 
         * inscrever no edital controlado pelo CadUnico */
         $app->hook("template(auth.index.form-login-button):after", function() use($plugin){

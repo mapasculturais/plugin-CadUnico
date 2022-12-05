@@ -34,7 +34,7 @@ $profile = $app->user->profile;
             </div>
 
             <h2 class="featured-title">
-                <?php if($has_seal_govbr):?>
+                <?php if($plugin->hasSealGovbr()):?>
                     <?= $plugin->text('dashboard.title') ?>
                 <?php else:?>
                     <?= $plugin->text('dashboard.titleGovbr') ?>
@@ -49,8 +49,7 @@ $profile = $app->user->profile;
         <div class="lab-form-filter opcoes-inciso">
           
             <?php if (count($registrations) < $plugin->limit && $plugin->isRegistrationOpen()): ?>
-                <button onclick="location.href='<?= $url_button ?>'" clickable id="option3" class="informative-box lab-option">
-                    <?php if($has_seal_govbr):?>
+                    <?php if($plugin->hasSealGovbr()):?>
                         <?php $this->part("cadunico/button-registration", ['plugin' => $plugin, 'opportunity' => $opportunity])?>
                     <?php else:?>
                         <?php $this->part("cadunico/govbr-sing-in", ['plugin' => $plugin, 'opportunity' => $opportunity])?>

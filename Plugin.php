@@ -801,4 +801,29 @@ class Plugin extends \MapasCulturais\Plugin
 
         return false;
     }
+
+    /**
+     * Retorna se o agente ja tem o selo do GovBr
+     * @return boolean
+     */
+    public function hasSealGovbr()
+    {
+        $app = App::i();
+                    
+        $has_seal_govbr = false;
+        $strategies_config = $app->config['auth.config']['strategies'];
+        if(in_array("govbr", array_keys($strategies_config)) && $strategies_config['govbr']['visible']){
+            $agent = $app->user->profile;
+            $relations = $agent->getSealRelations();
+            $sealId = $strategies_config['govbr']['applySealId'];
+
+            foreach($relations as $relation){
+                if($relation->seal->id == $sealId){
+                    $has_seal_govbr = true;
+                    break;
+                }
+            }
+        }
+        return $has_seal_govbr;
+    }
 }

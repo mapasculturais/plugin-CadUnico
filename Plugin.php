@@ -330,7 +330,17 @@ class Plugin extends \MapasCulturais\Plugin
 
         $opportunity = $this->opportunity;
 
-        /** Insere u aviso na tela de login, para que notifique o usuário que ele deve se autenticar pelo Gov.BR para conseguir se inscrever no edital controlado pelo CadUnico */
+        /** Auto seleciona a inscrição quando o agente já estiver selado com GovBr*/
+        $app->hook("entity(Registration).send:after", function() use ($plugin, $app){
+            if($plugin->config['approved_after_send'] && $plugin->hasSealGovbr() && $plugin->isCadUnicoOpportunity($this->opportunity)){
+                $app->disableAccessControl();
+                $this->setStatusToApproved();
+                $app->enableAccessControl();
+            }
+        });
+
+        /** Insere u aviso na tela de login, para que notifique o usuário que ele deve se autenticar pelo Gov.BR para conseguir se 
+        * inscrever no edital controlado pelo CadUnico */
         $app->hook("template(auth.index.form-login-button):after", function() use($plugin){
             $redirect_url = $_SESSION['mapasculturais.auth.redirect_path'] ?? '';
             if (strpos($redirect_url, "/{$plugin->getSlug()}") === 0) {

@@ -91,6 +91,8 @@ class Plugin extends \MapasCulturais\Plugin
 
             'reconsolidate_enabled' => false,
 
+            'approved_after_send' => env("{$PREFIX}_APPROVED_AFTER_SEND", false),
+
             /* CONFIGURAÇÕES DE INTERFACE */
             // layout a ser utilizado como "moldura" das páginas
             'layout' => "cad-unico",

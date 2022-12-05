@@ -11,6 +11,7 @@ use MapasCulturais\Entities\Opportunity;
 use Slim\Exception\Stop;
 
 /**
+ * @var MapasCulturais\App $app
  * @property-read String $slug slug configurado para o plugin
  * @property-read DateTime $fromDate data inicial das inscrições
  * @property-read DateTime $toDate data final das inscrições

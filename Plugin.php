@@ -265,7 +265,6 @@ class Plugin extends \MapasCulturais\Plugin
             'msg_appeal' => env("{$PREFIX}_MESSAGE_APPEAL", ''),
             'opportunities_disable_sending' => (array) json_decode(env("{$PREFIX}_OPPORTUNITIES_DISABLE_SENDING", '[]')),
             'message_disable_sending' => (array) json_decode(env("{$PREFIX}_MESSAGE_DISABLE_SENDING", '[]')),
-            'has_seal_govbr' => function(){}
         ];
 
         parent::__construct($config);

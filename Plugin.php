@@ -150,6 +150,8 @@ class Plugin extends \MapasCulturais\Plugin
             // url da imagem do destaque da home
             'featured.imageUrl' => '',
 
+            'featured.imageWidth' => env("{$PREFIX}_FEATURED_IMAGE_WIDTH",'15%'),
+
             /* TEXTOS E DEMAIS COMPONENTES DE INTERFACE */
             'texts' => [
                 /* TEXTOS TELA DE AUTENTICAÇÃO */

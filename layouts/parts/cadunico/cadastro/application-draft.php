@@ -46,9 +46,7 @@ use MapasCulturais\i;
             </div>
         </div>
     </button>
-        <div class="btn">
-        <?= i::__('Continuar inscrição incompleta', 'cad-unico') ?>
-        </div>
+        
     </a>
 
 

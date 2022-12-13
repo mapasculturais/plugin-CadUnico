@@ -10,6 +10,9 @@ $this->bodyProperties['ng-app'] = "entity.app";
 $this->bodyProperties['ng-controller'] = "EntityController";
 $this->jsObject['angularAppDependencies'][] = 'entity.module.opportunity';
 
+$PreventSend      = $config['opportunities_disable_sending'];
+$PreventSendMessages      = $config['message_disable_sending'];
+
 $this->addEntityToJs($registration);
 $this->addOpportunityToJs($registration->opportunity);
 $this->addOpportunitySelectFieldsToJs($registration->opportunity);
@@ -21,7 +24,11 @@ $_params = [
     'plugin' => $plugin,
     'entity'      => $registration,
     'opportunity' => $registration->opportunity,
-    'slug' => $slug
+    'slug' => $slug,
+    'opportunityId' => $registration->opportunity->id,
+    'PreventSend' => $PreventSend,
+    'PreventSendMessages' => $PreventSendMessages,
+    'comfirmation' => false
 ]; ?>
 
 <section id="lab-status" class="lab-main-content">

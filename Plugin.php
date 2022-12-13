@@ -100,6 +100,10 @@ class Plugin extends \MapasCulturais\Plugin
             /** ESTILOS INSERIDOS NAS ROTAS DOS PLUGINS */
             // configuração das variáveis das cores
             'styles:root' => [
+
+                /** HOME ELEMENTS */
+                'bg-btn-collor-home' => env("{$PREFIX}_STYLES_STATUS_COLOR", '#FFAA02'),
+
                 '--header-background' => env("{$PREFIX}_STYLES_HEADER_BG", '#a6e9a0'),
                 '--header-color' => env("{$PREFIX}_STYLES_HEADER_COLOR", '#ffffff'),
 
@@ -150,7 +154,7 @@ class Plugin extends \MapasCulturais\Plugin
             // url da imagem do destaque da home
             'featured.imageUrl' => '',
 
-            'featured.imageMaxWidth' => env("{$PREFIX}_FEATURED_IMAGE_MAX_WIDTH",'30%'),
+            'featured.imageWidth' => env("{$PREFIX}_FEATURED_IMAGE_WIDTH",'15%'),
 
             /* TEXTOS E DEMAIS COMPONENTES DE INTERFACE */
             'texts' => [
@@ -163,13 +167,13 @@ class Plugin extends \MapasCulturais\Plugin
                 'dashboard.titleGovbr' => i::__('Para prosseguir você precisa se autenticar com GovBr', 'cad-unico'),
                 'dashboard.description' => '', // se não definida, usará a descrição curta da oportunidade
                 'dashboard.button' => '', // se não definida, usará o nome da oportunidade
-                'dashboard.applicationSummaryTitle' => i::__('Resumo da inscrição', 'cad-unico'),
+                'dashboard.applicationSummaryTitle' => i::__('Resumo do cadastro', 'cad-unico'),
                 'dashboard.welcome' => i::__('Olá', 'cad-unico'),
                 'dashboard.buttonBack' => i::__('Clique <a href="%s">aqui</a> para retornar à página inicial', 'cad-unico'),
                 'dashboard.moreInformation' => i::__('Mais informações', 'cad-unico'),
 
                 /* TEXTOS DA TELA DO FORMULÁRIO */
-                'form.title' => 'Formulário de inscrição no Cadastro Único da Cultura',
+                'form.title' => 'Formulário do Cadastro Único da Cultura',
                 'form.description' => '',
 
                 /*TEXTO DA TELA FOOTER */
@@ -183,65 +187,65 @@ class Plugin extends \MapasCulturais\Plugin
                 /* TEXTOS DO DESTAQUE DA HOME */
                 'home.featuredTitle' => '',
                 'home.featuredText' => '',
-                'home.featuredButton' => i::__('Clique aqui para se inscrever', 'cad-unico'),
+                'home.featuredButton' => i::__('Clique aqui para se cadastrar', 'cad-unico'),
                 'home.featuredSubscription' => i::__('as inscrições abrirão em breve'),
                 'home.featiredRegistrationClosed' =>  i::__('inscrições encerradas'),
 
                 /* TERMOS E CONDIÇÕES */
                 'terms.intro' => env("{$PREFIX}_TERMS_INTRO", ''),
                 'terms.title' => env("{$PREFIX}_TERMS_TITLE", i::__('Termos e Condições', 'cad-unico')),
-                'terms.help' => env("{$PREFIX}_TERMS_HELP", i::__('Você precisa aceitar todos os termos para prosseguir com a inscrição', 'cad-unico')),
+                'terms.help' => env("{$PREFIX}_TERMS_HELP", i::__('Você precisa aceitar todos os termos para prosseguir com o cadastro', 'cad-unico')),
                 'terms.btn-continue' => env("{$PREFIX}_TERMS_BTN_CONTINUE", i::__('Continuar', 'cad-unico')),
                 'terms.modal.title' => env("{$PREFIX}_TERMS_MODAL_TITLE", i::__('Atenção!', 'cad-unico')),
                 'terms.modal.notification' => env("{$PREFIX}_TERMS_MODAL_NOTIFICATION", i::__('OK', 'cad-unico')),
 
                 /* FORMULÁRIO DA INSCRIÇÃO (Validação de campo caso sucesso) */
                 'validate.success.title' => env("{$PREFIX}_MODAL_ERROR_TITLE", i::__('Preenchimento Finalizado', 'cad-unico')),
-                'validate.success.text' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Para prosseguir, clique no botão revisar formulário. Lembre-se, antes de enviar a inscrição, releia atentamente os dados preenchidos e certifique-se que estão todos corretos. Você pode editar o formulário caso encontre alguma informação incorreta.', 'cad-unico')),
+                'validate.success.text' => env("{$PREFIX}_MODAL_ERROR_SSUBTITLE", i::__('Para prosseguir, clique no botão revisar formulário. Lembre-se, antes de enviar o cadastro, releia atentamente os dados preenchidos e certifique-se que estão todos corretos. Você pode editar o formulário caso encontre alguma informação incorreta.', 'cad-unico')),
                 'validate.ButtonSave' => env("{$PREFIX}_MODAL_ERROR_BUTTON_SAVE", i::__('Salvar', 'cad-unico')),
-                'validate.ButtonReview' => env("{$PREFIX}_MODAL_ERROR_BUTTON_REVIEW", i::__('Próximo >>', 'cad-unico')),
+                'validate.ButtonReview' => env("{$PREFIX}_MODAL_ERROR_BUTTON_REVIEW", i::__('Revisar e finalizar cadastro >>', 'cad-unico')),
 
 
                 /* FORMULÁRIO DA INSCRIÇÃO (Validação de campo caso error) */
                 'validate.error.title' => env("{$PREFIX}_NOTIFICATION_ERROR_TITLE", i::__('O cadastro não foi enviado!', 'cad-unico')),
-                'validate.error.subtitle' => env("{$PREFIX}_NOTIFICATION_ERROR_SUBTITLE", i::__('Corrija os campos listados abaixo e valide seu formulário utilizando o botão Validar.', 'cad-unico')),
+                'validate.error.subtitle' => env("{$PREFIX}_NOTIFICATION_ERROR_SUBTITLE", i::__('Corrija os campos listados abaixo e valide seu formulário utilizando o botão Salvar e validar.', 'cad-unico')),
 
                 /* TELA CONFIRMAÇÃO DE INSCRIÇÂO */
-                'confirmation.text' => env("{$PREFIX}_CONFIRMATION_TEXT", i::__('Certifique-se que você preencheu as informações corretamente antes de enviar sua inscrição.', 'cad-unico')),
+                'confirmation.text' => env("{$PREFIX}_CONFIRMATION_TEXT", i::__('Certifique-se que você preencheu as informações corretamente antes de enviar o seu cadastro.', 'cad-unico')),
                 'confirmation.alert' => env("{$PREFIX}_CONFIRMATION_ALERT", i::__('Depois de enviada, não será mais possível editá-la.', 'cad-unico')),
-                'confirmation.buttonSend' => env("{$PREFIX}_CONFIRMATION_BUTTON_SEND", i::__('Confirmar envio', 'cad-unico')),
+                'confirmation.buttonSend' => env("{$PREFIX}_CONFIRMATION_BUTTON_SEND", i::__('Concluir cadastro', 'cad-unico')),
                 'confirmation.buttonEdit' => env("{$PREFIX}_CONFIRMATION_BUTTON_EDIT", i::__('Editar formulário', 'cad-unico')),
                 'confirmation.modalTitle' => env("{$PREFIX}_CONFIRMATION_MODAL_TITLE", i::__('Cadastro enviado com sucesso!', 'cad-unico')),
-                'confirmation.modalText' => env("{$PREFIX}_CONFIRMATION_MODAL_TEXT", i::__('Sua inscrição será analisada pelo comitê de curadoria e o resultado será informado por email. <br/>Você também pode acompanhar o andamento da análise através desse site.', 'cad-unico')),
+                'confirmation.modalText' => env("{$PREFIX}_CONFIRMATION_MODAL_TEXT", i::__('', 'cad-unico')),
                 'confirmation.modalConfirm' => env("{$PREFIX}_CONFIRMATION_MODAL_CONFIRM", i::__('Acompanhar solicitação', 'cad-unico')),
 
                 /* TELA DE INSCRIÇÃO MODO ADMIN */
                 'declaration.adminstrative' => i::__('Declarações iniciais aceitas pelo proponente', 'cad-unico'),
 
                 // STATUS_SENT = 1
-                'status.title' => env("{$PREFIX}_STATUS_TITLE", i::__('Sua inscrição está em análise', 'cad-unico')),
+                'status.title' => env("{$PREFIX}_STATUS_TITLE", i::__('Seu cadastro está em análise', 'cad-unico')),
                 'status.message' => env("{$PREFIX}_STATUS_MESSAGE", i::__('Consulte novamente em outro momento.', 'cad-unico')),
                 'status.text' => env("{$PREFIX}_STATUS_TEXT", i::__('Você pode entrar com recurso', 'cad-unico')),
                 'status.opportunity' => env("{$PREFIX}_STATUS_OPPORTUNITY", i::__('', 'cad-unico')),
-                'status.buttonBack' => env("{$PREFIX}_STATUS_BUTTON_BACK", i::__('Voltar para inscrição', 'cad-unico')),
-                'status.registration' => env("{$PREFIX}_STATUS_REGISTRATION", i::__('Número da Inscrição', 'cad-unico')),
+                'status.buttonBack' => env("{$PREFIX}_STATUS_BUTTON_BACK", i::__('Voltar para cadastro', 'cad-unico')),
+                'status.registration' => env("{$PREFIX}_STATUS_REGISTRATION", i::__('Número do cadastro', 'cad-unico')),
                 'status.projoctName' => env("{$PREFIX}_STATUS_PROJECT_NAME", i::__('Nome do Projeto', 'cad-unico')),
 
                 // STATUS_INVALID = 2
-                'status.invalid.title' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Sua inscrição não foi aprovada', 'cad-unico')),
-                'status.invalid.message' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Sua inscrição foi analisada e não foi aprovada.', 'cad-unico')),
+                'status.invalid.title' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Seu cadastro não foi aprovado', 'cad-unico')),
+                'status.invalid.message' => env("{$PREFIX}_STATUS_INVALID_MESSAGE", i::__('Seu cadastro foi analisado e não foi aprovado.', 'cad-unico')),
 
                 // STATUS_NOTAPPROVED = 3
-                'status.notapproved.title' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Sua inscrição não foi aprovada', 'cad-unico')),
-                'status.notapproved.message' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Sua inscrição foi analisada e não foi aprovada.', 'cad-unico')),
+                'status.notapproved.title' => env("{$PREFIX}_STATUS_NOTAPPROVED_TITLE", i::__('Seu cadastro não foi aprovada', 'cad-unico')),
+                'status.notapproved.message' => env("{$PREFIX}_STATUS_NOTAPPROVED_MESSAGE", i::__('Seu cadastro foi analisado e não foi aprovado.', 'cad-unico')),
 
                 //STATUS_WAITLIST = 8
-                'status.waitlist.title' => env("{$PREFIX}_STATUS_WAITLIST_TITLE", i::__('Sua inscrição foi validada.', 'cad-unico')),
-                'status.waitlist.message' => env("{$PREFIX}_STATUS_WAITLIST_MESSAGE", i::__('Inscrição suplente.', 'cad-unico')),
+                'status.waitlist.title' => env("{$PREFIX}_STATUS_WAITLIST_TITLE", i::__('Seu cadastro foi validado.', 'cad-unico')),
+                'status.waitlist.message' => env("{$PREFIX}_STATUS_WAITLIST_MESSAGE", i::__('Cadastro suplente.', 'cad-unico')),
 
                 //STATUS_WAITLIST = 10
-                'status.approved.title' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Sua inscrição foi aprovada.', 'cad-unico')),
-                'status.approved.message' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('Sua inscrição foi analisada e foi aprovada.', 'cad-unico')),
+                'status.approved.title' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Seu cadastro foi aprovado.', 'cad-unico')),
+                'status.approved.message' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('Seu cadastro foi analisado e foi aprovado.', 'cad-unico')),
 
             ],
 
@@ -331,6 +335,20 @@ class Plugin extends \MapasCulturais\Plugin
 
         $opportunity = $this->opportunity;
 
+       
+        //Faz alteração dos textos ddos templates
+        $app->hook('view.partial(singles/registration-edit--header):after', function($template, &$html) use($plugin){
+            $registration = $this->controller->requestedEntity;
+            if($plugin->isCadUnicoOpportunity($registration->opportunity)){
+                $terms = [
+                    i::__('Inscrição') => i::__('Cadastro'),
+                    i::__('inscrição') => i::__('cadastro'),
+                ];
+                $html = str_replace(array_keys($terms), array_values($terms), $html);
+            }
+         });
+
+         
         /** Auto seleciona a inscrição quando o agente já estiver selado com GovBr*/
         $app->hook("entity(Registration).send:after", function() use ($plugin, $app){
             if($plugin->config['approved_after_send'] && $plugin->hasSealGovbr() && $plugin->isCadUnicoOpportunity($this->opportunity)){

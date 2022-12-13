@@ -18,20 +18,19 @@ $profile = $app->user->profile;
 
 ?>
 <section class="lab-main-content cadastro">
-    <header>
+    <header style="margin-bottom: -31px;">
         <div class="intro-message">
             <div class="name"> 
-                <?= $plugin->text('dashboard.welcome');?> <?= $profile->name ? ", " . $profile->name : "" ?>! <br>
-                <?= sprintf( $plugin->text('dashboard.buttonBack'), $app->baseUrl) ?>
+                <?= $plugin->text('dashboard.welcome');?> <?= $profile->name ? ", " . $profile->name : "" ?>!
             </div>
         </div>
     </header>
 
     <div class="js-lab-item lab-item cadastro-options">
         <?php  if (count($registrations) < $plugin->limit) { ?>
-            <div class="long-description">
-                <?= $plugin->text('dashboard.description') ?: $opportunity->shortDescription ?>
-            </div>
+            <!-- <div class="long-description"> -->
+                <?php // $plugin->text('dashboard.description') ?: $opportunity->shortDescription ?>
+            <!-- </div> -->
 
             <h2 class="featured-title">
                 <?php if($plugin->hasSealGovbr()):?>
@@ -78,6 +77,10 @@ $profile = $app->user->profile;
                 }
             }
             ?>
+             <div class="name" style="text-align: center;"> 
+                <?= sprintf( $plugin->text('dashboard.buttonBack'), $app->baseUrl) ?>
+            </div>
+
         </div>
 
     </div><!-- End item -->

@@ -4,8 +4,8 @@ $app = \MapasCulturais\App::i();
 ?>
 <div ng-controller="RegistrationFieldsController">
     <div class="registration-fieldset" ng-init="validateRegistration()">
-        <a ng-click="saveRegistration(); validateRegistration();" class="btn btn-primary btn-validate"><?= $plugin->text('validate.ButtonSave') ?></a>
-        <a ng-if="numFieldErrors() == 0" href="<?= $this->controller->createUrl('confirmacao', [$entity->id]) ?>" ng-click="" class="btn btn-primary js-confirmar"><?= $plugin->text('validate.ButtonReview') ?></a>
+
+        
         <div class="errors-header" ng-if="numFieldErrors() > 0">
             <p class="errors-header-title"><?= $plugin->text('validate.error.title') ?></p>
             <p><?= $plugin->text('validate.error.subtitle') ?></p>
@@ -21,5 +21,9 @@ $app = \MapasCulturais\App::i();
             <p><?= $plugin->text('validate.success.text') ?></p>
         </div>
 
+        <div style="text-align: center;">
+            <a ng-click="saveRegistration(); validateRegistration();" class="btn btn-primary btn-validate"><?= $plugin->text('validate.ButtonSave') ?></a>
+            <a ng-if="numFieldErrors() == 0" href="<?= $this->controller->createUrl('confirmacao', [$entity->id]) ?>" ng-click="" class="btn btn-primary js-confirmar"><?= $plugin->text('validate.ButtonReview') ?></a>
+        </div>
     </div>
 </div>

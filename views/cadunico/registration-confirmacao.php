@@ -30,12 +30,15 @@ $this->addRegistrationToJs($entity);
 $this->includeAngularEntityAssets($entity);
 $this->includeEditableEntityAssets();
 
+$opportunityId = $entity->opportunity->id;
 $_params = [
     'entity' => $entity,
     'action' => $action,
     'opportunity' => $entity->opportunity,
+    'opportunityId' => $opportunityId,
+    'PreventSend' => $PreventSend,
+    'comfirmation' => true
 ];
-$opportunityId = $entity->opportunity->id;
 
 ?>
 <article class="main-content registration" ng-controller="RegistrationFieldsController">
@@ -49,23 +52,12 @@ $opportunityId = $entity->opportunity->id;
 
         <?php $this->applyTemplateHook('form', 'end'); ?>
 
-        <?php if (in_array($opportunityId, $PreventSend)) { ?>
-            <h2 class="registration-help">
-                <strong>
-                    <?= $PreventSendMessages[$opportunityId] ?? '' ?>
-                </strong>
-            </h2>
-        <?php
-        } else { ?>
-            <p class="registration-help">
-                <?= $plugin->text('confirmation.text') ?>
-                <strong><?= $plugin->text('confirmation.alert') ?></strong>
-            </p>
+        
+    
+        <div style="text-align: center;">
+            <a href="<?= $this->controller->createUrl('formulario', [$entity->id]) ?>" class="btn secondary"><?= $plugin->text('confirmation.buttonEdit') ?></a>
             <a class="btn btn-confirmar" ng-click="sendRegistration(false)" rel='noopener noreferrer'><?= $plugin->text('confirmation.buttonSend') ?></a>
-        <?php
-        } ?>
-
-        <a href="<?= $this->controller->createUrl('formulario', [$entity->id]) ?>" class="btn secondary"><?= $plugin->text('confirmation.buttonEdit') ?></a>
+        </div>
 
     </article>
     <div ng-show="data.sent" style="display:none" id="modalAlert" class="modal">

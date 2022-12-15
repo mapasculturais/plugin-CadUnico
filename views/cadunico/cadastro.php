@@ -56,6 +56,7 @@ $profile = $app->user->profile;
             <?php endif; ?>
             <?php 
             foreach ($registrations as $registration) {
+                $registrationStatusName = $summaryStatusName[$registration->status];
                 $registrationUrl = $this->controller->createUrl('formulario', [$registration->id]);
                 switch ($registration->status) {
                         //caso seja nao enviada (Rascunho)
@@ -63,12 +64,11 @@ $profile = $app->user->profile;
                         $this->part('cadunico/cadastro/application-draft',  [
                             'registration' => $registration, 
                             'registrationUrl' => $registrationUrl, 
-                            'registrationStatusName' => i::__('Cadastro iniciado', 'cad-unico')
+                            'registrationStatusName' => $registrationStatusName
                         ]);
                         break;
                         //caso  tenha sido enviada
                     default:
-                        $registrationStatusName = $summaryStatusName[$registration->status];
                         $this->part('cadunico/cadastro/application-status',  [
                             'registration' => $registration, 
                             'registrationStatusName' => $registrationStatusName

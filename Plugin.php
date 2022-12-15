@@ -85,7 +85,7 @@ class Plugin extends \MapasCulturais\Plugin
             'opportunity_id' => env("{$PREFIX}_OPPORTUNITY_ID", null),
 
             // número máximo de inscrições por usuário
-            'limit' => env("{$PREFIX}_LIMIT", 5),
+            'limit' => env("{$PREFIX}_LIMIT", 1),
 
             'initial_statement_enabled' => false,
 
@@ -177,12 +177,9 @@ class Plugin extends \MapasCulturais\Plugin
                 'form.description' => '',
 
                 /*TEXTO DA TELA FOOTER */
-                'footer.privacyPolicy' => i::__('Politica de Privacidade e termos de condições de uso', 'cad-unico'),
                 'footer.needHelp' => i::__(' Precisa de ajuda?', 'cad-unico'),
                 'footer.clickHere' => i::__('Clique aqui', 'cad-unico'),
                 'footer.freeSoftware' => i::__('Software livre Mapas Culturais', 'cad-unico'),
-                'footer.company' => i::__('hacklab', 'cad-unico'),
-                'footer.community' => i::__('e comunidade', 'cad-unico'),
 
                 /* TEXTOS DO DESTAQUE DA HOME */
                 'home.featuredTitle' => '',
@@ -230,6 +227,12 @@ class Plugin extends \MapasCulturais\Plugin
                 'status.buttonBack' => env("{$PREFIX}_STATUS_BUTTON_BACK", i::__('Voltar para cadastro', 'cad-unico')),
                 'status.registration' => env("{$PREFIX}_STATUS_REGISTRATION", i::__('Número do cadastro', 'cad-unico')),
                 'status.projoctName' => env("{$PREFIX}_STATUS_PROJECT_NAME", i::__('Nome do Projeto', 'cad-unico')),
+
+                // STATUS_CAD_INFORMAÇOES
+                'status.responsible' => env("{$PREFIX}_STATUS_RESPONSIBLE", i::__('Nome do agente')),
+                'status.labelCpf'=> env("{$PREFIX}_STATUS_LABEL_CPF",i::__('CPF:')),
+                'status.shippingDate' => env("{$PREFIX}",i::__('Data do envio:')),
+                'status.moreInformation' => env("{$PREFIX}",i::__('Mais informações')),
 
                 // STATUS_INVALID = 2
                 'status.invalid.title' => env("{$PREFIX}_STATUS_INVALID_TITLE", i::__('Seu cadastro não foi aprovado', 'cad-unico')),

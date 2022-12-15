@@ -102,9 +102,9 @@ class CadUnico extends \MapasCulturais\Controllers\Registration
      */
     function getStatusNames(){
         $summaryStatusName = [
-            Registration::STATUS_DRAFT => i::__('Rascunho', 'cad-unico'),
-            Registration::STATUS_SENT => i::__('Em análise', 'cad-unico'),
-            Registration::STATUS_APPROVED => i::__('Aprovado', 'cad-unico'),
+            Registration::STATUS_DRAFT => i::__('Cadastro iniciado', 'cad-unico'),
+            Registration::STATUS_SENT => i::__('Cadastro enviado', 'cad-unico'),
+            Registration::STATUS_APPROVED => i::__('Cadastro realizado', 'cad-unico'),
             Registration::STATUS_NOTAPPROVED => i::__('Reprovado', 'cad-unico'),
             Registration::STATUS_WAITLIST => i::__('Recursos Exauridos', 'cad-unico'),
             Registration::STATUS_INVALID => i::__('Inválida', 'cad-unico'),

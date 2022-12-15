@@ -22,7 +22,6 @@ $logotipo = isset($config["logo_footer"]) ? $this->asset($config["logo_footer"],
     <?php if ($logotipo) {
     ?>
         <div class="logo-state">
-            <img src="<?= $logotipo ?>">
         </div>
     <?php
     } ?>
@@ -30,22 +29,17 @@ $logotipo = isset($config["logo_footer"]) ? $this->asset($config["logo_footer"],
     <?php if ($termosECondicoes) {
     ?>
         <a target="_blank" class="terms-conditions" href="<?= $termosECondicoes; ?> ">
-            <?= $plugin->text('footer.privacyPolicy'); ?>
         </a>
     <?php
     } ?>
 
     <div class="credits">
         <a href="https://github.com/mapasculturais/mapasculturais" target="_blank">
-            <?= $plugin->text('footer.freeSoftware'); ?>
         </a>
-        <span> por </span>
 
         <a href="https://hacklab.com.br/" class="hacklab" target="_blank" style="white-space: nowrap;">
-            <?= $plugin->text('footer.company');?> <span>/</span>
         </a>
 
-        <span> <?= $plugin->text('footer.community') ?> </span>
     </div>
 </footer>
 

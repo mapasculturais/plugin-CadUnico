@@ -1,6 +1,8 @@
 <?php
 
 use MapasCulturais\i;
+$app = \MapasCulturais\App::i();
+$plugin = $this->controller->plugin;
 
 /**
  * Carregada na tela inicial
@@ -19,29 +21,28 @@ use MapasCulturais\i;
         </div>
 
         <div class="informative-box--title">
-            <h2><?= i::__('Trabalhadoras e trabalhadores da Cultura', 'cad-unico') ?></h2>
+            <h2><?= $registration->opportunity->name ?></h2>
             <i class="far fa-check-circle"></i>
         </div>
 
         <div class="informative-box--content" data-content="">
-            <span class="more"> <?= i::__('Mais informações', 'cad-unico') ?> </span>
+            <span class="more"> <?= $plugin->text("status.moreInformation");?> </span>
             <div class="content">
                 <div class="item">
-                    <span class="label"><?= i::__('Número:', 'cad-unico') ?></span> <?php echo $registration->number; ?> </br>
                 </div>
 
                 <?php if(!empty($registration->sentTimestamp)): ?>
                     <div class="item">
-                        <span class="label"><?= i::__('Data do envio:', 'cad-unico') ?></span> <?php echo $registration->sentTimestamp ? $registration->sentTimestamp->format(\MapasCulturais\i::__('d/m/Y à\s H:i')) : ''; ?>. </br>
+                        <span class="label"><?= $plugin->text("status.shippingDate"); ?></span> <?php echo $registration->sentTimestamp ? $registration->sentTimestamp->format(\MapasCulturais\i::__('d/m/Y à\s H:i')) : ''; ?>. </br>
                     </div>
                 <?php endif; ?>
 
                 <div class="item">
-                    <span class="label"><?= i::__('Responsável:', 'cad-unico') ?></span> <?php echo $registration->owner->name; ?> </br>
+                    <span class="label"><?= $plugin->text("status.responsible");?></span> <?php echo $registration->owner->name; ?> </br>
                 </div>
 
                 <div class="item">
-                    <span class="label"><?= i::__('CPF:', 'cad-unico') ?></span> <?php echo $registration->owner->documento; ?>
+                    <span class="label"><?= $plugin->text("status.labelCpf");?></span> <?php echo $registration->owner->documento; ?>
                 </div>
             </div>
         </div>

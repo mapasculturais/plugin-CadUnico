@@ -1,6 +1,17 @@
 <?php
 
+/** 
+ * @var MapasCulturais\App $app
+ * @var MapasCulturais\Themes\BaseV1\Theme $this
+ * 
+ * Variáveis requeridas:
+ * @var CadUnico\Plugin $plugin 
+ * @var MapasCulturais\Entities\Registration $registration
+ * @var string  $registrationStatusName;
+ */
+
 use MapasCulturais\i;
+$plugin = $this->controller->plugin;
 
 /**
  * Contém as informações resumidas do cadastro
@@ -8,6 +19,7 @@ use MapasCulturais\i;
  * 
  * 
  */
+
 ?>
 
 
@@ -20,27 +32,26 @@ use MapasCulturais\i;
     </div>
 
     <div class="informative-box--title">
-        <h2><?=i::__('Trabalhadoras e trabalhadores da Cultura', 'cad-unico')?></h2>
+        <h2> <?= $registration->opportunity->name ?> </h2>
         <i class="far fa-check-circle"></i>
     </div>
 
     <div class="informative-box--content" data-content="">
-        <span class="more"> <?=i::__('Mais informações', 'cad-unico')?></span>
+        <span class="more"> <?= $plugin->text("status.moreInformation");?> </span>
         <div class="content">
             <div class="item">  
-                <span class="label"><?=i::__('Número:', 'cad-unico')?></span> <?php echo $registration->number; ?> </br>
             </div>
 
             <div class="item">
-                <span class="label"><?=i::__('Data do envio:', 'cad-unico')?></span> <?php echo $registration->sentTimestamp ? $registration->sentTimestamp->format(\MapasCulturais\i::__('d/m/Y à\s H:i')): ''; ?>.  </br>
+                <span class="label"><?= $plugin->text("status.shippingDate"); ?> </span> <?php echo $registration->sentTimestamp ? $registration->sentTimestamp->format(\MapasCulturais\i::__('d/m/Y à\s H:i')): ''; ?>.  </br>
             </div>
 
             <div class="item">
-                <span class="label"><?=i::__('Data do Responsável:', 'cad-unico')?></span>  <?php echo $registration->owner->name; ?> </br>
+                <span class="label"><?= $plugin->text("status.responsible");?></span>  <?php echo $registration->owner->name; ?> </br>
             </div>
             
             <div class="item">
-                <span class="label"><?=i::__('CPF:', 'cad-unico')?></span> <?php echo $registration->owner->documento; ?>
+                <span class="label"><?= $plugin->text("status.labelCpf");?></span> <?php echo $registration->owner->documento; ?>
             </div>
         </div>
     </div>

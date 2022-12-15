@@ -338,6 +338,19 @@ class Plugin extends \MapasCulturais\Plugin
 
         $opportunity = $this->opportunity;
 
+        //Desabilita o disparo de E-mail de criação de inscrição caso approved_after_send = true
+        $app->hook('sendMailNotification.registrationStart',function(&$registration, &$template, &$enable) use($config, $plugin){
+            if($plugin->isCadUnicoOpportunity($registration->opportunity) && $config["approved_after_send"]){
+                $enable = false;
+            }
+        });
+
+        //Desabilita o disparo de E-mail de envio de inscrição caso approved_after_send = true
+        $app->hook('sendMailNotification.registrationSend',function(&$registration, &$template, &$enable) use($config, $plugin){
+            if($plugin->isCadUnicoOpportunity($registration->opportunity) && $config["approved_after_send"]){
+                $enable = false;
+            }
+        });
        
         // Evita que o template seja carregado
         $app->hook('view.partial(singles/registration-edit--header):after', function($template, &$html) use($plugin){

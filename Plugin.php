@@ -339,15 +339,11 @@ class Plugin extends \MapasCulturais\Plugin
         $opportunity = $this->opportunity;
 
        
-        //Faz alteração dos textos ddos templates
+        // Evita que o template seja carregado
         $app->hook('view.partial(singles/registration-edit--header):after', function($template, &$html) use($plugin){
             $registration = $this->controller->requestedEntity;
             if($plugin->isCadUnicoOpportunity($registration->opportunity)){
-                $terms = [
-                    i::__('Inscrição') => i::__('Cadastro'),
-                    i::__('inscrição') => i::__('cadastro'),
-                ];
-                $html = str_replace(array_keys($terms), array_values($terms), $html);
+                $html = null;
             }
          });
 

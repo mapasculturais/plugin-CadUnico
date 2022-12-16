@@ -340,10 +340,12 @@ class Plugin extends \MapasCulturais\Plugin
 
         $opportunity = $this->opportunity;
 
-        $app->hook("controller(seal).render(sealrelation)", function(&$template, $args) use ($config, $plugin){
+        $app->hook("controller(seal).render(sealrelation)", function(&$template, &$args) use ($config, $plugin, $app){
             $seal_id = $plugin->opportunity->registrationSeals->owner ?? null;
-
             if($seal_id == $args['seal']->id){
+                $agent = $args['relation']->owner;
+                $registration = $app->repo("Registration")->findOneBy(["owner" => $agent, "opportunity" => $plugin->opportunity]);
+                $args['resgistration'] = $registration;
                 $template = $config['sealrelation_layout'];
             }
         });

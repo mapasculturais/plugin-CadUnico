@@ -15,7 +15,7 @@ $today = new DateTime();
         <?php endif; ?>
 
         <?php if ($img = $plugin->config['featured.imageUrl'] ?: $opportunity->avatar->url ?? null) : ?>
-            <img src="<?= $img ?>" alt="" style="width:<?= $plugin->config['featured.imageWidth'] ?>">
+            <img src="<?= $img ?>" alt="" style="width:<?= $plugin->config['featured.imageWidth'] ?> margin-bottom: 6%;">
         <?php endif; ?>
 
         <?php //if($text = $plugin->text('home.featuredText') ?: $opportunity->shortDescription): 

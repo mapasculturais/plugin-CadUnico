@@ -36,7 +36,6 @@ $_params = [
     <article class="main-content registration" ng-controller="OpportunityController">
 
         <div class="status-card status-<?= $registration->status ?>">
-            <h2 class="status-card--title"><?= $registrationStatusMessage['title'] ?? ''; ?></h2>
 
             <?php if (!empty($justificativaAvaliacao) && sizeof($justificativaAvaliacao) != 0) : ?>
                 <?php foreach ($justificativaAvaliacao as $message) : ?>

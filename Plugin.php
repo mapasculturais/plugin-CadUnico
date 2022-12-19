@@ -154,7 +154,7 @@ class Plugin extends \MapasCulturais\Plugin
             // url da imagem do destaque da home
             'featured.imageUrl' => '',
 
-            'featured.imageWidth' => env("{$PREFIX}_FEATURED_IMAGE_WIDTH",'15%'),
+            'featured.imageWidth' => env("{$PREFIX}_FEATURED_IMAGE_WIDTH",'30%'),
 
             /* TEXTOS E DEMAIS COMPONENTES DE INTERFACE */
             'texts' => [
@@ -182,7 +182,7 @@ class Plugin extends \MapasCulturais\Plugin
                 'footer.freeSoftware' => i::__('Software livre Mapas Culturais', 'cad-unico'),
 
                 /* TEXTOS DO DESTAQUE DA HOME */
-                'home.featuredTitle' => '',
+                'home.featuredTitle' => ' ',
                 'home.featuredText' => '',
                 'home.featuredButton' => i::__('Clique aqui para se cadastrar', 'cad-unico'),
                 'home.featuredSubscription' => i::__('as inscrições abrirão em breve'),
@@ -248,7 +248,7 @@ class Plugin extends \MapasCulturais\Plugin
 
                 //STATUS_WAITLIST = 10
                 'status.approved.title' => env("{$PREFIX}_STATUS_APPROVED_TITLE", i::__('Seu cadastro foi aprovado.', 'cad-unico')),
-                'status.approved.message' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('Seu cadastro foi analisado e foi aprovado.', 'cad-unico')),
+                'status.approved.message' => env("{$PREFIX}_STATUS_APPROVED_MESSAGE", i::__('Seu cadastro foi enviado.', 'cad-unico')),
 
             ],
 
@@ -267,7 +267,6 @@ class Plugin extends \MapasCulturais\Plugin
             'logo_institution' => env("$PREFIX}_LOGO_INSTUCTION", ''),
             'logo_footer' => env("$PREFIX}_LOGO_FOOTER", ''),
             'logo_center' => env("$PREFIX}_LOGO_CENTER", ''),
-            'privacy_terms_conditions' => env("$PREFIX}_PRIVACY_TERMS", null),
             'link_support' => env("$PREFIX}_LINK_SUPPORT", null),
             'link_support_footer' => env("{$PREFIX}_LINK_SUPORTE_FOOTER", null),
             'display_default_result' => (array) json_decode(env("{$PREFIX}_DISPLAY_DEFAULT_RESULT", '["1", "2", "3", "8", "10"]')),

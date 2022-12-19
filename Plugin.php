@@ -383,11 +383,26 @@ class Plugin extends \MapasCulturais\Plugin
 
         
          /** Aplica selo definido na oportunidade assim que o agente é aprovado na inscrição */
-         $app->hook("entity(Registration).status(approved)", function() use ($plugin, $app){
-            if($plugin->hasSealGovbr() && $plugin->isCadUnicoOpportunity($this->opportunity)){
-                $app->disableAccessControl();
-                $this->setAgentsSealRelation();
-                $app->enableAccessControl();
+        $app->hook("entity(Registration).status(approved)", function () use ($plugin, $app) {
+            if ($plugin->hasSealGovbr() && $plugin->isCadUnicoOpportunity($this->opportunity)) {
+                if ($opp_seal_id = $this->opportunity->registrationSeals->owner) {
+                    $seal = $app->repo('Seal')->find($opp_seal_id);
+                    $relations = $this->owner->getSealRelations();
+
+                    $has_seal = false;
+                    foreach ($relations as $relation) {
+                        if ($relation->seal->id == $seal->id) {
+                            $has_seal = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!$has_seal) {
+                    $app->disableAccessControl();
+                    $this->setAgentsSealRelation();
+                    $app->enableAccessControl();
+                }
             }
         });
 

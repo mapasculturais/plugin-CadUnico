@@ -406,6 +406,17 @@ class Plugin extends \MapasCulturais\Plugin
             }
         });
 
+        $app->hook("entity(Registration).status(draft)", function () use ($plugin, $app) {
+            if ($plugin->isCadUnicoOpportunity($this->opportunity)) {
+                if ($opp_seal_id = $this->opportunity->registrationSeals->owner) {
+                    $seal = $app->repo('Seal')->find($opp_seal_id);
+                    $app->disableAccessControl();
+                    $this->owner->removeSealRelation($seal);
+                    $app->enableAccessControl();
+                }
+            }
+        });
+
 
         /** Insere u aviso na tela de login, para que notifique o usuário que ele deve se autenticar pelo Gov.BR para conseguir se 
         * inscrever no edital controlado pelo CadUnico */
